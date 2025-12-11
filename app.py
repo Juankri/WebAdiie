@@ -114,7 +114,7 @@ def contacto():
     Thread(target=send_async_email, args=(app, msg)).start()
     
     # 4. Responder al usuario ya
-    return render_template('index.html')
+    return render_template('gracias.html')
         
         # Si el correo se envía con éxito, mostramos la página de agradecimiento
     #return render_template('gracias.html', nombre=nombre, correo=correo)
