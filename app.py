@@ -115,6 +115,8 @@ def contacto():
     
     # 4. Responder al usuario ya
     return render_template('gracias.html')
+
+print("hola")
         
         # Si el correo se envía con éxito, mostramos la página de agradecimiento
     #return render_template('gracias.html', nombre=nombre, correo=correo)
