@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje Enviado</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        .thank-you-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+            min-height: 50vh;
+        }
+        .thank-you-container h1 { color: #0B2126; }
+        .thank-you-container p { color: #5A6C73; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="thank-you-container">
+        <h1>¡Gracias por tu mensaje, {{ nombre }}!</h1>
+        <p>Hemos recibido tu consulta y te contactaremos pronto en la dirección de correo: {{ correo }}.</p>
+        <a href="{{ url_for('home') }}" class="main-container_link">Volver al Inicio</a>
+    </div>
+</body>
+</html>

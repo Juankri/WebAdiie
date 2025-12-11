@@ -1,0 +1,161 @@
+.main_proyecto{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto; /* Centra el contenedor principal en la página */
+    padding:  10px; /* Añade espacio arriba/abajo y a los lados */
+    box-sizing: border-box;
+}
+
+.main_proyecto h1{
+    text-align: start; 
+    font-size: 32px;
+    color: #0B2126;
+    padding:  0 20px;
+}
+
+.proyecto{
+    /* Quitamos la altura fija para que se ajuste al contenido */
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 2fr 1fr ;
+    gap: 24px;
+    align-items: center; /* Centra verticalmente las tarjetas */
+    /* justify-content no es necesario aquí, las 'fr' ya ocupan todo el espacio */
+    
+
+}
+
+.tarjeta_proyecto{
+    height: 300px;
+    width: 85%;
+    
+
+    background-color: #fff;
+    border-radius: 8px;
+   
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.tarjeta_proyecto img{
+    
+    
+    border-radius: 6px; /* Bordes redondeados para la imagen */
+    width: 100%;
+    height: 100%;
+    object-fit: coer; /* La magia está aquí: la imagen cubre el contenedor sin deformarse */
+    display: block; /* Elimina espacios extra debajo de la imagen */
+    
+
+}
+
+.descripcion_proyecto{
+    
+    /* Quitamos el ancho fijo para que el grid lo controle */
+    background-color: #0B2126;
+    border-radius: 8px;
+    padding: 10px; /* Añadimos padding para el espacio interior */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    display: flex; /* Usamos flexbox para centrar el contenido dentro de la tarjeta */
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ocupa toda la altura de la fila del grid */
+    box-sizing: border-box;
+    margin: 0; /* Quitamos el margen que ya no es necesario */
+}
+
+
+.descripcion_proyecto p{
+    font-size: 16px;
+    line-height: 1.6;
+    color: #fff; /* Cambiamos el color a uno oscuro para que sea visible */
+    text-align: start;
+    margin: 0;
+
+}
+
+/*Seccion galeria       */
+
+.seccion_fotos{
+    
+    
+    background-color: #0B2126;
+
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    
+    margin: 0 auto;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.seccion_fotos h2{
+    color: #fff;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 30px;
+
+}
+
+
+
+.fotos_proyectos{
+
+    height: 400px;
+    width: 80%;
+    
+    display: grid ;
+    grid-template-columns:  1fr 1fr 1fr 1fr;
+    gap: 24px;
+
+}
+
+.foto{
+    
+    background-color: #fff;
+    max-height: 200px;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 16px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+
+
+}
+
+.foto:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+
+}
+
+.foto img{
+
+    
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+
+}
+
+/* --- MEDIA QUERIES PARA RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+    .proyecto {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+
+    .tarjeta_proyecto {
+        width: 100%; /* La tarjeta ocupa todo el ancho */
+    }
+
+    .fotos_proyectos{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstudioAdiie</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
+
+</head>
+<body class="home-body">
+
+    <header class="header">
+        <div class="social">
+            <div class="social-icons">
+                <a href="https://facebook.com/tu-pagina" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                
+                <a href="https://www.instagram.com/estudioadiie/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                
+            </div>
+
+        </div>
+
+        <nav class="nav">
+            <div class="nav-logo">
+                <a href="{{url_for('home')}}">
+                    <img class="logo"  src="{{ url_for('static', filename='img/logo/LOGO_BLANCO.png') }}" alt="Logo Blog">
+                </a>
+            </div>
+
+            <div class="nav-link">
+                <a href="{{url_for('home')}}">Inicio</a>
+                <a href="{{url_for('home', _anchor='Servicios')}}">Servicios</a>
+                <a href="{{url_for('galeria_planos')}}">Planos</a>
+                <a href="{{url_for('galeria_proyectos')}}">Proyectos</a>
+                <a href="{{url_for('home', _anchor='Contacto')}}">Contacto</a>
+
+            </div>
+
+        </nav>
+    </header>
+    
+    <main class="home-main">
+        <div class="main-container">
+            <p class="main-container_text">
+                Arquitectura y Remodelaciones para tu hogar o negocio
+            </p>
+
+            <a class="main-container_link" href="{{url_for('home', _anchor='Contacto')}}" 
+            >Cotiza ya!</a>
+
+        </div>
+       
+    </main>
+
+
+    <section id="Servicios" class="seccion_servicios">
+        <h2>Servicios</h2>
+
+        <div class="container_servicios">
+            <img src="{{ url_for('static', filename='img/hogar.png') }}" alt="icono1">
+            <h3>Diseño arquitectónico</h3>
+            <ul>
+                <li>Proyectos residenciales, comerciales o industriales.</li>
+                <li>Planos 2D y modelado 3D.</li>
+                <li>Visualizaciones realistas .</li>
+            </ul>
+
+        </div>
+
+        <div class="container_servicios">
+            <img src="{{ url_for('static', filename='img/seguridad-del-casco-del-usuario.png') }}" alt="icono2">
+            <h3>Construcción y ejecución de obras</h3>
+            
+            <ul>
+                <li>Supervisión y gestión de obra.</li>
+                <li>Presupuestos y control de materiales.</li>
+                <li>Mano de obra y dirección técnica.</li>
+            </ul>
+        </div>
+
+        <div class="container_servicios">
+            <img src="{{ url_for('static', filename='img/buscar-alt.png') }}" alt="icono3">
+            <h3>Documentación técnica</h3>
+            <ul>
+                <li>Planos municipales y de regularización.</li>
+                <li>Permisos de edificación.</li>
+                <li>Certificados y trámites legales.</li>
+            </ul>
+
+        </div>
+
+        <div class="container_servicios">
+            <img src="{{ url_for('static', filename='img/apreton-de-manos.png') }}" alt="icono3">
+            <h3>Diseño de interiores</h3>
+            <ul>
+                <li>Decoración, mobiliario, iluminación, distribución de espacios..</li>
+                
+            </ul>
+        </div>
+
+        <div class="container_servicios">
+            <img src="{{ url_for('static', filename='img/sol.png') }}" alt="icono3">
+            <h3>Paisajismo</h3>
+            <ul>
+                <li>Diseño de jardines, terrazas, patios y áreas verdes.</li>
+                
+            </ul>
+        </div>
+
+        <div class="container_servicios">
+            <img src="{{ url_for('static', filename='img/chat-flecha-crecer.png') }}" alt="icono3">
+            <h3>Reformas y remodelaciones</h3>
+            <ul>
+                <li>Ampliaciones, modernización de espacios y eficiencia energética.</li>
+                
+            </ul>
+        </div>
+
+    </section>
+
+
+
+    <section id="Proyectos" class="home_proyectos">
+
+        <div class="main_container_proyecto">
+            <h2>Proyectos</h2>
+            <img src="{{ url_for('static', filename='img/Proyecto01/QUINCHO_AF/quincho05.webp') }}" alt="img_proyecto">
+            
+
+        </div>
+
+        <div class="container_info">
+            <h2>Nombre Proyecto</h2>
+            
+            <h3> 
+                "Descripción......." </h3>
+
+            <a href="{{url_for('galeria_proyectos')}}" class="boton_info">Ver mas...</a>
+
+        </div>
+       
+    </section>
+
+
+    <section id="Contacto" class="seccion_contacto">
+        <h2>Contacto</h2>
+        
+        <div class="seccion_formulario">
+            <form class="formulario" action="{{ url_for('contacto') }}" method="POST">
+            <label>Nombre</label>
+            <input type="text" name="nombre" required>
+
+            <label>Correo</label>
+            <input type="email" name="correo" required>
+
+            <label>Mensaje</label>
+            <textarea name="mensaje" rows="4" required></textarea>
+
+            <button type="submit">Enviar</button>
+            </form>
+        </div>
+        
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                
+                <a href="{{url_for('home')}}">
+                    <img class="logo_azul" src="{{ url_for('static', filename='img/logo/azzul.png') }}" alt="Logo EstudioAdie" class="footer-logo">
+                </a>
+                <p class="footer-about">
+                    Transformando espacios con diseño y funcionalidad. Arquitectura y remodelaciones a tu medida.
+                </p>
+            </div>
+            <div class="footer-column">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="{{url_for('home')}}">Inicio</a></li>
+                    <li><a href="{{url_for('home', _anchor='Servicios')}}">Servicios</a></li>
+                    <li><a href="{{url_for('galeria_planos')}}">Planos</a></li>
+                    <li><a href="{{url_for('galeria_proyectos')}}">Proyectos</a></li>
+                    <li><a href="{{url_for('home', _anchor='Contacto')}}">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Síguenos</h4>
+                <div class="footer_social">
+                    <a href="https://facebook.com/tu-pagina" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/estudioadiie/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 EstudioAdiie. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+</body>
+</html>
