@@ -1,31 +1,13 @@
 from flask import Flask, render_template, request
 from flask_mail import Mail, Message
 import os # Para manejar variables de entorno de forma segura
-from threading import Thread # 1. Importar Threading
+import resend
 
 app = Flask(__name__)
 
-def send_async_email(app, msg):
-    with app.app_context():
-        try:
-            print("➡️ [HILO] Iniciando conexión con Gmail...", flush=True) # <--- OJO AL FLUSH
-            mail.send(msg)
-            print("✅ [HILO] Correo enviado a Google exitosamente!", flush=True)
-        except Exception as e:
-            print(f"❌ [HILO] Error enviando correo: {e}", flush=True)
 
-# --- Configuración de Flask-Mail ---
-# Es MUY RECOMENDABLE usar variables de entorno para no exponer tus credenciales.
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-# Reemplaza con tu correo y la contraseña de aplicación que generarás en el paso 3.
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
-# Inicializa la extensión Mail
-mail = Mail(app)
+resend.api_key = os.environ.get('RESEND_API_KEY')
 
 @app.route('/')
 def home():
@@ -88,35 +70,40 @@ def plano08():
 
 @app.route('/contacto', methods=['POST'])
 def contacto():
-    nombre = request.form['nombre']
-    correo = request.form['correo']
-    mensaje = request.form['mensaje']
+    print("📩 Recibiendo datos del formulario...")
+    
+    # 1. Capturar datos
+    nombre = request.form.get('nombre')
+    correo = request.form.get('correo')
+    mensaje = request.form.get('mensaje')
 
-    
-    # 2. CREAR EL MENSAJE
-    msg = Message(
-        subject=f"Nuevo Cliente: {nombre}",
-        sender=app.config['MAIL_USERNAME'],    # Lo envía tu servidor
-        recipients=[app.config['MAIL_USERNAME']], # Te llega a ti
-        reply_to=correo  # <--- AQUÍ LA USAMOS (Vital para poder responder)
-    )
-    
-    # Armamos el cuerpo del correo
-    msg.body = f"""
-    Hola Adiie Arquitectura, tienes un nuevo contacto:
-    
-    Cliente: {nombre}
-    Email: {correo}
-    
-    Mensaje:
-    {mensaje}
-    """
+    try:
+        print("🚀 Enviando con Resend API...")
+        
+        # 2. Enviar el correo (¡Es una sola función, adiós timeout!)
+        r = resend.Emails.send({
+            "from": "onboarding@resend.dev",  # Correo temporal de envío (luego ponemos tu dominio)
+            "to": "estudio.adiie@gmail.com",     # <--- AQUÍ TE LLEGA A TI
+            "subject": f"Nuevo Cliente Web: {nombre}",
+            "html": f"""
+                <h3>Nuevo Contacto desde Adiie.cl</h3>
+                <p><strong>Cliente:</strong> {nombre}</p>
+                <p><strong>Correo:</strong> {correo}</p>
+                <p><strong>Mensaje:</strong></p>
+                <blockquote style="background: #f1f1f1; padding: 10px;">{mensaje}</blockquote>
+            """,
+            "reply_to": correo  # Esto permite que le respondas directo al cliente
+        })
+        
+        print(f"✅ Éxito! ID del correo: {r.get('id')}")
+        
+        # 3. Retorno inmediato
+        return render_template('gracias.html') # O 'gracias.html' si la tienes
 
-    # 3. Lanzar hilo
-    Thread(target=send_async_email, args=(app, msg)).start()
+    except Exception as e:
+        print(f"❌ Error fatal: {e}")
+        return f"Hubo un error enviando el mensaje: {e}"
     
-    # 4. Responder al usuario ya
-    return render_template('gracias.html')
 
 print("hola")
         
