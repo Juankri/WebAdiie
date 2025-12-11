@@ -1,8 +1,17 @@
 from flask import Flask, render_template, request
 from flask_mail import Mail, Message
 import os # Para manejar variables de entorno de forma segura
+from threading import Thread # 1. Importar Threading
 
 app = Flask(__name__)
+
+def send_async_email(app, msg):
+    with app.app_context():
+        try:
+            mail.send(msg)
+            print(" Enviado async")
+        except Exception as e:
+            print(f" Error async: {e}")
 
 # --- Configuración de Flask-Mail ---
 # Es MUY RECOMENDABLE usar variables de entorno para no exponer tus credenciales.
@@ -83,14 +92,14 @@ def contacto():
     mensaje = request.form['mensaje']
 
     # Usamos un bloque try...except para manejar posibles errores al enviar el correo
-    try:
+    #try:
         # Creamos el cuerpo del correo
-        msg = Message(
+    msg = Message(
             subject=f"Nuevo Mensaje de Contacto de {nombre}",
             sender=app.config['MAIL_USERNAME'],
             recipients=[app.config['MAIL_USERNAME']] # El correo se envía a ti mismo
         )
-        msg.body = f"""
+    msg.body = f"""
         Has recibido un nuevo mensaje desde tu página web.
     
         De: {nombre}
@@ -99,17 +108,24 @@ def contacto():
         Mensaje:
         {mensaje}
         """
-        mail.send(msg)
+    mail.send(msg)
+
+    # 3. Lanzar hilo
+    Thread(target=send_async_email, args=(app, msg)).start()
+    
+    # 4. Responder al usuario ya
+    return render_template('index.html')
         
         # Si el correo se envía con éxito, mostramos la página de agradecimiento
-        return render_template('gracias.html', nombre=nombre, correo=correo)
+    #return render_template('gracias.html', nombre=nombre, correo=correo)
     
-    except Exception as e:
+    #except Exception as e:
         # Si ocurre un error, lo imprimimos en la consola para saber qué pasó
-        print(f"Error al enviar el correo: {e}")
+        #print(f"Error al enviar el correo: {e}")
         # Y le mostramos al usuario un mensaje de error claro.
         # (Opcional: podrías crear una plantilla HTML para la página de error)
-        return "Ocurrió un error al intentar enviar tu mensaje. Por favor, verifica que las credenciales del correo estén bien configuradas en el servidor. Revisa la consola para más detalles."
+        #return "Ocurrió un error al intentar enviar tu mensaje. Por favor, verifica que las credenciales del correo estén bien configuradas en el servidor. Revisa la consola para más detalles."
+       
 
 if __name__ == '__main__':
     app.run(debug=True)
