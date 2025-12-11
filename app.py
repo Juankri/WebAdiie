@@ -83,7 +83,7 @@ def contacto():
         # 2. Enviar el correo (¡Es una sola función, adiós timeout!)
         r = resend.Emails.send({
             "from": "onboarding@resend.dev",  # Correo temporal de envío (luego ponemos tu dominio)
-            "to": "estudio.adiie@gmail.com",     # <--- AQUÍ TE LLEGA A TI
+            "to": "juancri687@gmail.com",     # <--- AQUÍ TE LLEGA A TI
             "subject": f"Nuevo Cliente Web: {nombre}",
             "html": f"""
                 <h3>Nuevo Contacto desde Adiie.cl</h3>
