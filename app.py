@@ -16,9 +16,9 @@ def send_async_email(app, msg):
 # --- Configuración de Flask-Mail ---
 # Es MUY RECOMENDABLE usar variables de entorno para no exponer tus credenciales.
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
 # Reemplaza con tu correo y la contraseña de aplicación que generarás en el paso 3.
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
