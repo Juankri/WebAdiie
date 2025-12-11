@@ -8,10 +8,11 @@ app = Flask(__name__)
 def send_async_email(app, msg):
     with app.app_context():
         try:
+            print("➡️ [HILO] Iniciando conexión con Gmail...", flush=True) # <--- OJO AL FLUSH
             mail.send(msg)
-            print(" Enviado async")
+            print("✅ [HILO] Correo enviado a Google exitosamente!", flush=True)
         except Exception as e:
-            print(f" Error async: {e}")
+            print(f"❌ [HILO] Error enviando correo: {e}", flush=True)
 
 # --- Configuración de Flask-Mail ---
 # Es MUY RECOMENDABLE usar variables de entorno para no exponer tus credenciales.
