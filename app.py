@@ -91,24 +91,25 @@ def contacto():
     correo = request.form['correo']
     mensaje = request.form['mensaje']
 
-    # Usamos un bloque try...except para manejar posibles errores al enviar el correo
-    #try:
-        # Creamos el cuerpo del correo
-    msg = Message(
-            subject=f"Nuevo Mensaje de Contacto de {nombre}",
-            sender=app.config['MAIL_USERNAME'],
-            recipients=[app.config['MAIL_USERNAME']] # El correo se envía a ti mismo
-        )
-    msg.body = f"""
-        Has recibido un nuevo mensaje desde tu página web.
     
-        De: {nombre}
-        Correo: {correo}
-        
-        Mensaje:
-        {mensaje}
-        """
-    mail.send(msg)
+    # 2. CREAR EL MENSAJE
+    msg = Message(
+        subject=f"Nuevo Cliente: {nombre}",
+        sender=app.config['MAIL_USERNAME'],    # Lo envía tu servidor
+        recipients=[app.config['MAIL_USERNAME']], # Te llega a ti
+        reply_to=correo  # <--- AQUÍ LA USAMOS (Vital para poder responder)
+    )
+    
+    # Armamos el cuerpo del correo
+    msg.body = f"""
+    Hola Adiie Arquitectura, tienes un nuevo contacto:
+    
+    Cliente: {nombre}
+    Email: {correo}
+    
+    Mensaje:
+    {mensaje}
+    """
 
     # 3. Lanzar hilo
     Thread(target=send_async_email, args=(app, msg)).start()
