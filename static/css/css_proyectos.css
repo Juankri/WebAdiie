@@ -145,27 +145,36 @@
 
 /* El fondo negro del Lightbox */
 .lightbox {
-    display: none; /* Oculto por defecto */
+    display: none;
     position: fixed;
-    z-index: 2000; /* Encima de todo, incluso del menú */
-    padding-top: 50px;
+    z-index: 2000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.9); /* Negro al 90% */
+    overflow: hidden; /* Cambiamos auto por hidden para evitar barras de scroll dobles */
+    background-color: rgba(0, 0, 0, 0.95); /* Un poco más oscuro se ve mejor */
 }
+
 
 /* La imagen grande centrada */
 .lightbox-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 900px;
-    max-height: 80vh; /* Que no sea más alta que la pantalla */
+    /* Truco de centrado absoluto */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* Límites para que no se salga de la pantalla */
+    width: auto;
+    height: auto;
+    max-width: 90%;  /* Deja un margen del 10% a los lados */
+    max-height: 90vh; /* Deja un margen arriba y abajo */
+    
+    margin: 0; /* Quitamos el margin: auto viejo */
     object-fit: contain;
     animation: zoomIn 0.3s;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); /* Sombra elegante opcional */
 }
 
 /* Animación de entrada */
@@ -190,17 +199,20 @@
 .nav-btn {
     cursor: pointer;
     position: absolute;
-    top: 50%;
+    top: 50%;  /* Los pone a la mitad de la altura */
+    /* EL CAMBIO CLAVE: Usamos transform en vez de margin-top */
+    transform: translateY(-50%); 
+    
     width: auto;
     padding: 16px;
-    margin-top: -50px;
     color: white;
     font-weight: bold;
-    font-size: 30px;
-    background: none;
+    font-size: 40px; /* Un poco más grandes para que se vean bien */
+    background: none; /* Sin fondo por defecto */
     border: none;
     transition: 0.3s ease;
     user-select: none;
+    z-index: 2010; /* Aseguramos que estén ENCIMA de la imagen */
 }
 
 .nav-btn:hover {
@@ -229,5 +241,14 @@
 }
 
 @media only screen and (max-width: 700px){
-    .lightbox-content { width: 100%; }
-    .nav-btn { padding: 10px; font-size: 20px; }}
+    .lightbox-content { 
+    width: 100%;
+    margin: auto; }
+
+    .nav-btn { padding: 10px; font-size: 20px; }
+
+    .lightbox{
+        justify-content: center;
+    }
+
+}
