@@ -65,38 +65,45 @@
         <div class="fotos_proyectos">
                 <div class="foto">
                 
-                    <img src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc01.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc01.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc02.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc02.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc03.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc03.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc04.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc04.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc05.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc05.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc06.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano01/CASA_SC/casa_sc06.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
+                </div>
+
+                <div id="lightbox" class="lightbox">
+                <span class="close-lightbox">&times;</span>
+                <button class="nav-btn prev" onclick="cambiarImagen(-1)">&#10094;</button>
+                <img class="lightbox-content" id="img-grande">
+                <button class="nav-btn next" onclick="cambiarImagen(1)">&#10095;</button>
                 </div>
 
                 
@@ -160,5 +167,6 @@
             <p>&copy; 2025 EstudioAdiie. Todos los derechos reservados.</p>
         </div>
     </footer>
+<script src="{{ url_for('static', filename='js/proyectos.js') }}"></script>
 </body>
 </html>

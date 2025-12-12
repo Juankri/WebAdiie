@@ -216,11 +216,11 @@ body{
   gap: 8px;                          /* espacio entre elementos */
   background-color: #fff;
   width: 100%;
-  max-width: 320px;
+  max-width: 250px;
   height: 100%;
   border-radius: 8px;
   padding: 16px;
-  border: 2px solid #000;
+  border: 2px solid #fff;
   box-shadow: 0 8px 18px rgba(0,0,0,0.12);
   
 }
@@ -268,63 +268,72 @@ body{
   padding: 24px;
   padding: 40px 24px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 2fr;
+  
   
   gap: 24px;
-  align-items: center; /* Centra verticalmente los elementos */
+  align-items: center;  
   background-color: #fff;
   
 
 }
 
-.main_container_proyecto{
+/* El contenedor general */
+.slider-container {
+  justify-content: center;
+  position: relative; /* Para poder ubicar las flechas */
+  max-width: 1200px;
+  margin: auto;
+  overflow: hidden; /* Que nada se salga */
   display: grid;
-  
-  
-  gap: 16px;
+    
+}
+.slider-container h1{
+  margin-left: 70px;
+  margin-bottom: 20px;
 }
 
-.main_container_proyecto h2{
-  padding: 10px ;
-  /*padding-right: 20px;*/
-  font-size: 20px;
-  font-size: 28px;
-  font-weight: 700;
-  
-  color: #0B2126;
-  padding: 0;
+/* Cada Slide individual */
+.slide-proyecto {
+    display: none; /* Por defecto están ocultos */
+    /* Aquí replicamos tu diseño lado a lado: */
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
 }
 
-.main_container_proyecto img{
-  display: inline-block;
-  padding: 10px ;
-  grid-column: 1;
-  grid-row: 2;
-  display: block;
-  height: 100%;
-  width: 85%;
-  width: 100%;
-  max-height: 400px; /* Evita que la imagen sea demasiado alta */
-  object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
-  border-radius: 8px;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
-  
+/* SOLO mostramos el que tenga la clase 'activo' */
+.slide-proyecto.activo {
+  justify-content: center;
+  align-items: center;
+  max-height: 90%;
+  max-width: 90%;
+  margin: 0 auto;
+  display: grid; /* Se activa y se pone en modo Grid */
+  grid-template-columns: 2fr 1fr;
 }
 
+/* Ajustes de tus columnas (Imagen y Texto) */
+.slide-imagen, .slide-texto {
+    flex: 1; /* Mitad y mitad */
+}
 
-/* INFO DE SECCION PROYECTO */
+.slide-imagen img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Opcional */
+}
 
-.container_info{
+.slide-texto {
   padding: 10px;
   display: grid;
   grid-template-rows: 1fr 2fr 1fr;/* fila 1: título, fila 2: contenido, fila 3: botón */
   gap: 20px;
   border-radius: 8px; 
   padding: 10px;
-  padding: 20px;
   /*background-color: #0B2126;*/
   background-color: #0B2126;
+  color: #fff;
   grid-column: 2;
   grid-row: 1;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
@@ -334,24 +343,10 @@ body{
   align-content: center;
 }
 
-.container_info h2{
-  margin-top: 10px;
-  color: #fff;
-
-}
-
-.container_info h3{
-  margin-top: 15;
-  grid-column: 1;
-  grid-row: 2;
-  color: #fff;
-}
-
-
 .boton_info{
   grid-row: 3;       /* asegurar que esté en la tercera fila */
   grid-column: 1 / -1;
-  justify-self: start;  /* centrar horizontal dentro de su celda */
+    /* centrar horizontal dentro de su celda */
   align-self: center;    /* centrar vertical dentro de su fila */
   justify-self: start;
   align-self: end;
@@ -370,6 +365,50 @@ body{
   cursor: pointer;
   
 }
+
+/* LAS FLECHAS */
+.slider-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white; /* O un color que resalte */
+    font-weight: bold;
+    font-size: 25px;
+    border: none;
+    background-color: rgba(0,0,0,0.5); /* Fondo semitransparente */
+    border-radius: 50%;
+    user-select: none;
+    z-index: 10;
+    transition: 0.3s;
+}
+
+.slider-btn:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* Animación de desvanecimiento suave */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+
+/* Responsivo para celular: Poner uno debajo del otro */
+/*@media (max-width: 768px) {
+    .slide-proyecto.activo {
+        flex-direction: column;
+    }
+}*/
 
 
 
@@ -567,7 +606,7 @@ body{
 
   /* --- SECCIÓN SERVICIOS --- */
   .seccion_servicios {
-    grid-template-columns: 1fr; /* Una sola columna */
+    grid-template-columns: 1fr 1fr; /* Una sola columna */
   }
 
   /* --- SECCIÓN PROYECTOS (HOME) --- */
@@ -575,13 +614,20 @@ body{
     grid-template-columns: 1fr; /* Una sola columna */
     gap: 20px;
   }
+  .slide-proyecto.activo{
+    grid-template-columns: 1fr;
+    
+  }
+  .slider-btn{
+    top: 50%;
+  }
 
-  .container_info {
+  .slide-texto {
     grid-row: 2; /* La info pasa debajo de la imagen */
     grid-column: 1; /* Aseguramos que ocupe la única columna */
   }
 
-  .main_container_proyecto img {
+  .slide_imagen img {
     width: 100%; /* La imagen ocupa todo el ancho */
   }
 

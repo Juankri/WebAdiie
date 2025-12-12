@@ -114,7 +114,7 @@
 }
 
 .foto{
-    
+    cursor: pointer;
     background-color: #fff;
     max-height: 200px;
     width: 100%;
@@ -143,6 +143,74 @@
 
 }
 
+/* El fondo negro del Lightbox */
+.lightbox {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 2000; /* Encima de todo, incluso del menú */
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9); /* Negro al 90% */
+}
+
+/* La imagen grande centrada */
+.lightbox-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 900px;
+    max-height: 80vh; /* Que no sea más alta que la pantalla */
+    object-fit: contain;
+    animation: zoomIn 0.3s;
+}
+
+/* Animación de entrada */
+@keyframes zoomIn {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* Botón Cerrar (X) */
+.close-lightbox {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2001;
+}
+
+/* Botones Siguiente / Anterior */
+.nav-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    background: none;
+    border: none;
+    transition: 0.3s ease;
+    user-select: none;
+}
+
+.nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
 /* --- MEDIA QUERIES PARA RESPONSIVE DESIGN --- */
 @media (max-width: 768px) {
     .proyecto {
@@ -159,3 +227,7 @@
         width: 100%;
     }
 }
+
+@media only screen and (max-width: 700px){
+    .lightbox-content { width: 100%; }
+    .nav-btn { padding: 10px; font-size: 20px; }}
