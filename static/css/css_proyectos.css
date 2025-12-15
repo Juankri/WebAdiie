@@ -6,12 +6,7 @@
     box-sizing: border-box;
 }
 
-.main_proyecto h1{
-    text-align: start; 
-    font-size: 32px;
-    color: #0B2126;
-    padding:  0 20px;
-}
+
 
 .proyecto{
     /* Quitamos la altura fija para que se ajuste al contenido */
@@ -52,18 +47,24 @@
 }
 
 .descripcion_proyecto{
-    
-    /* Quitamos el ancho fijo para que el grid lo controle */
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
     background-color: #0B2126;
     border-radius: 8px;
     padding: 10px; /* Añadimos padding para el espacio interior */
     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    display: flex; /* Usamos flexbox para centrar el contenido dentro de la tarjeta */
     justify-content: center;
     align-items: center;
     height: 100%; /* Ocupa toda la altura de la fila del grid */
     box-sizing: border-box;
     margin: 0; /* Quitamos el margen que ya no es necesario */
+}
+
+.descripcion_proyecto h1{
+    color: #fff;
+    padding: 0;
+
+
 }
 
 
@@ -104,7 +105,6 @@
 
 .fotos_proyectos{
 
-    height: 400px;
     width: 80%;
     
     display: grid ;
