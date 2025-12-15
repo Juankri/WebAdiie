@@ -40,7 +40,7 @@
     border-radius: 6px; /* Bordes redondeados para la imagen */
     width: 100%;
     height: 100%;
-    object-fit: coer; /* La magia está aquí: la imagen cubre el contenedor sin deformarse */
+    object-fit: cover; /* La magia está aquí: la imagen cubre el contenedor sin deformarse */
     display: block; /* Elimina espacios extra debajo de la imagen */
     
 
