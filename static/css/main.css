@@ -15,6 +15,10 @@ html, body{
   overflow-x: hidden;
 }
 
+.body-no-scroll {
+  overflow: hidden;
+}
+
 body{
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
@@ -44,7 +48,7 @@ body{
   height: 140px;
   display: grid;
   grid-template-rows: 1fr 1fr ;
-  position: sticky; /* La magia para que se quede fijo */
+  position: fixed; /* Cambiado a fixed para asegurar que se quede fijo */
   top: 0; /* Lo pegamos a la parte superior */
   z-index: 1000; /* Nos aseguramos que esté por encima de todo */
   background-color: #fff; /* Nuevo fondo gris azulado claro */
@@ -156,6 +160,7 @@ body{
 /* MAIN DEL HOME */
 
 .home-main{
+  margin-top: 140px; /* Añadido para compensar el header fijo */
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
   height: 100%;
@@ -631,22 +636,25 @@ body{
 
   .nav-links {
     position: fixed;
-    top: 140px;
-    left: 0;
-    width: 100%;
-    color: #fff;
+    top: 140px; /* Se alinea justo debajo del header */
+    right: 0;   /* Se posiciona a la derecha */
+    width: 280px; /* Ancho fijo para el panel lateral */
     background-color: #0B2126;
     flex-direction: column;
     align-items: center;
-    padding: 1rem 0;
-    clip-path: circle(0px at 90% -10%);
-    pointer-events: none;
-    justify-content: center;
+    padding: 1.5rem 0; /* Espaciado interno */
+    gap: 1.5rem; /* Espacio entre links */
+    justify-content: flex-start;
     
+    /* Animación desde la esquina superior derecha */
+    clip-path: circle(0px at 100% 0); 
+    pointer-events: none;
+    transition: clip-path 0.4s ease-in-out;
+    border-bottom-left-radius: 8px; /* Estética */
   }
   
   .nav-links.active{
-    clip-path: circle(1000px at 90% -10%);
+    clip-path: circle(150% at 100% 0); /* Animación de apertura */
     pointer-events: all;
   }
   
