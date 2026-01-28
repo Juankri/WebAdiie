@@ -13,6 +13,11 @@ resend.api_key = os.environ.get('RESEND_API_KEY')
 def home():
     return render_template('index.html')
 
+
+@app.route('/galeria_planos_venta')
+def galeria_planos_venta():
+    return render_template('galeria_planos_venta.html')
+
 @app.route('/galeria_proyectos')
 def galeria_proyectos():
     return render_template('galeria_proyectos.html')

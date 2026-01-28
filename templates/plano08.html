@@ -25,19 +25,24 @@
         </div>
 
         <nav class="nav">
+            
             <div class="nav-logo">
                 <a href="{{url_for('home')}}">
                     <img class="logo" src="{{ url_for('static', filename='img/logo/LOGO_BLANCO.png') }}" alt="Logo Blog">
                 </a>
             </div>
 
-            <div class="nav-link">
-                <a href="{{url_for('home')}}">Inicio</a>
-                <a href="{{url_for('home', _anchor='Servicios')}}">Servicios</a>
-                <a href="{{url_for('galeria_planos')}}">Planos</a>
-                <a href="{{url_for('galeria_proyectos')}}">Proyectos</a>
-                <a href="{{url_for('home', _anchor='Contacto')}}">Contacto</a>
+            <button class="menubtn" id="menuBtn"><span>&#9776;</span></button>
 
+            <div class="nav-link-container">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="{{url_for('home')}}">Inicio</a></li>
+                    <li><a href="{{url_for('home', _anchor='Servicios')}}">Servicios</a></li>
+                    <li><a href="{{url_for('galeria_planos_venta')}}">Planos</a></li>
+                    <li><a href="{{url_for('galeria_proyectos')}}">Proyectos</a></li>
+                    <li><a href="{{url_for('home', _anchor='Contacto')}}">Contacto</a></li>
+                    <li><a href="{{url_for('galeria_planos')}}">Personalizados</a></li>
+                </ul>
             </div>
 
         </nav>
@@ -161,5 +166,6 @@
         </div>
     </footer>
 <script src="{{ url_for('static', filename='js/proyectos.js') }}"></script>
+<script src="{{ url_for('static', filename='js/nav.js') }}"></script>
 </body>
 </html>
