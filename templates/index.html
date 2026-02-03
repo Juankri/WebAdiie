@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EstudioAdiie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Oswald:wght@500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
@@ -48,8 +51,12 @@
     
     <main class="home-main">
         <div class="main-container">
+            <h1 class="main-container_titulo">EstudioAdiie
+</h1>
             <p class="main-container_text">
-                Arquitectura y Remodelaciones para tu hogar o negocio
+                ARQUITECTURA Y CONSTRUCCION
+                NOSOTROS PROFESIONALIZAMOS TUS IDEAS
+
             </p>
 
             <a class="main-container_link" href="{{url_for('home', _anchor='Contacto')}}" 

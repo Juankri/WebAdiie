@@ -172,23 +172,53 @@ body{
 }
 
 .main-container{
-  display: grid;
   grid-column: 2;
-  justify-items: center;
-  height: 350px;
-  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    gap: 5;  height: 350px;
+  
   
 }
 
-.main-container_text{
+.main-container_titulo{
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+  
   text-align: center;
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: 10px;
+  font-size: 40px;
+  
+  
   color: #fff;
+  margin-top: 60px;
+
+  font-family: 'Montserrat', sans-serif;
+    font-weight: 700px; /* Hace que se vea gordita y fuerte */
+    letter-spacing: 1px; /* Separa un poco las letras (queda muy elegante) */
+    text-transform: uppercase; /* Asegura que esté en mayúsculas */
+
+}
+.main-container_text{
+  
+  text-align: center;
+  
+  
+  
+  
+
+  font-family: 'Montserrat', sans-serif;
+    font-weight: 400;       /* Letra normal/fina, no negrita */
+    font-size: 16px;        /* Tamaño discreto */
+    letter-spacing: 4px;    /* EL SECRETO: Separar mucho las letras */
+    text-transform: uppercase; /* Todo en mayúsculas */
+    color: #f1f1f1;         /* Blanco un poco suave, no puro */
+  
+    
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8)
 }
 
 .main-container_link{
+  margin-top: auto;
+  margin-bottom: 30px;
   background-color: #0B2126;
   display: inline-block;
   padding: 10px 20px;
