@@ -164,10 +164,12 @@ body{
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
   height: 100%;
-  background-image: url('../img/fondomh.webp');
-  background-position: center;
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),url('../img/Fondos/fondo1.webp');
+  background-position: 50% 30%;
   background-repeat: no-repeat;
   background-size: cover;
+
+  transition: background-image 1s ease-in-out;
 
 }
 

@@ -20,3 +20,45 @@ function cambiarSlide(direction) {
     // 3. Mostrar el nuevo slide (ponemos la clase activo)
     slides[slideIndex].classList.add('activo');
 }
+
+
+
+
+
+
+
+const fondos = [
+    { 
+        url: '/static/img/Fondos/fondo1.webp', 
+        posicion: '50% 30%'  
+    },
+    { 
+        url: '/static/img/Fondos/fondo2.webp', 
+        posicion: '50% 30%' 
+    },
+    { 
+        url: '/static/img/Fondos/fondo3.webp', 
+        posicion: 'center'       
+    }
+];
+
+const homeSection = document.querySelector('.home-main');
+let indice = 0;
+
+function rotarFondo() {
+    indice++;
+    if (indice >= fondos.length) {
+        indice = 0;
+    }
+
+    
+    const fotoActual = fondos[indice];
+
+    
+    homeSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${fotoActual.url}')`;
+
+    // 3. Aplicamos la POSICIÓN específica usando .posicion
+    homeSection.style.backgroundPosition = fotoActual.posicion;
+}
+
+setInterval(rotarFondo, 4000);
