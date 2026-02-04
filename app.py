@@ -13,6 +13,9 @@ resend.api_key = os.environ.get('RESEND_API_KEY')
 def home():
     return render_template('index.html')
 
+@app.route('/portafolio')
+def portafolio():
+    return render_template('portafolio.html')
 
 @app.route('/galeria_planos_venta')
 def galeria_planos_venta():
@@ -67,6 +70,10 @@ def plano07():
 @app.route('/plano08')
 def plano08():
     return render_template('plano08.html')
+
+@app.route('/en_construccion')
+def en_construccion():
+    return render_template('en_construccion.html')
 
 
 

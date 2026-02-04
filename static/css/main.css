@@ -9,6 +9,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
 html, body{
@@ -132,6 +133,7 @@ body{
 }
 
 .nav-links a{
+  font-size: 11px;
   text-decoration: none;
   color: #0B2126;
   font-weight: 700;

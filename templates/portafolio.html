@@ -6,10 +6,8 @@
     <title>Proyectos</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/css_proyectos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/css_portafolio.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/css_galeria_proyectos.css') }}">
 </head>
 <body class="home-body">
 
@@ -49,72 +47,42 @@
         </nav>
     </header>
 
-    <main class="main_proyecto">
-        <div class="proyecto">
-            <div class="tarjeta_proyecto">
-            <img src="{{ url_for('static', filename='img/Plano03/CASANG/casang02.webp') }}" alt="">
-            </div>
-            <div class="descripcion_proyecto">
-            <h1>Casa NG</h1>
-            <p>Una casa diseñada para compartir. Su distribución conecta todos los espacios interiores con una gran terraza central, donde un fogón en obra se convierte en el corazón del hogar, ideal para disfrutar las tardes al aire libre con total privacidad.</p>
-            </div>
+    <main class="main_galeria_proyectos">
+        <h1 class="titulo_galeria_proyectos">Portafolio</h1>
+        <div class="galeria_proyectos">
+            
+            <a href="{{url_for('en_construccion')}}" class="link_galeria_proyecto">
+                <h2>Construcción</h2>
+                <div class="container_galeria_proyectos">
+                
+                <img src="{{ url_for('static', filename='img/portafolio/construccionhp.webp') }}" alt="img_proyectos">
+                <p class="descripcion">Descripción</p> 
+                </div>
+            </a>
+
+            <a href="{{url_for('galeria_planos')}}" class="link_galeria_proyecto">
+                <h2>Diseños Personalizados</h2>
+                <div class="container_galeria_proyectos">
+                
+                <img src="{{ url_for('static', filename='img/Proyecto02/LOCALES_COMERCIALES/locales08.webp') }}" alt="img_proyectos">
+                <p class="descripcion">Descripción</p> 
+                </div>
+            </a>
+
+            <a href="{{url_for('galeria_proyectos')}}" class="link_galeria_proyecto3">
+                <h2>Proyectos</h2>
+                <div class="container_galeria_proyectos">
+                
+                <img src="{{ url_for('static', filename='img/Proyecto02/LOCALES_COMERCIALES/locales08.webp') }}" alt="img_proyectos">
+                <p class="descripcion">Descripción</p> 
+                </div>
+            </a>
+
+            
+
         </div>
-
-        
-
 
     </main>
-
-    <section class="seccion_fotos">
-        <h2>Galeria de Fotos</h2>
-
-        <div class="fotos_proyectos">
-                <div class="foto">
-                
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano03/CASANG/casang01.webp') }}" alt="img_proyectos">
-                    <p>Descripción</p> 
-                </div>
-
-                <div class="foto">
-                    
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano03/CASANG/casang02.webp') }}" alt="img_proyectos">
-                    <p>Descripción</p> 
-                </div>
-
-                <div class="foto">
-                    
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano03/CASANG/casang03.webp') }}" alt="img_proyectos">
-                    <p>Descripción</p> 
-                </div>
-
-                <div class="foto">
-                    
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano03/CASANG/casang04.webp') }}" alt="img_proyectos">
-                    <p>Descripción</p> 
-                </div>
-
-                <div class="foto">
-                    
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano03/CASANG/casang05.webp') }}" alt="img_proyectos">
-                    <p>Descripción</p> 
-                </div>
-
-                <div id="lightbox" class="lightbox">
-                <span class="close-lightbox">&times;</span>
-                <button class="nav-btn prev" onclick="cambiarImagen(-1)">&#10094;</button>
-                <img class="lightbox-content" id="img-grande">
-                <button class="nav-btn next" onclick="cambiarImagen(1)">&#10095;</button>
-                </div>
-
-                
-
-                
-
-               
-        </div>
-
-        
-    </section>
 
     <section id="Contacto" class="seccion_contacto">
         <h2>Contacto</h2>
@@ -141,7 +109,7 @@
             <div class="footer-column">
                 <!-- Asumo que el logo es .png, si es .pn, déjalo como estaba -->
                 <a href="{{url_for('home')}}">
-                    <img class="logo_azul footer-logo" src="{{ url_for('static', filename='img/logo/azzul.png') }}" alt="Logo EstudioAdie">
+                    <img class=logo_azul src="{{ url_for('static', filename='img/logo/azzul.png') }}" alt="Logo EstudioAdie">
                 </a>
                 <p class="footer-about">
                     Transformando espacios con diseño y funcionalidad. Arquitectura y remodelaciones a tu medida.
@@ -169,7 +137,6 @@
             <p>&copy; 2025 EstudioAdiie. Todos los derechos reservados.</p>
         </div>
     </footer>
-<script src="{{ url_for('static', filename='js/proyectos.js') }}"></script>
 <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
 </body>
 </html>

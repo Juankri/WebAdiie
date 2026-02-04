@@ -1,4 +1,4 @@
-.main_galeria_planos{
+.main_galeria_proyectos{
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -10,34 +10,45 @@
 
 }
 
-.titulo_galeria_planos{
-    margin-top: 120px;
+.titulo_galeria_proyectos{
     text-align: center;
-    font-size: 32px;
+    font-size: 24px;
+    font-weight: 700;
     margin-bottom: 40px;
+    margin-top: 120px;
     color: #0B2126;
 
 }
 
-.galeria_planos{
+.galeria_proyectos{
     justify-items: center;
     width: 100%;
     display: grid ;
     /* Esto hace la magia: crea columnas que se ajustan solas */
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2,1fr) ;
     gap: 48px;
 
 }
 
 
-.link_galeria_planos{
-    width: 100%;
+.link_galeria_proyecto{
+    width: 90%;
+    text-decoration: none; /* Quita el subrayado */
+    color: inherit; /* Hereda el color del texto (negro por defecto) */
+    display: cover; /* Asegura que el enlace ocupe todo el espacio de la tarjeta */
+}
+
+.link_galeria_proyecto3{
+    width: 90%;
+    grid-row: 1;
+    grid-column: 1/3;
     text-decoration: none; /* Quita el subrayado */
     color: inherit; /* Hereda el color del texto (negro por defecto) */
     display: block; /* Asegura que el enlace ocupe todo el espacio de la tarjeta */
 }
 
-.container_galeria_planos{
+.container_galeria_proyectos{
     
     width: 100%; /* Ocupará el espacio que le dé el grid */
     background-color: #fff;
@@ -51,22 +62,37 @@
 
 }
 
-.container_galeria_planos:hover{
+.container_galeria_proyectos:hover{
     transform: translateY(-5px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 
     
 
 }
+.link_galeria_proyecto h2{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 5px;
+    text-align: center;
 
-.container_galeria_planos img{
-    object-position: center;
+}
+
+.link_galeria_proyecto3 h2{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 5px;
+    text-align: center;
+
+}
+
+.container_galeria_proyectos img{
+    
     width: 100%;
     height: 200px;
     object-fit: cover;
     display: block;
-    aspect-ratio: 4 / 3;
-    
 
     }
 
@@ -90,20 +116,19 @@
 }
 
 /* Cuando pasamos el ratón sobre el contenedor, mostramos la descripción */
-.container_galeria_planos:hover .descripcion {
+.container_galeria_proyectos:hover .descripcion {
     opacity: 1;
 }
 
+@media (max-width: 768px) {
 
+        .galeria_proyectos{
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            width: 100%;}
 
-@media (max-width: 768px){
+            
+            }
+            
 
-    .galeria_planos{
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-
-}
-
-
-
+        

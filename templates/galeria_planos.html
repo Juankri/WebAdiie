@@ -35,11 +35,12 @@
             <div class="nav-link-container">
                 <ul class="nav-links" id="navLinks">
                     <li><a href="{{url_for('home')}}">Inicio</a></li>
+                    <li><a href="{{url_for('portafolio')}}">Portafolio</a></li>
                     <li><a href="{{url_for('home', _anchor='Servicios')}}">Servicios</a></li>
-                    <li><a href="{{url_for('galeria_planos_venta')}}">Planos</a></li>
-                    <li><a href="{{url_for('galeria_proyectos')}}">Proyectos</a></li>
+                    <li><a href="{{url_for('en_construccion')}}">Servicio Express</a></li>
+                    <li><a href="{{url_for('en_construccion')}}">Proyectos en venta</a></li>
                     <li><a href="{{url_for('home', _anchor='Contacto')}}">Contacto</a></li>
-                    <li><a href="{{url_for('galeria_planos')}}">Personalizados</a></li>
+                    
                 </ul>
             </div>
 
@@ -47,7 +48,7 @@
     </header>
 
     <main class="main_galeria_planos">
-        <h1 class="titulo_galeria_planos">Planos</h1>
+        <h1 class="titulo_galeria_planos">Diseños Personalizados</h1>
         <div class="galeria_planos">
             
             <a href="{{url_for('plano01')}}" class="link_galeria_planos">
