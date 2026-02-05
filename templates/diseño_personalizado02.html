@@ -53,11 +53,11 @@
         
         <div class="proyecto">
             <div class="tarjeta_proyecto">
-            <img src="{{ url_for('static', filename='img/Plano07/CASACG/casacg03.webp') }}" alt="">
+            <img src="{{ url_for('static', filename='img/Plano02/CASA_PINOS/casa_pinos02.webp') }}" alt="">
             </div>
             <div class="descripcion_proyecto">
-            <h1>Casa CG</h1>
-            <p>Reinterpretación contemporánea de la arquitectura colonial chilena. Destacan sus amplios corredores perimetrales y un gran quincho revestido en piedra, ideal para la vida familiar.</p>
+            <h1>Casa Pinos</h1>
+            <p>Un refugio moderno diseñado para la desconexión total. La estructura se integra respetuosamente entre los árboles, ofreciendo privacidad absoluta y vistas panorámicas del bosque desde cada habitación, difuminando el límite entre interior y exterior.</p>
             </div>
         </div>
 
@@ -72,31 +72,19 @@
         <div class="fotos_proyectos">
                 <div class="foto">
                 
-                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano07/CASACG/casacg01.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano02/CASA_PINOS/casa_pinos01.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano07/CASACG/casacg02.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano02/CASA_PINOS/casa_pinos02.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano07/CASACG/casacg03.webp') }}" alt="img_proyectos">
-                    <p>Descripción</p> 
-                </div>
-
-                <div class="foto">
-                    
-                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano07/CASACG/casacg04.webp') }}" alt="img_proyectos">
-                    <p>Descripción</p> 
-                </div>
-
-                <div class="foto">
-                    
-                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano07/CASACG/casacg05.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano02/CASA_PINOS/casa_pinos03.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
@@ -109,7 +97,10 @@
 
                 
 
-            </div>
+                
+
+               
+        </div>
 
         
     </section>
@@ -149,13 +140,13 @@
                 <h4>Navegación</h4>
                 <ul>
                     <li><a href="{{url_for('home')}}">Inicio</a></li>
+                    <li><a href="{{url_for('portafolio')}}">Portafolio</a></li>
                     <li><a href="{{url_for('home', _anchor='Servicios')}}">Servicios</a></li>
-                    <li><a href="{{url_for('galeria_planos')}}">Planos</a></li>
-                    <li><a href="{{url_for('galeria_proyectos')}}">Proyectos</a></li>
+                    <li><a href="{{url_for('en_construccion')}}">Servicio Express</a></li>
+                    <li><a href="{{url_for('en_construccion')}}">Proyectos en venta</a></li>
                     <li><a href="{{url_for('home', _anchor='Contacto')}}">Contacto</a></li>
                 </ul>
             </div>
-            
             <div class="footer-column">
                 <h4>Síguenos</h4>
                 <div class="footer_social">

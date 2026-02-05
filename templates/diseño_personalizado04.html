@@ -50,14 +50,13 @@
     </header>
 
     <main class="main_proyecto">
-        
         <div class="proyecto">
             <div class="tarjeta_proyecto">
-            <img src="{{ url_for('static', filename='img/Plano05/CASAHP/casahp01.webp') }}" alt="">
+            <img src="{{ url_for('static', filename='img/Plano04/CASAMH/casamh03.webp') }}" alt="">
             </div>
             <div class="descripcion_proyecto">
-            <h1>Casa HP</h1>
-            <p>Una vivienda diseñada para impresionar. La arquitectura juega con la continuidad visual: el muro de piedra exterior ingresa al salón principal, borrando el límite entre adentro y afuera. Ideal para quienes buscan sofisticación y calidez en un mismo espacio.</p>
+            <h1>Casa MH</h1>
+            <p>Un diseño que respira tranquilidad y orden. Sus espacios se abren hacia el jardín mediante ventanales de piso a cielo, incluyendo detalles únicos como ventanas en esquina y caminos de acceso en gravilla que invitan a recorrer el exterior.</p>
             </div>
         </div>
 
@@ -72,25 +71,19 @@
         <div class="fotos_proyectos">
                 <div class="foto">
                 
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano05/CASAHP/casahp01.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano04/CASAMH/casamh01.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano05/CASAHP/casahp02.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano04/CASAMH/casamh02.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano05/CASAHP/casahp03.webp') }}" alt="img_proyectos">
-                    <p>Descripción</p> 
-                </div>
-
-                <div class="foto">
-                    
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano05/CASAHP/casahp04.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano04/CASAMH/casamh03.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
@@ -101,6 +94,11 @@
                 <button class="nav-btn next" onclick="cambiarImagen(1)">&#10095;</button>
                 </div>
 
+               
+
+                
+
+                
 
                
         </div>
@@ -143,9 +141,10 @@
                 <h4>Navegación</h4>
                 <ul>
                     <li><a href="{{url_for('home')}}">Inicio</a></li>
+                    <li><a href="{{url_for('portafolio')}}">Portafolio</a></li>
                     <li><a href="{{url_for('home', _anchor='Servicios')}}">Servicios</a></li>
-                    <li><a href="{{url_for('galeria_planos')}}">Planos</a></li>
-                    <li><a href="{{url_for('galeria_proyectos')}}">Proyectos</a></li>
+                    <li><a href="{{url_for('en_construccion')}}">Servicio Express</a></li>
+                    <li><a href="{{url_for('en_construccion')}}">Proyectos en venta</a></li>
                     <li><a href="{{url_for('home', _anchor='Contacto')}}">Contacto</a></li>
                 </ul>
             </div>

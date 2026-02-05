@@ -35,41 +35,41 @@ def proyecto02():
 
 
 
-@app.route('/galeria_planos')
-def galeria_planos():
-    return render_template('galeria_planos.html')
+@app.route('/galeria_diseños_personalizados')
+def galeria_diseños_personalizados():
+    return render_template('galeria_diseños_personalizados.html')
 
-@app.route('/plano01')
-def plano01():
-    return render_template('plano01.html')
+@app.route('/diseño_personalizado01')
+def diseño_personalizado01():
+    return render_template('diseño_personalizado01.html')
 
-@app.route('/plano02')
-def plano02():
-    return render_template('plano02.html')
+@app.route('/diseño_personalizado02')
+def diseño_personalizado02():
+    return render_template('diseño_personalizado02.html')
 
-@app.route('/plano03')
-def plano03():
-    return render_template('plano03.html')
+@app.route('/diseño_personalizado03')
+def diseño_personalizado03():
+    return render_template('diseño_personalizado03.html')
 
-@app.route('/plano04')
-def plano04():
-    return render_template('plano04.html')
+@app.route('/diseño_personalizado04')
+def diseño_personalizado04():
+    return render_template('diseño_personalizado04.html')
 
-@app.route('/plano05')
-def plano05():
-    return render_template('plano05.html')
+@app.route('/diseño_personalizado05')
+def diseño_personalizado05():
+    return render_template('diseño_personalizado05.html')
 
-@app.route('/plano06')
-def plano06():
-    return render_template('plano06.html')
+@app.route('/diseño_personalizado06')
+def diseño_personalizado06():
+    return render_template('diseño_personalizado06.html')
 
-@app.route('/plano07')
-def plano07():
-    return render_template('plano07.html')
+@app.route('/diseño_personalizado07')
+def diseño_personalizado07():
+    return render_template('diseño_personalizado07.html')
 
-@app.route('/plano08')
-def plano08():
-    return render_template('plano08.html')
+@app.route('/diseño_personalizado08')
+def diseño_personalizado08():
+    return render_template('diseño_personalizado08.html')
 
 @app.route('/en_construccion')
 def en_construccion():

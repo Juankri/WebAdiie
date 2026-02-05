@@ -50,14 +50,13 @@
     </header>
 
     <main class="main_proyecto">
-        
         <div class="proyecto">
             <div class="tarjeta_proyecto">
-            <img src="{{ url_for('static', filename='img/Plano06/CASAFR/casafr01.webp') }}" alt="">
+            <img src="{{ url_for('static', filename='img/Plano08/CASA1/casa1_2.webp') }}" alt="">
             </div>
             <div class="descripcion_proyecto">
-            <h1>Casa FR</h1>
-            <p>Arquitectura contemporánea de volúmenes sólidos inserta en un bosque de pinos. Su fachada en tonos grises y líneas geométricas genera un contraste moderno con el entorno natural.</p>
+            <h1>Casa 01</h1>
+            <p>Una casa que equilibra lo moderno y lo tradicional. Sus techos altos con madera expuesta y los detalles en piedra natural crean ambientes amplios pero acogedores, perfectos para quienes buscan diseño y calidez de hogar en un mismo lugar.</p>
             </div>
         </div>
 
@@ -72,43 +71,31 @@
         <div class="fotos_proyectos">
                 <div class="foto">
                 
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano06/CASAFR/casafr01.webp') }}" alt="img_proyectos">
+                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano08/CASA1/casa1_1.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano06/CASAFR/casafr02.webp') }}" alt="img_proyectos">
+                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano08/CASA1/casa1_2.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano06/CASAFR/casafr03.webp') }}" alt="img_proyectos">
+                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano08/CASA1/casa1_3.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano06/CASAFR/casafr04.webp') }}" alt="img_proyectos">
+                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano08/CASA1/casa1_4.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
                 <div class="foto">
                     
-                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano06/CASAFR/casafr05.webp') }}" alt="img_proyectos">
-                    <p>Descripción</p> 
-                </div>
-
-                <div class="foto">
-                    
-                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano06/CASAFR/casafr06.webp') }}" alt="img_proyectos">
-                    <p>Descripción</p> 
-                </div>
-
-                <div class="foto">
-                    
-                    <img class="foto_img"  src="{{ url_for('static', filename='img/Plano06/CASAFR/casafr07.webp') }}" alt="img_proyectos">
+                    <img class="foto_img" src="{{ url_for('static', filename='img/Plano08/CASA1/casa1_5.webp') }}" alt="img_proyectos">
                     <p>Descripción</p> 
                 </div>
 
@@ -119,7 +106,9 @@
                 <button class="nav-btn next" onclick="cambiarImagen(1)">&#10095;</button>
                 </div>
 
-                </div>
+                
+
+            </div>
 
         
     </section>
@@ -159,9 +148,10 @@
                 <h4>Navegación</h4>
                 <ul>
                     <li><a href="{{url_for('home')}}">Inicio</a></li>
+                    <li><a href="{{url_for('portafolio')}}">Portafolio</a></li>
                     <li><a href="{{url_for('home', _anchor='Servicios')}}">Servicios</a></li>
-                    <li><a href="{{url_for('galeria_planos')}}">Planos</a></li>
-                    <li><a href="{{url_for('galeria_proyectos')}}">Proyectos</a></li>
+                    <li><a href="{{url_for('en_construccion')}}">Servicio Express</a></li>
+                    <li><a href="{{url_for('en_construccion')}}">Proyectos en venta</a></li>
                     <li><a href="{{url_for('home', _anchor='Contacto')}}">Contacto</a></li>
                 </ul>
             </div>
@@ -181,8 +171,3 @@
 <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
 </body>
 </html>
-
-
-                
-
-                

@@ -11,6 +11,7 @@
 .proyecto{
     /* Quitamos la altura fija para que se ajuste al contenido */
     padding: 12px;
+    margin-top: 140px;
     display: grid;
     grid-template-columns: 2fr 1fr ;
     gap: 24px;
