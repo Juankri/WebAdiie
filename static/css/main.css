@@ -163,10 +163,11 @@ body{
 
 .home-main{
   margin-top: 140px; /* Añadido para compensar el header fijo */
-  display: grid;
+  position: relative;
+  background-color: #1a1a1a; /* Fondo de seguridad */
   grid-template-columns: 1fr 4fr 1fr;
   height: 100%;
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),url('../img/Fondos/fondo1.webp');
+  
   background-position: 50% 30%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -175,7 +176,39 @@ body{
 
 }
 
+/* Estilo compartido para ambas capas */
+.slider_fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Configuración de imagen */
+    background-size: cover;
+    background-position: center top; /* O como prefieras */
+    z-index: 0; /* Detrás del texto */
+    
+    /* Transición suave de opacidad */
+    transition: opacity 1.5s ease-in-out; 
+    opacity: 0; /* Por defecto invisibles */
+}
+
+/* La clase que las hace visibles */
+.slider_fondo_activo {
+    opacity: 1;
+    z-index: 1; /* Un poquito más arriba que la inactiva */
+}
+
+/* IMPORTANTE: Ponemos la primera foto fija en el CSS para que cargue rápido */
+#slider-1 {
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/static/img/Fondos/fondo1.webp');
+    background-position: 50% 30%;
+}
+
 .main-container{
+  position: relative;
+    z-index: 10;
   grid-column: 2;
   display: flex;
   flex-direction: column;

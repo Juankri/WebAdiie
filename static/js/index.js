@@ -24,7 +24,9 @@ function cambiarSlide(direction) {
 
 
 
-
+const capa1 = document.getElementById('slider-1');
+const capa2 = document.getElementById('slider-2');
+const capas = [capa1, capa2];
 
 
 const fondos = [
@@ -42,23 +44,30 @@ const fondos = [
     }
 ];
 
-const homeSection = document.querySelector('.home-main');
-let indice = 0;
+let indiceActual = 0; // Índice de la foto
+let capaActual = 0;   // Índice de la capa (0 o 1)
 
 function rotarFondo() {
-    indice++;
-    if (indice >= fondos.length) {
-        indice = 0;
-    }
-
+    // Calculamos cuál es la siguiente foto
+    indiceActual++;
+    if (indiceActual >= fondos.length) indiceActual = 0;
     
-    const fotoActual = fondos[indice];
-
+    // Identificamos qué capa está visible y cuál está escondida
+    const capaVisible = capas[capaActual];
+    const capaEscondida = capas[1 - capaActual]; // Si es 0 da 1, si es 1 da 0
     
-    homeSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${fotoActual.url}')`;
-
-    // 3. Aplicamos la POSICIÓN específica usando .posicion
-    homeSection.style.backgroundPosition = fotoActual.posicion;
+    // 1. Preparamos la capa escondida con la NUEVA foto
+    const foto = fondos[indiceActual];
+    capaEscondida.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${foto.url}')`;
+    capaEscondida.style.backgroundPosition = foto.posicion;
+    
+    // 2. HACEMOS EL CAMBIO (Cross-fade)
+    capaEscondida.classList.add('slider_fondo_activo'); // Aparece la nueva
+    capaVisible.classList.remove('slider_fondo_activo'); // Desaparece la vieja
+    
+    // 3. Cambiamos el turno de la capa para la próxima vez
+    capaActual = 1 - capaActual;
 }
 
-setInterval(rotarFondo, 4000);
+// Iniciar el ciclo cada 5 segundos
+setInterval(rotarFondo, 5000);
