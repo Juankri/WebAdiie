@@ -10,6 +10,10 @@
   margin: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
+  
+  text-decoration: none;
+  
+  
 }
 
 html, body{
@@ -324,6 +328,14 @@ body{
   padding: 16px;
   border: 2px solid #fff;
   box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  text-decoration: none; /* Elimina el subrayado si es un enlace */
+}
+
+a.container_servicios:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+  border-color: #D4AF37;
   
 }
 
@@ -338,6 +350,13 @@ body{
 }
 
 .container_servicios h3{
+   text-align: center;
+   font-size: 18px;
+   color: #0B2126;
+
+}
+
+.container_servicios a{
    text-align: center;
    font-size: 18px;
    color: #0B2126;
@@ -749,7 +768,7 @@ body{
 
   /* --- SECCIÓN SERVICIOS --- */
   .seccion_servicios {
-    grid-template-columns: 1fr 1fr; /* Una sola columna */
+    grid-template-columns: 1fr 1fr; /* 2 columnas para tablets y móviles grandes */
     
   }
 
@@ -797,5 +816,12 @@ body{
     justify-content: center;
     align-items: center;
     margin: 0 auto 15px;
+  }
+}
+
+/* Cuando la pantalla es menor a 480px (celulares verticales), pasamos a 1 columna */
+@media (max-width: 480px) {
+  .seccion_servicios {
+    grid-template-columns: 1fr;
   }
 }

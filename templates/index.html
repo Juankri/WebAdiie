@@ -75,16 +75,27 @@
     <section id="Servicios" class="seccion_servicios">
         <h2>Servicios</h2>
 
-        <div class="container_servicios">
+        <a href="{{url_for('servicio_express')}}" class="container_servicios">
+                <img src="{{ url_for('static', filename='img/sol.png') }}" alt="icono3">
+                <h3>Servicio Express</h3>
+                <ul>
+                    <li>Un servicio para quienes buscan la decoración de su espacio en poco tiempo.Pensado para que se animan a implementar el diseño por su cuenta y así lograr un importante ahorro.</li>
+                    
+                </ul>
+        </a>
+
+        <a href="{{url_for('galeria_diseños_personalizados')}}" class="container_servicios">
             <img src="{{ url_for('static', filename='img/hogar.png') }}" alt="icono1">
             <h3>Diseño arquitectónico</h3>
             <ul>
                 <li>Proyectos residenciales, comerciales o industriales.</li>
                 <li>Planos 2D y modelado 3D.</li>
                 <li>Visualizaciones realistas .</li>
+                <li>Master Plan de tu Parcela</li>
             </ul>
-
-        </div>
+        </a>
+        
+        
 
         <div class="container_servicios">
             <img src="{{ url_for('static', filename='img/seguridad-del-casco-del-usuario.png') }}" alt="icono2">
@@ -101,9 +112,11 @@
             <img src="{{ url_for('static', filename='img/buscar-alt.png') }}" alt="icono3">
             <h3>Documentación técnica</h3>
             <ul>
-                <li>Planos municipales y de regularización.</li>
+                <li>Tramitacion Municipal y Regularización.</li>
                 <li>Permisos de edificación.</li>
                 <li>Certificados y trámites legales.</li>
+                <li>LEY 20.898 ( LEY DEL MONO)</li>
+</li>           
             </ul>
 
         </div>
@@ -117,14 +130,6 @@
             </ul>
         </div>
 
-        <div class="container_servicios">
-            <img src="{{ url_for('static', filename='img/sol.png') }}" alt="icono3">
-            <h3>Paisajismo</h3>
-            <ul>
-                <li>Diseño de jardines, terrazas, patios y áreas verdes.</li>
-                
-            </ul>
-        </div>
 
         <div class="container_servicios">
             <img src="{{ url_for('static', filename='img/chat-flecha-crecer.png') }}" alt="icono3">
@@ -220,7 +225,7 @@
                     <li><a href="{{url_for('home')}}">Inicio</a></li>
                     <li><a href="{{url_for('portafolio')}}">Portafolio</a></li>
                     <li><a href="{{url_for('home', _anchor='Servicios')}}">Servicios</a></li>
-                    <li><a href="{{url_for('en_construccion')}}">Servicio Express</a></li>
+                    <li><a href="{{url_for('servicio_express')}}">Servicio Express</a></li>
                     <li><a href="{{url_for('en_construccion')}}">Proyectos en venta</a></li>
                     <li><a href="{{url_for('home', _anchor='Contacto')}}">Contacto</a></li>
                 </ul>

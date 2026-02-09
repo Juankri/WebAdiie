@@ -130,6 +130,7 @@ def enviar_cotizacion():
         # 1. Recibimos los datos del formulario
         datos = request.form
         estilo = datos.get('estilo')
+        metros = datos.get('metros')
         nombre = datos.get('nombre')
         correo = datos.get('correo')
 
@@ -141,6 +142,7 @@ def enviar_cotizacion():
             <li><strong>Nombre:</strong> {nombre}</li>
             <li><strong>Correo:</strong> {correo}</li>
             <li><strong>Estilo Preferido:</strong> {estilo}</li>
+            <li><strong>Metros Cuadrados:</strong> {metros}</li>
         </ul>
         <p>Responde a este correo para contactar al cliente.</p>
         """

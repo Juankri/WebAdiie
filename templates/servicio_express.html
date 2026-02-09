@@ -8,6 +8,31 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/servicio_express.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
+    <style>
+        /* Estilos para el nuevo layout del modal con imagen */
+        .modal-body-grid {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .modal-imagen-container {
+            flex: 1;
+        }
+        .modal-imagen-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .modal-info-container {
+            flex: 1;
+        }
+        @media (max-width: 768px) {
+            .modal-body-grid {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body class="home-body">
 
@@ -100,30 +125,49 @@
     <div id="servicio-modal" class="modal">
         <div class="modal-contenido">
             <span class="modal-cerrar">&times;</span>
-            <h2 id="modal-titulo"></h2>
-            <p id="modal-descripcion"></p>
-            <form id="modal-formulario">
-                <h3>Solicita una cotización</h3>
-                <div class="form-grupo">
-                    <label for="estilo">Preferencia de Estilo:</label>
-                    <select id="estilo" name="estilo">
-                        <option value="moderno">Moderno</option>
-                        <option value="minimalista">Minimalista</option>
-                        <option value="industrial">Industrial</option>
-                        <option value="rustico">Rústico</option>
-                        <option value="no-seguro">No estoy seguro</option>
-                    </select>
+            
+            <div class="modal-body-grid">
+                <div class="modal-imagen-container">
+                    <img id="modal-imagen" src="" alt="Imagen del servicio">
                 </div>
-                <div class="form-grupo">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" required>
+                
+                <div class="modal-info-container">
+                    <h2 id="modal-titulo"></h2>
+                    <p id="modal-descripcion"></p>
+                    <form id="modal-formulario">
+                        <h3>Solicita una cotización</h3>
+                        <div class="form-grupo">
+                            <label for="estilo">Preferencia de Estilo:</label>
+                            <select id="estilo" name="estilo">
+                                <option value="moderno">Moderno</option>
+                                <option value="minimalista">Minimalista</option>
+                                <option value="industrial">Industrial</option>
+                                <option value="rustico">Rústico</option>
+                                <option value="no-seguro">No estoy seguro</option>
+                            </select>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="metros">Metros Cuadrados (m²):</label>
+                            <select id="metros" name="metros">
+                                <option value="menos-10">Menos de 10 m²</option>
+                                <option value="10-20">10 - 20 m²</option>
+                                <option value="20-30">20 - 30 m²</option>
+                                <option value="30-50">30 - 50 m²</option>
+                                <option value="mas-50">Más de 50 m²</option>
+                            </select>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="correo">Correo Electrónico:</label>
+                            <input type="email" id="correo" name="correo" required>
+                        </div>
+                        <button type="submit">Enviar Solicitud</button>
+                    </form>
                 </div>
-                <div class="form-grupo">
-                    <label for="correo">Correo Electrónico:</label>
-                    <input type="email" id="correo" name="correo" required>
-                </div>
-                <button type="submit">Enviar Solicitud</button>
-            </form>
+            </div>
         </div>
     </div>
 

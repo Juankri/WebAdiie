@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('servicio-modal');
     const modalTitulo = document.getElementById('modal-titulo');
     const modalDescripcion = document.getElementById('modal-descripcion');
+    const modalImagen = document.getElementById('modal-imagen');
     const cerrarBoton = document.querySelector('.modal-cerrar');
     const servicioItems = document.querySelectorAll('.servicio-item');
 
@@ -13,10 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // 1. Obtener datos del item clickeado
             const titulo = item.dataset.titulo;
             const descripcion = item.dataset.descripcion;
+            const imagenSrc = item.querySelector('img').src;
 
             // 2. Poblar el modal con los datos
             modalTitulo.textContent = titulo;
             modalDescripcion.textContent = descripcion;
+            if (modalImagen) {
+                modalImagen.src = imagenSrc;
+            }
 
             // 3. Mostrar el modal
             modal.style.display = 'block';
