@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, jsonify, request
 from flask_mail import Mail, Message
 import os # Para manejar variables de entorno de forma segura
 import resend
@@ -75,6 +75,11 @@ def diseño_personalizado08():
 def en_construccion():
     return render_template('en_construccion.html')
 
+@app.route('/servicio_express')
+def servicio_express():
+    return render_template('servicio_express.html')
+
+
 
 
 
@@ -115,7 +120,45 @@ def contacto():
     except Exception as e:
         print(f"❌ Error fatal: {e}")
         return f"Hubo un error enviando el mensaje: {e}"
-    
+
+# ---------------------------------------------------------
+# RUTA PARA PROCESAR EL FORMULARIO
+# ---------------------------------------------------------
+@app.route('/enviar-cotizacion', methods=['POST'])
+def enviar_cotizacion():
+    try:
+        # 1. Recibimos los datos del formulario
+        datos = request.form
+        estilo = datos.get('estilo')
+        nombre = datos.get('nombre')
+        correo = datos.get('correo')
+
+        # 2. Preparamos el contenido del correo (HTML bonito)
+        mensaje_html = f"""
+        <h1>Nueva Solicitud de Cotización 🏗️</h1>
+        <p>Un cliente está interesado en tus servicios:</p>
+        <ul>
+            <li><strong>Nombre:</strong> {nombre}</li>
+            <li><strong>Correo:</strong> {correo}</li>
+            <li><strong>Estilo Preferido:</strong> {estilo}</li>
+        </ul>
+        <p>Responde a este correo para contactar al cliente.</p>
+        """
+
+        # 3. Enviamos el correo usando Resend
+        r = resend.Emails.send({
+            "from": "onboarding@resend.dev",  # USA ESTE CORREO SI AÚN NO TIENES DOMINIO VERIFICADO
+            "to": "juancri687@gmail.com",       # <--- AQUÍ VA TU CORREO DONDE QUIERES RECIBIR EL AVISO
+            "subject": f"Nueva Cotización de {nombre}",
+            "html": mensaje_html,
+            "reply_to": correo                # Para que al dar "Responder" le escribas al cliente
+        })
+
+        return jsonify({"status": "success", "mensaje": "Correo enviado correctamente"})
+
+    except Exception as e:
+        print(f"Error al enviar: {e}")
+        return jsonify({"status": "error", "mensaje": str(e)}), 500
 
 print("hola")
         

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicio Express - EstudioAdiie</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/servicio_express.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
+</head>
+<body class="home-body">
+
+    <header class="header">
+        <div class="social">
+            <div class="social-icons">
+                <a href="https://facebook.com/tu-pagina" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/estudioadiie/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <nav class="nav">
+            <div class="nav-logo">
+                <a href="{{url_for('home')}}">
+                    <img class="logo" src="{{ url_for('static', filename='img/logo/LOGO_BLANCO.png') }}" alt="Logo Blog">
+                </a>
+            </div>
+            <button class="menubtn" id="menuBtn"><span>&#9776;</span></button>
+            <div class="nav-link-container">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="{{url_for('home')}}">Inicio</a></li>
+                    <li><a href="{{url_for('portafolio')}}">Portafolio</a></li>
+                    <li><a href="{{url_for('home', _anchor='Servicios')}}">Servicios</a></li>
+                    <li><a href="{{url_for('servicio_express')}}">Servicio Express</a></li>
+                    <li><a href="{{url_for('en_construccion')}}">Proyectos en venta</a></li>
+                    <li><a href="{{url_for('home', _anchor='Contacto')}}">Contacto</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-servicios">
+        <h1 class="titulo-servicios">Diseño de Interiores Express</h1>
+        <p class="subtitulo-servicios">Selecciona el espacio que quieres diseñar. Hacemos el resto.</p>
+
+        <div class="servicios-grid">
+            <!-- Fila 1 -->
+            <div class="servicio-item" data-titulo="Diseño de Dormitorio Principal" data-descripcion="Un santuario de tranquilidad y estilo. Optimizamos el espacio para el descanso y la funcionalidad, con una paleta de colores que invita a la calma.">
+                <img src="https://via.placeholder.com/300x200.png?text=Dormitorio" alt="Diseño de Dormitorio Principal">
+                <h3>Dormitorio Principal</h3>
+            </div>
+            <div class="servicio-item" data-titulo="Diseño de Cocina Funcional" data-descripcion="El corazón de tu hogar, ahora más práctico y moderno. Creamos un flujo de trabajo eficiente con almacenamiento inteligente y acabados de alta calidad.">
+                <img src="https://via.placeholder.com/300x200.png?text=Cocina" alt="Diseño de Cocina Funcional">
+                <h3>Cocina Funcional</h3>
+            </div>
+            <div class="servicio-item" data-titulo="Diseño de Sala de Estar" data-descripcion="Un espacio para convivir y relajarse. Diseñamos la distribución perfecta de muebles, iluminación ambiental y textiles para crear una atmósfera acogedora.">
+                <img src="https://via.placeholder.com/300x200.png?text=Sala+de+Estar" alt="Diseño de Sala de Estar">
+                <h3>Sala de Estar</h3>
+            </div>
+            <div class="servicio-item" data-titulo="Diseño de Baño tipo Spa" data-descripcion="Transforma tu baño en un oasis de relajación. Seleccionamos materiales, duchas tipo lluvia y soluciones de almacenamiento para una experiencia de spa en casa.">
+                <img src="https://via.placeholder.com/300x200.png?text=Baño" alt="Diseño de Baño tipo Spa">
+                <h3>Baño tipo Spa</h3>
+            </div>
+            <div class="servicio-item" data-titulo="Diseño de Oficina en Casa" data-descripcion="Un espacio productivo y ergonómico. Creamos un ambiente que fomenta la concentración, con mobiliario adecuado y excelente iluminación.">
+                <img src="https://via.placeholder.com/300x200.png?text=Oficina" alt="Diseño de Oficina en Casa">
+                <h3>Oficina en Casa</h3>
+            </div>
+            <div class="servicio-item" data-titulo="Diseño de Habitación Infantil" data-descripcion="Un mundo de creatividad y diversión. Diseñamos habitaciones temáticas y funcionales que crecen con tus hijos, con zonas de juego y estudio.">
+                <img src="https://via.placeholder.com/300x200.png?text=Habitación+Infantil" alt="Diseño de Habitación Infantil">
+                <h3>Habitación Infantil</h3>
+            </div>
+            <!-- Fila 2 -->
+            <div class="servicio-item" data-titulo="Diseño de Comedor" data-descripcion="El lugar perfecto para tus reuniones. Creamos un ambiente elegante y cómodo, con la mesa y sillas ideales y una iluminación que destaca.">
+                <img src="https://via.placeholder.com/300x200.png?text=Comedor" alt="Diseño de Comedor">
+                <h3>Comedor</h3>
+            </div>
+            <div class="servicio-item" data-titulo="Diseño de Terraza o Balcón" data-descripcion="Tu propio escape al aire libre. Maximizamos el espacio con mobiliario resistente a la intemperie, plantas y una iluminación acogedora para tus noches.">
+                <img src="https://via.placeholder.com/300x200.png?text=Terraza" alt="Diseño de Terraza o Balcón">
+                <h3>Terraza / Balcón</h3>
+            </div>
+            <div class="servicio-item" data-titulo="Diseño de Sala de Juegos" data-descripcion="El centro del entretenimiento familiar. Creamos un espacio multifuncional con soluciones de almacenamiento para juguetes, consolas y juegos de mesa.">
+                <img src="https://via.placeholder.com/300x200.png?text=Sala+Juegos" alt="Diseño de Sala de Juegos">
+                <h3>Sala de Juegos</h3>
+            </div>
+            <div class="servicio-item" data-titulo="Diseño de Vestidor" data-descripcion="Organización y estilo en tu espacio personal. Diseñamos vestidores a medida con soluciones inteligentes para cada prenda y accesorio.">
+                <img src="https://via.placeholder.com/300x200.png?text=Vestidor" alt="Diseño de Vestidor">
+                <h3>Vestidor</h3>
+            </div>
+             <div class="servicio-item" data-titulo="Diseño de Bar en Casa" data-descripcion="Conviértete en el mejor anfitrión. Diseñamos un rincón de bar elegante con todo lo necesario para preparar tus bebidas favoritas.">
+                <img src="https://via.placeholder.com/300x200.png?text=Bar" alt="Diseño de Bar en Casa">
+                <h3>Bar en Casa</h3>
+            </div>
+            <div class="servicio-item" data-titulo="Diseño de Biblioteca" data-descripcion="Un rincón para la lectura y el conocimiento. Creamos estanterías a medida y un ambiente tranquilo con la iluminación perfecta para leer.">
+                <img src="https://via.placeholder.com/300x200.png?text=Biblioteca" alt="Diseño de Biblioteca">
+                <h3>Biblioteca</h3>
+            </div>
+        </div>
+    </main>
+
+    <!-- Estructura de la Ventana Modal (oculta por defecto) -->
+    <div id="servicio-modal" class="modal">
+        <div class="modal-contenido">
+            <span class="modal-cerrar">&times;</span>
+            <h2 id="modal-titulo"></h2>
+            <p id="modal-descripcion"></p>
+            <form id="modal-formulario">
+                <h3>Solicita una cotización</h3>
+                <div class="form-grupo">
+                    <label for="estilo">Preferencia de Estilo:</label>
+                    <select id="estilo" name="estilo">
+                        <option value="moderno">Moderno</option>
+                        <option value="minimalista">Minimalista</option>
+                        <option value="industrial">Industrial</option>
+                        <option value="rustico">Rústico</option>
+                        <option value="no-seguro">No estoy seguro</option>
+                    </select>
+                </div>
+                <div class="form-grupo">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-grupo">
+                    <label for="correo">Correo Electrónico:</label>
+                    <input type="email" id="correo" name="correo" required>
+                </div>
+                <button type="submit">Enviar Solicitud</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <!-- ... (El mismo footer de las otras páginas) ... -->
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/servicio_express.js') }}"></script>
+</body>
+</html>

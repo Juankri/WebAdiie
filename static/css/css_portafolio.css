@@ -12,12 +12,18 @@
 
 .titulo_galeria_proyectos{
     text-align: center;
-    font-size: 24px;
+    font-size: 2.5rem; /* Aumentamos el tamaño */
     font-weight: 700;
-    margin-bottom: 40px;
-    margin-top: 120px;
+    margin-bottom: 10px; /* Reducimos el margen inferior para el subtítulo */
+    margin-top: 140px; /* Ajustamos el margen superior */
     color: #0B2126;
+}
 
+.subtitulo_galeria_proyectos {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 50px; /* Margen inferior para separar del contenido */
 }
 
 .galeria_proyectos{
@@ -121,14 +127,20 @@
 }
 
 @media (max-width: 768px) {
+    .link_galeria_proyecto3 {
+        grid-row: 1;
+        grid-column: 1 / -1;
+    }
 
-        .galeria_proyectos{
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0;
-            width: 100%;}
+    .link_galeria_proyecto {
+        grid-column: 1 / -1;
+    }
 
-            
-            }
+    .galeria_proyectos {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
             
 
         
