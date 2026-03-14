@@ -1,0 +1,30 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  
+  text-decoration: none;
+  
+  
+}
+
+html, body{
+  overflow-x: hidden;
+  scroll-behavior: smooth; /* ESTA ES LA LÍNEA MÁGICA */
+}
+
+body{
+  
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+   /* suavizado/antialiasing */
+  -webkit-font-smoothing: antialiased; /* para WebKit (Chrome, Safari) */
+  -moz-osx-font-smoothing: grayscale;  /* para macOS Firefox */
+  text-rendering: optimizeLegibility;  /* mejora el kerning y ligaduras */
+  -webkit-text-size-adjust: 100%;       /* evitar escalados extra en móviles */
+  /* mantener pesos de fuente reales para evitar "fake bold" */
+  
+}

@@ -1,0 +1,987 @@
+/*Roboto Slaf 400, 700
+  Roboto 400 500 700 900
+  Roboto Mono 400 500 700
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Roboto+Slab:wght@400;700&family=Roboto:wght@400;500;700;900&display=swap');
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  
+  text-decoration: none;
+  
+  
+}
+
+html, body{
+  overflow-x: hidden;
+}
+
+.body-no-scroll {
+  overflow: hidden;
+}
+
+body{
+  
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+   /* suavizado/antialiasing */
+  -webkit-font-smoothing: antialiased; /* para WebKit (Chrome, Safari) */
+  -moz-osx-font-smoothing: grayscale;  /* para macOS Firefox */
+  text-rendering: optimizeLegibility;  /* mejora el kerning y ligaduras */
+  -webkit-text-size-adjust: 100%;       /* evitar escalados extra en móviles */
+  /* mantener pesos de fuente reales para evitar "fake bold" */
+  
+}
+
+.home-body{
+  position: relative;
+  min-height: 100vh;
+  /*top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;*/
+}
+
+
+.header{
+  width: 100%;
+  height: 140px;
+  display: grid;
+  grid-template-rows: 1fr 1fr ;
+  position: fixed; /* Cambiado a fixed para asegurar que se quede fijo */
+  top: 0; /* Lo pegamos a la parte superior */
+  z-index: 1000; /* Nos aseguramos que esté por encima de todo */
+  background-color: #fff; /* Nuevo fondo gris azulado claro */
+  
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12); /* Sombra sutil para darle profundidad */
+ 
+}
+
+.social{
+  background-color: #0B2126;
+  width: 100%;
+  height: 50px;
+  display: grid;
+
+}
+
+.social-icons{
+  width: auto;
+  height: auto;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+  justify-self: end;
+  margin-right: 20px;
+
+}
+
+.social-icons a{
+  color: #fff;
+  font-size: 28px;
+
+}
+
+.social-icons a:hover{
+  color: #616161;
+}
+
+.nav{
+  background-color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 90px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-logo{
+  
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+  
+
+}
+
+.logo {
+  /* Aumentamos la altura para que sea más visible en la barra de navegación */
+  height: 75px; 
+  width: auto; /* Dejamos que el ancho se ajuste automáticamente para no deformar la imagen */
+  object-fit: contain; /* Asegura que la imagen se escale correctamente dentro del espacio asignado */
+  display: block; /* Buena práctica para eliminar espacios extra debajo de la imagen */
+}
+
+.nav-link-container{
+  
+  
+  
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 50px;
+}
+
+
+
+.nav-links{
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  transition: all 0,3s ease;
+}
+
+.nav-links a{
+  font-size: 11px;
+  text-decoration: none;
+  color: #0B2126;
+  font-weight: 700;
+  transition: all 0,2;
+
+}
+
+.nav-links a:hover{
+  opacity: 0.8s;
+  transform: translateY(-2px);
+  color: #D4AF37; /* Nuevo color dorado para el hover */
+  border-bottom-color: #D4AF37;/* Nuevo color dorado para el hover */
+}
+
+.menubtn{
+  background: none;
+  border: none;
+  color: #0B2126;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: none;
+
+}
+
+
+/* MAIN DEL HOME */
+
+.home-main{
+  margin-top: 140px; /* Añadido para compensar el header fijo */
+  position: relative;
+  background-color: #1a1a1a; /* Fondo de seguridad */
+  grid-template-columns: 1fr 4fr 1fr;
+  height: 100%;
+  
+  background-position: 50% 30%;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  transition: background-image 1s ease-in-out;
+
+}
+
+/* Estilo compartido para ambas capas */
+.slider_fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Configuración de imagen */
+    background-size: cover;
+    background-position: center top; /* O como prefieras */
+    z-index: 0; /* Detrás del texto */
+    
+    /* Transición suave de opacidad */
+    transition: opacity 1.5s ease-in-out; 
+    opacity: 0; /* Por defecto invisibles */
+}
+
+/* La clase que las hace visibles */
+.slider_fondo_activo {
+    opacity: 1;
+    z-index: 1; /* Un poquito más arriba que la inactiva */
+}
+
+/* IMPORTANTE: Ponemos la primera foto fija en el CSS para que cargue rápido */
+#slider-1 {
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/static/img/Fondos/fondo1.webp');
+    background-position: 50% 30%;
+}
+
+.main-container{
+  position: relative;
+    z-index: 10;
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    gap: 5;  height: 350px;
+  
+  
+}
+
+.main-container_titulo{
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+  
+  text-align: center;
+  font-size: 40px;
+  
+  
+  color: #fff;
+  margin-top: 60px;
+
+  font-family: 'Montserrat', sans-serif;
+    font-weight: 700px; /* Hace que se vea gordita y fuerte */
+    letter-spacing: 1px; /* Separa un poco las letras (queda muy elegante) */
+    text-transform: uppercase; /* Asegura que esté en mayúsculas */
+
+}
+.main-container_text{
+  
+  text-align: center;
+  
+  
+  
+  
+
+  font-family: 'Montserrat', sans-serif;
+    font-weight: 400;       /* Letra normal/fina, no negrita */
+    font-size: 16px;        /* Tamaño discreto */
+    letter-spacing: 4px;    /* EL SECRETO: Separar mucho las letras */
+    text-transform: uppercase; /* Todo en mayúsculas */
+    color: #f1f1f1;         /* Blanco un poco suave, no puro */
+  
+    
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8)
+}
+
+.main-container_link{
+  margin-top: auto;
+  margin-bottom: 30px;
+  background-color: #0B2126;
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  height: 45px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.main-container_link:hover{
+  background-color: #5A6C73;
+  transform: translateY(-5px);
+
+}
+
+.main-container_link:active{
+  background-color: #000;
+}
+
+
+
+/* SECCION SERVICIOS*/
+
+.seccion_servicios{
+  min-height: 60vh;                             /* ocupa al menos una parte de la pantalla */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* columnas responsivas */
+  grid-auto-rows: auto;
+  gap: 24px;
+  background-color: #0B2126;
+  padding: 24px;
+  padding-bottom: 60px;
+  align-items: start;
+  justify-items: center;                        /* centra cada tarjeta en su columna */
+  box-sizing: border-box;
+
+}
+
+.seccion_servicios h2{
+  margin-top: 120px;
+  grid-column: 1 / -1;
+  
+  align-self: start;
+  justify-self: center;
+  color: #fff;
+
+}
+
+
+
+
+.container_servicios{
+  justify-self: center;
+  display: grid;
+  grid-template-rows: auto auto 1fr; /* icono, título, contenido */
+  justify-items: center;             /* centra horizontalmente hijos */
+  align-items: start;
+  gap: 8px;                          /* espacio entre elementos */
+  background-color: #fff;
+  width: 100%;
+  max-width: 250px;
+  height: 100%;
+  border-radius: 8px;
+  padding: 16px;
+  border: 2px solid #fff;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  text-decoration: none; /* Elimina el subrayado si es un enlace */
+}
+
+a.container_servicios:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+  border-color: #D4AF37;
+  
+}
+
+
+.container_servicios img{
+  
+  width: 64px;           /* tamaño consistente para el icono */
+  height: 64px;
+  object-fit: contain;
+  display: block;
+  margin: 0; 
+}
+
+.container_servicios h3{
+   text-align: center;
+   font-size: 18px;
+   color: #0B2126;
+
+}
+
+.container_servicios a{
+   text-align: center;
+   font-size: 18px;
+   color: #0B2126;
+
+}
+
+.container_servicios ul{
+  margin: 8px 0 0;
+  text-align: center;
+  line-height: 1.4;
+  color: #0B2126;
+  font-size: 14px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* PROYECTOS*/
+
+.home_proyectos{
+  min-height: 60vh;    
+  padding: 24px;
+  padding: 40px 24px;
+  display: grid;
+  
+  
+  gap: 24px;
+  align-items: center;  
+  background-color: #fff;
+  
+
+}
+
+/* El contenedor general */
+.slider-container {
+  justify-content: center;
+  position: relative; /* Para poder ubicar las flechas */
+  max-width: 1200px;
+  margin: auto;
+  overflow: hidden; /* Que nada se salga */
+  display: grid;
+    
+}
+.slider-container h1{
+  margin-left: 70px;
+  margin-bottom: 20px;
+}
+
+/* Cada Slide individual */
+.slide-proyecto {
+    display: none; /* Por defecto están ocultos */
+    /* Aquí replicamos tu diseño lado a lado: */
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* SOLO mostramos el que tenga la clase 'activo' */
+.slide-proyecto.activo {
+  justify-content: center;
+  align-items: center;
+  max-height: 90%;
+  max-width: 90%;
+  margin: 0 auto;
+  display: grid; /* Se activa y se pone en modo Grid */
+  grid-template-columns: 2fr 1fr;
+}
+
+/* Ajustes de tus columnas (Imagen y Texto) */
+.slide-imagen, .slide-texto {
+    flex: 1; /* Mitad y mitad */
+}
+
+.slide-imagen img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Opcional */
+}
+
+.slide-texto {
+  padding: 10px;
+  display: grid;
+  grid-template-rows: 1fr 2fr 1fr;/* fila 1: título, fila 2: contenido, fila 3: botón */
+  gap: 20px;
+  border-radius: 8px; 
+  padding: 10px;
+  /*background-color: #0B2126;*/
+  background-color: #0B2126;
+  color: #fff;
+  grid-column: 2;
+  grid-row: 1;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+  border: 2px solid #000;
+
+  height: 100%;
+  align-content: center;
+}
+
+.boton_info{
+  grid-row: 3;       /* asegurar que esté en la tercera fila */
+  grid-column: 1 / -1;
+    /* centrar horizontal dentro de su celda */
+  align-self: center;    /* centrar vertical dentro de su fila */
+  justify-self: start;
+  align-self: end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  height: 50px;
+  min-width: 100px;
+  color: #000;
+  border: 2px solid #000;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 12px;
+  background-color: #fff;
+  cursor: pointer;
+  
+}
+
+/* LAS FLECHAS */
+.slider-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white; /* O un color que resalte */
+    font-weight: bold;
+    font-size: 25px;
+    border: none;
+    background-color: rgba(0,0,0,0.5); /* Fondo semitransparente */
+    border-radius: 50%;
+    user-select: none;
+    z-index: 10;
+    transition: 0.3s;
+}
+
+.slider-btn:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* Animación de desvanecimiento suave */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+
+/* Responsivo para celular: Poner uno debajo del otro */
+/*@media (max-width: 768px) {
+    .slide-proyecto.activo {
+        flex-direction: column;
+    }
+}*/
+
+
+
+
+
+
+
+.seccion_contacto{
+  min-height: 60vh;                             /* ocupa al menos una parte de la pantalla */
+  display: grid;
+  grid-template-columns: 1fr ; /* columnas responsivas */
+  grid-template-rows:  1fr ;
+  gap: 24px;
+  background-color: #0B2126;
+  padding: 24px;
+  
+                         /* centra cada tarjeta en su columna */
+  box-sizing: border-box;
+
+}
+
+.seccion_contacto h2{
+  margin-top: 120px;
+  font-size: 28px;
+  padding: 10px ;
+  color: #fff;
+  grid-row: 1;
+
+}
+
+.seccion_formulario{
+  grid-row: 2;
+  padding: 10px;
+  align-items: start;
+
+}
+
+
+
+.formulario{
+  width: 60%;
+  
+  display: grid;
+  gap: 12px;
+  background: #fff;
+  padding: 18px;
+  border-radius: 8px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  color: #0B2126;
+}
+
+.formulario label{
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.formulario input[type="text"],
+.formulario input[type="email"],
+.formulario textarea{
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+  box-sizing: border-box;
+
+}
+
+.formulario button{
+  color: #fff;
+  background-color: #0B2126;
+}
+
+/* --- FOOTER --- */
+
+.footer {
+  background-color: #0B2126; /* Usamos el azul oscuro principal */
+  ;
+  color: #EAF2F8; /* Un color claro para el texto que combina bien */
+  padding: 40px 20px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas */
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.footer-column .footer-logo {
+  align-items: start;
+  max-width: 150px;
+  margin-bottom: 15px;
+}
+
+.footer-column .footer-about {
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.footer-about {
+  margin-top: 15px;
+}
+
+.footer-column h4 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.footer-column ul {
+  list-style: none;
+}
+
+.footer-column ul  {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a  {
+  color: #EAF2F8;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+  color: #D4AF37; /* Efecto hover dorado consistente */
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #3A506B; /* Línea divisoria sutil */
+  font-size: 13px;
+}
+
+.footer_social{
+  align-items: start;
+
+  
+}
+
+.footer_social i{
+  color: #fff;
+  font-size: 28px;
+  
+
+}
+
+.footer_social i:hover{
+  color: #616161;
+}
+
+
+.logo_azul{
+  margin-left: 30px;
+  /* Aumentamos la altura para que sea más visible en la barra de navegación */
+  height: 75px; 
+  width: auto; /* Dejamos que el ancho se ajuste automáticamente para no deformar la imagen */
+  object-fit: contain; /* Asegura que la imagen se escale correctamente dentro del espacio asignado */
+  display: block;
+  /* justify-content no aplica a un elemento img, por eso lo quito */
+ }
+
+/* --- MEDIA QUERIES PARA RESPONSIVE DESIGN --- */
+
+/* Para tablets y móviles (pantallas de menos de 768px) */
+@media (max-width: 768px) {
+
+  /* --- HEADER Y NAVEGACIÓN --- */
+  .main-container_link{
+    margin-top: auto;
+    margin-bottom: 20px;
+  }
+
+  .menubtn{
+    display: block;
+    color: #0B2126;
+    margin-left: auto;
+    margin-right: 20px;
+    
+    
+    font-size: 40px;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 140px; /* Se alinea justo debajo del header */
+    right: 0;   /* Se posiciona a la derecha */
+    width: 280px; /* Ancho fijo para el panel lateral */
+    background-color: #0B2126;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 0; /* Espaciado interno */
+    gap: 1.5rem; /* Espacio entre links */
+    justify-content: flex-start;
+    
+    /* Animación desde la esquina superior derecha */
+    clip-path: circle(0px at 100% 0); 
+    pointer-events: none;
+    transition: clip-path 0.4s ease-in-out;
+    border-bottom-left-radius: 8px; /* Estética */
+  }
+  
+  .nav-links.active{
+    clip-path: circle(150% at 100% 0); /* Animación de apertura */
+    pointer-events: all;
+  }
+  
+  .nav-links a{
+    color: #fff;}
+
+  .nav-links li{
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .3s ease, transform .3s ease;
+  }
+
+  .nav-links.active li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-links li:nth-child(1) { transition-delay: 0.1s; }
+  .nav-links li:nth-child(2) { transition-delay: 0.2s; }
+  .nav-links li:nth-child(3) { transition-delay: 0.3s; }
+  .nav-links li:nth-child(4) { transition-delay: 0.4s; }
+  .nav-links li:nth-child(5) { transition-delay: 0.5s; }
+  .nav-links li:nth-child(6) { transition-delay: 0.6s; }
+
+
+  /* --- SECCIÓN SERVICIOS --- */
+  .seccion_servicios {
+    grid-template-columns: 1fr 1fr; /* 2 columnas para tablets y móviles grandes */
+    
+  }
+
+  /* --- SECCIÓN PROYECTOS (HOME) --- */
+  .home_proyectos {
+    grid-template-columns: 1fr; /* Una sola columna */
+    gap: 20px;
+  }
+  .slide-proyecto.activo{
+    grid-template-columns: 1fr;
+    
+  }
+  .slider-btn{
+    top: 50%;
+  }
+
+  .slide-texto {
+    grid-row: 2; /* La info pasa debajo de la imagen */
+    grid-column: 1; /* Aseguramos que ocupe la única columna */
+  }
+
+  .slide-imagen img {
+    width: 100%; /* La imagen ocupa todo el ancho */
+  }
+
+  /* --- SECCIÓN CONTACTO --- */
+  .formulario {
+    width: 100%; /* El formulario ocupa todo el ancho */
+  }
+
+  /* --- FOOTER --- */
+  .footer-container {
+    grid-template-columns: 1fr; /* Una sola columna */
+    text-align: center;
+  }
+  .footer-column p{
+    /* Centramos el párrafo de descripción en móviles */
+    margin: 0 auto;
+  }
+  .logo_azul{
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .footer-column .footer-logo, .footer_social {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 15px;
+  }
+}
+
+/* Cuando la pantalla es menor a 480px (celulares verticales), pasamos a 1 columna */
+@media (max-width: 480px) {
+  .seccion_servicios {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+/* =========================================
+   ESTILOS DEL DROPDOWN (MENÚ DESPLEGABLE)
+   ========================================= */
+
+.dropdown-container {
+    position: relative;
+    white-space: nowrap; /* ¡LA MAGIA! Prohíbe que "Servicio Express" se parta en dos */
+}
+
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    width: 100%; 
+    background-color: #0B2126; 
+    list-style: none;
+    padding: 0; 
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    
+    /* MAGIA 1: El efecto "Burbuja" (Clip-path) igual al celular */
+    clip-path: circle(0px at 50% 0); /* Nace desde el centro superior */
+    pointer-events: none; /* Evita clics fantasmas cuando está cerrado */
+    transition: clip-path 0.4s ease-in-out; 
+    
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    z-index: 2000;
+}
+
+.dropdown-menu li {
+    width: 100%;
+    border-bottom: 1px solid #333; 
+    
+    /* MAGIA 2: Preparamos los textos para que vengan desde abajo */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu li a {
+    padding: 12px 5px;
+    display: block;
+    color: #ffffff;
+    text-align: center; 
+    font-size: 0.85rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #333333; 
+    color: #D4AF37; /* Le puse tu color dorado de hover para que combine */
+}
+
+/* LA ACCIÓN EN ESCRITORIO */
+@media (min-width: 769px) {
+    /* 1. Abrir la burbuja al pasar el mouse */
+    .dropdown-container:hover .dropdown-menu {
+        clip-path: circle(150% at 50% 0);
+        pointer-events: all;
+    }
+
+    /* 2. Mostrar los textos cuando se abre la burbuja */
+    .dropdown-container:hover .dropdown-menu li {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* 3. El efecto cascada (igual que en tu celular) */
+    .dropdown-container:hover .dropdown-menu li:nth-child(1) { transition-delay: 0.1s; }
+    .dropdown-container:hover .dropdown-menu li:nth-child(2) { transition-delay: 0.2s; }
+    .dropdown-container:hover .dropdown-menu li:nth-child(3) { transition-delay: 0.3s; }
+    .dropdown-container:hover .dropdown-menu li:nth-child(4) { transition-delay: 0.4s; }
+    .dropdown-container:hover .dropdown-menu li:nth-child(5) { transition-delay: 0.5s; }
+    .dropdown-container:hover .dropdown-menu li:nth-child(6) { transition-delay: 0.6s; }
+}
+
+@media (max-width: 768px) {
+    .dropdown-menu {
+        display: none !important; 
+    }
+}
+
+/* =========================================
+   ESTILOS DEL CARRITO (MÓVIL Y ESCRITORIO)
+   ========================================= */
+
+/* Por defecto (en escritorio), ocultamos los controles móviles */
+.nav-controles-movil {
+  display: none; 
+}
+
+/* --- MEDIA QUERIES PARA CELULARES (max-width: 768px) --- */
+@media (max-width: 768px) {
+  
+  /* 1. Ajustamos el grid del Nav para que el lado derecho aloje nuestros controles */
+  .nav {
+    display: flex; /* Cambiamos a flex para alinear mejor en celular */
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 20px; /* Un poco de respiro al borde */
+  }
+
+  /* 2. Mostramos el contenedor de controles móviles */
+  .nav-controles-movil {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre el carrito y la hamburguesa */
+    
+    /* 🌟 EL TRUCO MAGICO: Lo empuja a la derecha del todo */
+    margin-left: auto; 
+  }
+
+  /* 3. Estilos del Carrito Móvil */
+  .carrito-movil {
+    font-size: 1.5rem;
+    text-decoration: none;
+    position: relative;
+    color: #0B2126;
+  }
+
+  .carrito-movil .carrito-badge {
+    background-color: #D4AF37;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+    position: absolute;
+    top: -5px;
+    right: -10px;
+  }
+
+  /* 4. Ajustamos la hamburguesa para que encaje bien */
+  .menubtn {
+    display: block; /* La volvemos a mostrar */
+    margin: 0; /* Quitamos los márgenes raros que tenía antes */
+  }
+
+  /* 5. Ocultamos el carrito de escritorio (el que está dentro de la lista) */
+  .carrito-desktop {
+    display: none !important;
+  }
+
+  /* 6. Ajustamos el contenedor de los links para que no estorbe */
+  .nav-link-container {
+    margin: 0; 
+    width: 0; 
+  }
+}
