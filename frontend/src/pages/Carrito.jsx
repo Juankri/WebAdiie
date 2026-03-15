@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { CarritoContext } from '../context/CarritoContext';
 import { Link } from 'react-router-dom';
 import Contacto from '../components/Contacto';
-import './ServicioExpress.css'; // Usamos los mismos estilos para mantener la coherencia
+import './Servicioexpress.css'; // Usamos los mismos estilos para mantener la coherencia
 
 function Carrito() {
     // 1. Extraemos todo del cerebro global
