@@ -61,14 +61,14 @@ function Carrito() {
 
     return (
         <>
-            <main className="main-servicios" style={{ paddingTop: '150px', minHeight: '70vh' }}>
-                <h1 style={{}}className="titulo-servicios">Tu Cotización</h1>
+            <main className="main-servicios" style={{ paddingTop: '170px', minHeight: '70vh' }}>
+                <h1 className="titulo-servicios">Tu Cotización</h1>
                 
                 {/* SI EL CARRITO ESTÁ VACÍO */}
                 {carrito.length === 0 ? (
                     <div style={{ textAlign: 'center', marginTop: '40px' }}>
                         <p>Aún no has agregado ningún espacio a tu cotización.</p>
-                        <Link to="/servicio-express" style={{ display: 'inline-block', marginTop: '20px', padding: '10px 20px', backgroundColor: '#D4AF37', color: 'white', textDecoration: 'none', borderRadius: '5px' }}>
+                        <Link to="/servicio-express" style={{ display: 'inline-block', marginTop: '20px', padding: '10px 20px', backgroundColor: '#0B2126', color: 'white', textDecoration: 'none', borderRadius: '5px' }}>
                             Volver a Servicio Express
                         </Link>
                     </div>

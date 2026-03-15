@@ -57,7 +57,9 @@ function Navbar() {
                     <li><HashLink smooth to="/#Servicios" onClick={cerrarMenu}>Servicios</HashLink></li>
                     
                     <li className="dropdown-container">
-                        <Link to="/servicio-express" onClick={cerrarMenu}>Servicio Express ▾</Link>
+                        <Link to="/servicio-express" onClick={cerrarMenu}>
+                        Servicio Express <span className="flecha-dropdown">▾</span>
+                        </Link>
                         
                         <ul className="dropdown-menu">
                             <li><Link to="/servicio-express" state={{ abrirModal: "Diseño de baño" }} onClick={cerrarMenu}>Baño</Link></li>

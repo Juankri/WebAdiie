@@ -165,6 +165,7 @@ body{
 }
 
 
+
 /* MAIN DEL HOME */
 
 .home-main{
@@ -219,7 +220,7 @@ body{
   display: flex;
   flex-direction: column;
   align-items: center;
-    gap: 5;  height: 350px;
+    gap: 5;  height: 450px;
   
   
 }
@@ -821,7 +822,14 @@ a.container_servicios:hover {
     align-items: center;
     margin: 0 auto 15px;
   }
+
+  /* Ocultar la flecha del dropdown solo en celulares */
+  .flecha-dropdown {
+    display: none;
+  }
 }
+
+
 
 /* Cuando la pantalla es menor a 480px (celulares verticales), pasamos a 1 columna */
 @media (max-width: 480px) {
@@ -957,7 +965,7 @@ a.container_servicios:hover {
   }
 
   .carrito-movil .carrito-badge {
-    background-color: #D4AF37;
+    background-color: #0B2126;
     color: white;
     font-size: 0.75rem;
     font-weight: bold;
