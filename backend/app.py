@@ -2,9 +2,33 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import os
 import resend
+from pymongo import MongoClient
+from dotenv import load_dotenv
+
+# Cargar las variables secretas del archivo .env
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app) # Esto le da permiso a React para pedirle datos a Python
+
+
+
+# Conexión a la Base de Datos MongoDB
+try:
+    MONGO_URI = os.getenv("MONGO_URI")
+    cliente_mongo = MongoClient(MONGO_URI)
+    
+    # Creamos/Seleccionamos la base de datos de tu cuñado
+    db = cliente_mongo["estudio_adiie"]
+    
+    # Creamos/Seleccionamos la colección (como una tabla) para los proyectos
+    proyectos_collection = db["proyectos"]
+    
+    print("¡Conexión a MongoDB exitosa! 🚀")
+except Exception as e:
+    print(f"Error conectando a la base de datos: {e}")
+
+
 
 @app.route('/')
 def home():
@@ -120,3 +144,14 @@ def enviar_cotizacion():
 if __name__ == '__main__':
     # El puerto 5000 es el clásico para Flask
     app.run(debug=True, port=5000)
+
+
+
+@app.route('/api/test-db', methods=['GET'])
+def test_db():
+    try:
+        # Intenta contar cuántos proyectos hay (debería ser 0 por ahora)
+        cantidad = proyectos_collection.count_documents({})
+        return {"mensaje": "¡Conexión perfecta con MongoDB!", "proyectos_actuales": cantidad}, 200
+    except Exception as e:
+        return {"error": str(e)}, 500
