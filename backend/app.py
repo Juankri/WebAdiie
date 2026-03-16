@@ -12,6 +12,31 @@ app = Flask(__name__)
 CORS(app) # Esto le da permiso a React para pedirle datos a Python
 
 
+@app.route('/api/proyectos', methods=['POST'])
+def crear_proyecto():
+    try:
+        # 1. Recibimos los datos que envía React
+        datos = request.json
+        
+        # 2. Preparamos el documento (formato JSON/Diccionario)
+        nuevo_proyecto = {
+            "titulo": datos.get("titulo"),
+            "descripcion": datos.get("descripcion"),
+            "imagen_url": datos.get("imagen_url")
+        }
+        
+        # 3. Lo guardamos en MongoDB (en la colección que creamos antes)
+        resultado = proyectos_collection.insert_one(nuevo_proyecto)
+        
+        # 4. Respondemos que todo salió perfecto
+        return jsonify({
+            "mensaje": "¡Proyecto guardado con éxito!", 
+            "id": str(resultado.inserted_id)
+        }), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 # Conexión a la Base de Datos MongoDB
 try:
