@@ -33,3 +33,5 @@ __pycache__/
 
 backend/
 *.env
+
+.env
