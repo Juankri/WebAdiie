@@ -262,7 +262,7 @@ body{
 
 .main-container_link{
   margin-top: auto;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   background-color: #0B2126;
   display: inline-block;
   padding: 10px 20px;
@@ -710,11 +710,7 @@ a.container_servicios:hover {
 @media (max-width: 768px) {
 
   /* --- HEADER Y NAVEGACIÓN --- */
-  .main-container_link{
-    margin-top: auto;
-    margin-bottom: 20px;
-  }
-
+  
   .menubtn{
     display: block;
     color: #0B2126;
