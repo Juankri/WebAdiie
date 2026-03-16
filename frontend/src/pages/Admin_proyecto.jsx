@@ -18,7 +18,6 @@ const AdminProyectos = () => {
     e.preventDefault();
     
     try {
-      // RECUERDA: Cambia este enlace por tu URL real de Render
       const respuesta = await fetch('https://webadiie-backend.onrender.com/api/proyectos', {
         method: 'POST',
         headers: {
@@ -29,14 +28,19 @@ const AdminProyectos = () => {
 
       if (respuesta.ok) {
         alert('¡Proyecto guardado en la base de datos! 🚀');
-        setProyecto({ titulo: '', descripcion: '', imagen_url: '' }); // Limpia el formulario
+        setProyecto({ titulo: '', descripcion: '', imagen_url: '' }); 
       } else {
-        alert('Hubo un error al guardar');
+        // ¡ESTA ES LA MAGIA! Leemos la respuesta de Python
+        const datosError = await respuesta.json();
+        // Y la mostramos en la pantalla
+        alert('Error de Python: ' + datosError.error);
       }
     } catch (error) {
       console.error('Error:', error);
+      alert('Error de conexión: ' + error.message);
     }
   };
+
 
   return (
     <div style={{ paddingTop: '200px', paddingBottom: '100px',maxWidth: '500px', margin: '0 auto' }}>
