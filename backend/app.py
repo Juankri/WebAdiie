@@ -6,6 +6,10 @@ import resend
 app = Flask(__name__)
 CORS(app) # Esto le da permiso a React para pedirle datos a Python
 
+@app.route('/')
+def home():
+    return "¡Backend funcionando al 100%!"
+
 resend.api_key = os.environ.get('RESEND_API_KEY')
 
 
