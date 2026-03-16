@@ -5,7 +5,7 @@ import Contacto from '../components/Contacto';
 
 function PaginaProyecto() {
     // 1. Aquí atrapamos el ID exactamente como viene en la URL
-    const { id } = useParams();
+    const { idUrl } = useParams();
     
     // 2. Estados para la base de datos
     const [proyecto, setProyecto] = useState(null);
@@ -20,7 +20,7 @@ function PaginaProyecto() {
         const obtenerDetalles = async () => {
             try {
                 // Usamos el 'id' para buscar en Python
-                const respuesta = await fetch(`https://webadiie-backend.onrender.com/api/proyectos/${id}`);
+                const respuesta = await fetch(`https://webadiie-backend.onrender.com/api/proyectos/${idUrl}`);
                 const datos = await respuesta.json();
                 
                 setProyecto(datos);
@@ -32,7 +32,7 @@ function PaginaProyecto() {
         };
 
         obtenerDetalles();
-    }, [id]); // Dependemos del 'id'
+    }, [idUrl]); // Dependemos del 'id'
 
     // 5. Pantallas de carga y error
     if (cargando) {
@@ -72,53 +72,40 @@ function PaginaProyecto() {
     };
 
     return (
-        <>
-        <main className="main_proyecto" style={{ paddingTop: '120px' }}>
-            <div className="proyecto">
-                <div className="tarjeta_proyecto">
-                    {/* Mostramos la imagen que viene de Mongo */}
-                    <img 
-                        src={proyecto.imagen_url} 
-                        alt={proyecto.titulo} 
-                        style={{ objectFit: 'cover' }}
-                    />
-                </div>
-                <div className="descripcion_proyecto">
-                    <h1>{proyecto.titulo}</h1>
-                    <p>{proyecto.descripcion}</p>
-                </div>
+    <>
+    <main className="main_proyecto" style={{ paddingTop: '120px' }}>
+        <div className="proyecto">
+            <div className="tarjeta_proyecto">
+                {/* 1. Usamos imagen_url (de Mongo) en lugar de imagenPrincipal */}
+                <img 
+                    src={proyecto.imagen_url} 
+                    alt={proyecto.titulo} 
+                    style={{ objectFit: 'cover' }}
+                />
             </div>
-        </main>
-
-        {/* --- SECCIÓN DE LA GALERÍA --- */}
-        <section className="seccion_fotos">
-            <h2>Galería de Fotos</h2>
-            
-            <div className="fotos_proyectos">
-                {galeriaFotos.map((foto, index) => (
-                    <div className="foto" key={index} onClick={() => abrirLightbox(index)}>
-                        <img className="foto_img" src={foto} alt={`Foto ${index + 1}`} style={{cursor: 'pointer'}} />
-                        <p>Vista de la obra</p>
-                    </div>
-                ))}
+            <div className="descripcion_proyecto">
+                <h1>{proyecto.titulo}</h1>
+                <p>{proyecto.descripcion}</p>
             </div>
+        </div>
+    </main>
 
-            {/* --- EL LIGHTBOX --- */}
-            {fotoAmpliada && (
-                <div id="lightbox" className="lightbox" style={{ display: 'block' }}>
-                    <span className="close-lightbox" onClick={cerrarLightbox}>&times;</span>
-                    
-                    <button className="nav-btn prev" onClick={() => cambiarImagen(-1)}>&#10094;</button>
-                    
-                    <img className="lightbox-content" src={fotoAmpliada} alt="Vista ampliada" />
-                    
-                    <button className="nav-btn next" onClick={() => cambiarImagen(1)}>&#10095;</button>
+    {/* --- SECCIÓN DE LA GALERÍA --- */}
+    <section className="seccion_fotos">
+        <h2>Galería de Fotos</h2>
+        <div className="fotos_proyectos">
+            {/* 2. Usamos el arreglo que definimos antes (galeriaFotos) */}
+            {galeriaFotos.map((foto, index) => (
+                <div className="foto" key={index} onClick={() => abrirLightbox(index)}>
+                    <img className="foto_img" src={foto} alt={`Foto ${index + 1}`} style={{cursor: 'pointer'}} />
+                    <p>Vista de la obra</p>
                 </div>
-            )}
-        </section>
+            ))}
+        </div>
+    </section>
 
-        <Contacto />
-        </>
+    <Contacto />
+    </>
     );
 }
 
