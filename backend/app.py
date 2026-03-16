@@ -99,8 +99,8 @@ def enviar_cotizacion():
 
         # 4. Enviamos el correo a través de Resend
         params = {
-            "from": "EstudioAdiie <onboarding@resend.dev>", # Cambia esto por tu dominio verificado si lo tienes
-            "to": ["tu-correo@estudioadiie.cl"], # Aquí va el correo donde quieres recibir las cotizaciones
+            "from": "onboarding@resend.dev", # Cambia esto por tu dominio verificado si lo tienes
+            "to": ["juancri687@gmail.com"], # Aquí va el correo donde quieres recibir las cotizaciones
             "subject": f"Nueva Cotización Express de {nombre}",
             "html": cuerpo_correo
         }
