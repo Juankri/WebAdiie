@@ -12,6 +12,21 @@ app = Flask(__name__)
 CORS(app) # Esto le da permiso a React para pedirle datos a Python
 
 
+# Conexión a la Base de Datos MongoDB
+try:
+    MONGO_URI = os.getenv("MONGO_URI")
+    cliente_mongo = MongoClient(MONGO_URI)
+    
+    # Creamos/Seleccionamos la base de datos de tu cuñado
+    db = cliente_mongo["estudio_adiie"]
+    
+    # Creamos/Seleccionamos la colección (como una tabla) para los proyectos
+    proyectos_collection = db["proyectos"]
+    
+    print("¡Conexión a MongoDB exitosa! 🚀")
+except Exception as e:
+    print(f"Error conectando a la base de datos: {e}")
+
 @app.route('/api/proyectos', methods=['POST'])
 def crear_proyecto():
     try:
@@ -38,20 +53,6 @@ def crear_proyecto():
         return jsonify({"error": str(e)}), 500
 
 
-# Conexión a la Base de Datos MongoDB
-try:
-    MONGO_URI = os.getenv("MONGO_URI")
-    cliente_mongo = MongoClient(MONGO_URI)
-    
-    # Creamos/Seleccionamos la base de datos de tu cuñado
-    db = cliente_mongo["estudio_adiie"]
-    
-    # Creamos/Seleccionamos la colección (como una tabla) para los proyectos
-    proyectos_collection = db["proyectos"]
-    
-    print("¡Conexión a MongoDB exitosa! 🚀")
-except Exception as e:
-    print(f"Error conectando a la base de datos: {e}")
 
 
 
