@@ -1,36 +1,61 @@
-// src/pages/pagina_proyecto.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { baseDeDatosProyectos } from '../data/Proyectos';
 import './Pagina_proyecto.css';
-
-
-// Si tus componentes ya existen, impórtalos para que aparezcan abajo
 import Contacto from '../components/Contacto'; 
 
 function PaginaProyecto() {
-    const { idUrl } = useParams();
+    // 1. Aquí atrapamos el ID exactamente como viene en la URL
+    const { id } = useParams();
     
-    // 1. Estados para controlar la galería en pantalla grande (Lightbox)
+    // 2. Estados para la base de datos
+    const [proyecto, setProyecto] = useState(null);
+    const [cargando, setCargando] = useState(true);
+
+    // 3. Estados para controlar el Lightbox
     const [fotoAmpliada, setFotoAmpliada] = useState(null);
     const [indiceActual, setIndiceActual] = useState(0);
 
-    // 2. Buscamos el proyecto
-    const proyecto = baseDeDatosProyectos.find((item) => item.id === idUrl);
+    // 4. Conectamos a tu backend en Render para buscar este ID en específico
+    useEffect(() => {
+        const obtenerDetalles = async () => {
+            try {
+                // Usamos el 'id' para buscar en Python
+                const respuesta = await fetch(`https://webadiie-backend.onrender.com/api/proyectos/${id}`);
+                const datos = await respuesta.json();
+                
+                setProyecto(datos);
+                setCargando(false);
+            } catch (error) {
+                console.error('Error al cargar detalles:', error);
+                setCargando(false);
+            }
+        };
 
-    if (!proyecto) {
+        obtenerDetalles();
+    }, [id]); // Dependemos del 'id'
+
+    // 5. Pantallas de carga y error
+    if (cargando) {
+        return <h2 style={{ textAlign: 'center', marginTop: '150px' }}>Cargando el proyecto... ⏳</h2>;
+    }
+
+    if (!proyecto || proyecto.error) {
         return (
             <div style={{ textAlign: 'center', padding: '150px 20px', minHeight: '60vh' }}>
                 <h2>Proyecto no encontrado 🕵️‍♂️</h2>
-                <Link to="/portafolio" style={{ color: '#D4AF37' }}>Volver al Portafolio</Link>
+                <Link to="/proyectos" style={{ color: '#D4AF37' }}>Volver a la Galería</Link>
             </div>
         );
     }
 
-    // 3. Funciones para navegar en la galería
+    // 6. Salvavidas: Como en Mongo solo guardamos 1 imagen por ahora, 
+    // creamos un arreglo falso para que tu Lightbox no explote.
+    const galeriaFotos = proyecto.galeria || [proyecto.imagen_url];
+
+    // 7. Tus funciones del Lightbox (¡Intactas!)
     const abrirLightbox = (index) => {
         setIndiceActual(index);
-        setFotoAmpliada(proyecto.galeria[index]);
+        setFotoAmpliada(galeriaFotos[index]);
     };
 
     const cerrarLightbox = () => {
@@ -39,12 +64,11 @@ function PaginaProyecto() {
 
     const cambiarImagen = (direccion) => {
         let nuevoIndice = indiceActual + direccion;
-        // Lógica para que sea infinito (si pasa de la última, vuelve a la primera)
-        if (nuevoIndice < 0) nuevoIndice = proyecto.galeria.length - 1;
-        if (nuevoIndice >= proyecto.galeria.length) nuevoIndice = 0;
+        if (nuevoIndice < 0) nuevoIndice = galeriaFotos.length - 1;
+        if (nuevoIndice >= galeriaFotos.length) nuevoIndice = 0;
         
         setIndiceActual(nuevoIndice);
-        setFotoAmpliada(proyecto.galeria[nuevoIndice]);
+        setFotoAmpliada(galeriaFotos[nuevoIndice]);
     };
 
     return (
@@ -52,12 +76,12 @@ function PaginaProyecto() {
         <main className="main_proyecto" style={{ paddingTop: '120px' }}>
             <div className="proyecto">
                 <div className="tarjeta_proyecto">
-                    <img src={proyecto.imagenPrincipal} 
+                    {/* Mostramos la imagen que viene de Mongo */}
+                    <img 
+                        src={proyecto.imagen_url} 
                         alt={proyecto.titulo} 
-                        // Le pasamos el estilo guardado. Si no tiene estilo, le pasamos un objeto vacío {}
-                        // Además, le forzamos 'objectFit: cover' para que el objectPosition funcione bien.
-                        style={proyecto.estiloImagen ? { ...proyecto.estiloImagen, objectFit: 'cover' } : { objectFit: 'cover' }}/>
-                    
+                        style={{ objectFit: 'cover' }}
+                    />
                 </div>
                 <div className="descripcion_proyecto">
                     <h1>{proyecto.titulo}</h1>
@@ -71,16 +95,15 @@ function PaginaProyecto() {
             <h2>Galería de Fotos</h2>
             
             <div className="fotos_proyectos">
-                {/* Dibujamos automáticamente cada foto que esté en el arreglo "galeria" */}
-                {proyecto.galeria.map((foto, index) => (
+                {galeriaFotos.map((foto, index) => (
                     <div className="foto" key={index} onClick={() => abrirLightbox(index)}>
                         <img className="foto_img" src={foto} alt={`Foto ${index + 1}`} style={{cursor: 'pointer'}} />
-                        <p>Descripción</p>
+                        <p>Vista de la obra</p>
                     </div>
                 ))}
             </div>
 
-            {/* --- EL LIGHTBOX (Solo se dibuja si el usuario hizo clic en una foto) --- */}
+            {/* --- EL LIGHTBOX --- */}
             {fotoAmpliada && (
                 <div id="lightbox" className="lightbox" style={{ display: 'block' }}>
                     <span className="close-lightbox" onClick={cerrarLightbox}>&times;</span>
@@ -94,7 +117,6 @@ function PaginaProyecto() {
             )}
         </section>
 
-        {/* Dibujamos tu componente de Contacto original al final de la página */}
         <Contacto />
         </>
     );
