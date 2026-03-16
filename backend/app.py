@@ -54,14 +54,7 @@ def contacto():
 # ---------------------------------------------------------
 
 
-from flask import Flask, request, jsonify
-import resend # Asumiendo que ya tienes resend instalado e importado
-import os
 
-# Tu configuración habitual de Flask y CORS por aquí...
-
-# Asegúrate de tener tu API Key de Resend configurada
-resend.api_key = os.environ.get("RESEND_API_KEY") 
 
 @app.route('/api/enviar-cotizacion', methods=['POST'])
 def enviar_cotizacion():

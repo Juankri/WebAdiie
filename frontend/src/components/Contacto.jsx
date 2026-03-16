@@ -25,7 +25,7 @@ function Contacto() {
         
         try {
             // Usamos 'fetch' para golpear la puerta de Python
-            const respuesta = await fetch('http://127.0.0.1:5000/api/contacto', {
+            const respuesta = await fetch('https://webadiie-backend.onrender.com/api/contacto', {
                 method: 'POST',
                 headers: { // CORRECCIÓN: Con "s" al final
                     'Content-Type': 'application/json' 

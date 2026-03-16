@@ -40,7 +40,7 @@ function Carrito() {
         try {
             console.log("Enviando a Python...", paqueteDeDatos);
             
-            const respuesta = await fetch('https://webadiie-backend.onrender.com', {
+            const respuesta = await fetch('https://webadiie-backend.onrender.com/api/enviar-cotizacion', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(paqueteDeDatos)
