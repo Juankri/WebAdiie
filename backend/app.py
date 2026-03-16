@@ -65,6 +65,25 @@ def crear_proyecto():
         return jsonify({"error": str(e)}), 500
     
 
+@app.route('/api/proyectos', methods=['GET'])
+def obtener_todos_los_proyectos():
+    try:
+        # Buscamos todos los proyectos en la base de datos
+        proyectos_cursor = proyectos_collection.find()
+        
+        lista_proyectos = []
+        for proyecto in proyectos_cursor:
+            # Convertimos el ID raro a texto normal
+            proyecto['_id'] = str(proyecto['_id']) 
+            lista_proyectos.append(proyecto)
+            
+        # Devolvemos la lista completa a React
+        return jsonify(lista_proyectos), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
     
 
 @app.route('/api/proyectos/<id>', methods=['GET'])
