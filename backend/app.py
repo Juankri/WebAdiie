@@ -116,7 +116,31 @@ def eliminar_proyecto(id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
-    
+
+
+@app.route('/api/proyectos/<id>', methods=['PUT'])
+def editar_proyecto(id):
+    try:
+        datos = request.json
+        # Usamos $set para actualizar solo los campos que enviamos
+        resultado = proyectos_collection.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": {
+                "titulo": datos.get("titulo"),
+                "descripcion": datos.get("descripcion"),
+                "imagen_url": datos.get("imagen_url"),
+                "galeria": datos.get("galeria", []),
+                "video_url": datos.get("video_url", "")
+            }}
+        )
+        
+        if resultado.matched_count > 0:
+            return jsonify({"mensaje": "¡Proyecto actualizado con éxito!"}), 200
+        else:
+            return jsonify({"error": "No se encontró el proyecto"}), 404
+            
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     
 
 
