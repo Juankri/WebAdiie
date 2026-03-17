@@ -5,3 +5,5 @@ gunicorn==21.2.0
 python-dotenv==1.0.1
 pymongo==4.6.2
 python-dotenv==1.0.1
+flask-jwt-extended
+flask-bcrypt

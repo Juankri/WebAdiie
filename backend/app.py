@@ -5,6 +5,9 @@ import resend
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
+from flask_bcrypt import Bcrypt
+import datetime
 
 # Cargar las variables secretas del archivo .env
 load_dotenv()
@@ -46,6 +49,7 @@ def test_db():
         return {"error": str(e)}, 500
 
 @app.route('/api/proyectos', methods=['POST'])
+@jwt_required()
 def crear_proyecto():
     try:
         datos = request.json
@@ -103,6 +107,7 @@ def obtener_proyecto(id):
 
 
 @app.route('/api/proyectos/<id>', methods=['DELETE'])
+@jwt_required()
 def eliminar_proyecto(id):
     try:
         # Intentamos borrar el proyecto que coincida con ese ID
@@ -119,6 +124,7 @@ def eliminar_proyecto(id):
 
 
 @app.route('/api/proyectos/<id>', methods=['PUT'])
+@jwt_required()
 def editar_proyecto(id):
     try:
         datos = request.json
@@ -216,6 +222,41 @@ def enviar_cotizacion():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+
+
+
+
+# --- Configuración login ---
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "123456789")
+jwt = JWTManager(app)
+bcrypt = Bcrypt(app)
+
+# 1. RUTA PARA CREAR TU USUARIO (Úsala solo una vez)
+@app.route('/api/setup-admin', methods=['POST'])
+def setup_admin():
+    if db.usuarios.count_documents({"usuario": "admin"}) == 0:
+        # Encriptamos la clave "Adiie2026"
+        password_encriptada = bcrypt.generate_password_hash("Adiie2026").decode('utf-8')
+        db.usuarios.insert_one({"usuario": "admin", "password": password_encriptada})
+        return jsonify({"mensaje": "Usuario admin creado con éxito"}), 201
+    return jsonify({"error": "El usuario ya existe"}), 400
+
+# 2. RUTA DE LOGIN
+@app.route('/api/login', methods=['POST'])
+def login():
+    datos = request.json
+    user_en_db = db.usuarios.find_one({"usuario": datos.get('usuario')})
+
+    if user_en_db and bcrypt.check_password_hash(user_en_db['password'], datos.get('password')):
+        # Si la clave es correcta, entregamos el carnet (Token)
+        token = create_access_token(identity=datos.get('usuario'))
+        return jsonify({"token": token}), 200
+    
+    return jsonify({"error": "Usuario o clave incorrectos"}), 401
+
+
+
 
 # ---------------------------------------------------------
 # 4. ARRANQUE DE LA APLICACIÓN

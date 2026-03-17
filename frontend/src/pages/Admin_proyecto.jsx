@@ -1,11 +1,25 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AdminProyectos = () => {
+  const navigate = useNavigate();
   const [proyectos, setProyectos] = useState([]);
   const [editandoId, setEditandoId] = useState(null);
   const [proyecto, setProyecto] = useState({
     titulo: '', descripcion: '', imagen_url: '', galeria: [], video_url: ''
   });
+
+  // 1. RECUPERAMOS EL TOKEN (EL CARNET)
+  const token = localStorage.getItem('token_adiie');
+
+  // --- PROTECCIÓN DE RUTA ---
+  useEffect(() => {
+    if (!token) {
+      navigate('/login'); // Si no hay carnet, te manda al login
+    } else {
+      obtenerProyectos();
+    }
+  }, [token, navigate]);
 
   const obtenerProyectos = async () => {
     try {
@@ -15,22 +29,25 @@ const AdminProyectos = () => {
     } catch (error) { console.error("Error:", error); }
   };
 
-  useEffect(() => { obtenerProyectos(); }, []);
-
   const manejarCambio = (e) => {
     setProyecto({ ...proyecto, [e.target.name]: e.target.value });
+  };
+
+  const cerrarSesion = () => {
+    localStorage.removeItem('token_adiie');
+    navigate('/login');
   };
 
   // --- CONFIGURACIÓN DE CLOUDINARY ---
   const abrirWidgetSubida = (esPortada) => {
     window.cloudinary.openUploadWidget(
       {
-        cloudName: 'dtiqi9fim', // PON AQUÍ TU NOMBRE DE NUBE
-        uploadPreset: 'ml_default', // PON AQUÍ TU PRESET UNSIGNED
+        cloudName: 'dtiqi9fim',
+        uploadPreset: 'ml_default',
         sources: ['local', 'url', 'camera'],
         showAdvancedOptions: false,
-        cropping: esPortada, // Permite recortar solo si es la portada
-        multiple: !esPortada, // Permite subir varias si es galería
+        cropping: esPortada,
+        multiple: !esPortada,
         defaultSource: 'local',
         styles: { palette: { window: '#0B2126', sourceTabIcon: '#D4AF37' } }
       },
@@ -52,6 +69,7 @@ const AdminProyectos = () => {
     setProyecto({ ...proyecto, galeria: nuevaGaleria });
   };
 
+  // --- CREAR O EDITAR CON TOKEN ---
   const enviarProyecto = async (e) => {
     e.preventDefault();
     const url = editandoId ? `https://webadiie-backend.onrender.com/api/proyectos/${editandoId}` : 'https://webadiie-backend.onrender.com/api/proyectos';
@@ -60,15 +78,37 @@ const AdminProyectos = () => {
     try {
       const respuesta = await fetch(url, {
         method: metodo,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // <--- ENVIAMOS EL TOKEN
+        },
         body: JSON.stringify(proyecto)
       });
       if (respuesta.ok) {
-        alert('¡Hecho! ✨');
+        alert('¡Guardado con éxito! ✨');
         cancelarEdicion();
         obtenerProyectos();
+      } else {
+        alert('Sesión expirada o sin permisos');
+        cerrarSesion();
       }
     } catch (error) { alert('Error de conexión'); }
+  };
+
+  // --- ELIMINAR PROYECTO CON TOKEN ---
+  const borrarProyecto = async (id, titulo) => {
+    if (window.confirm(`¿Estás seguro de que quieres eliminar "${titulo}"?`)) {
+      try {
+        const res = await fetch(`https://webadiie-backend.onrender.com/api/proyectos/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` } // <--- TOKEN REQUERIDO
+        });
+        if (res.ok) {
+          alert('Proyecto eliminado');
+          obtenerProyectos();
+        }
+      } catch (error) { alert('Error al borrar'); }
+    }
   };
 
   const prepararEdicion = (p) => {
@@ -84,24 +124,28 @@ const AdminProyectos = () => {
 
   return (
     <div style={{ paddingTop: '150px', paddingBottom: '100px', maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif' }}>
-      <h2 style={{ textAlign: 'center', color: '#0B2126' }}>Panel de Administración</h2>
       
-      <form onSubmit={enviarProyecto} style={{ background: '#f9f9f9', padding: '25px', borderRadius: '15px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+        <h2 style={{ color: '#0B2126', margin: 0 }}>Panel de Administración Pro</h2>
+        <button onClick={cerrarSesion} style={{ background: '#666', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>
+          Cerrar Sesión 🔒
+        </button>
+      </div>
+      
+      <form onSubmit={enviarProyecto} style={{ background: '#f9f9f9', padding: '25px', borderRadius: '15px', display: 'flex', flexDirection: 'column', gap: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
         <h3>{editandoId ? '📝 Editar Proyecto' : '🆕 Nuevo Proyecto'}</h3>
         
         <input type="text" name="titulo" placeholder="Título" value={proyecto.titulo} onChange={manejarCambio} required />
-        <textarea name="descripcion" placeholder="Descripción" value={proyecto.descripcion} onChange={manejarCambio} required />
+        <textarea name="descripcion" placeholder="Descripción" value={proyecto.descripcion} onChange={manejarCambio} required style={{ height: '80px' }} />
         
-        {/* SUBIDA DE PORTADA */}
         <div>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Imagen de Portada (Principal):</label>
+          <label style={{ display: 'block', marginBottom: '5px' }}>Imagen de Portada:</label>
           <button type="button" onClick={() => abrirWidgetSubida(true)} style={estiloBotonSubir}>
             {proyecto.imagen_url ? "✅ Cambiar Portada" : "📁 Subir desde PC"}
           </button>
           {proyecto.imagen_url && <img src={proyecto.imagen_url} width="120" style={{ marginTop: '10px', borderRadius: '5px' }} />}
         </div>
 
-        {/* SUBIDA DE GALERÍA */}
         <div>
           <label style={{ display: 'block', marginBottom: '5px' }}>Galería de Fotos:</label>
           <button type="button" onClick={() => abrirWidgetSubida(false)} style={estiloBotonSubir}>
@@ -127,15 +171,15 @@ const AdminProyectos = () => {
         </div>
       </form>
 
-      {/* LISTA (Igual que antes pero más limpia) */}
-      <div style={{ marginTop: '50px' }}>
+      {/* LISTA DE PROYECTOS */}
+      <div style={{ marginTop: '50px', background: 'white', padding: '20px', borderRadius: '15px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
         <h3>Proyectos en la Nube</h3>
         {proyectos.map(p => (
-          <div key={p._id} style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid #eee' }}>
+          <div key={p._id} style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid #eee', alignItems: 'center' }}>
             <span>{p.titulo}</span>
             <div>
-              <button onClick={() => prepararEdicion(p)} style={{ marginRight: '10px' }}>Editar</button>
-              <button onClick={() => {/* misma funcion borrar */}} style={{ color: 'red' }}>Borrar</button>
+              <button onClick={() => prepararEdicion(p)} style={{ marginRight: '10px', padding: '5px 10px' }}>Editar</button>
+              <button onClick={() => borrarProyecto(p._id, p.titulo)} style={{ color: 'red', border: '1px solid red', padding: '5px 10px', borderRadius: '5px' }}>Eliminar</button>
             </div>
           </div>
         ))}
