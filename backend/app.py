@@ -52,15 +52,12 @@ def crear_proyecto():
         nuevo_proyecto = {
             "titulo": datos.get("titulo"),
             "descripcion": datos.get("descripcion"),
-            "imagen_url": datos.get("imagen_url")
+            "imagen_url": datos.get("imagen_url"),
+            "galeria": datos.get("galeria", []), # Recibe la lista de fotos
+            "video_url": datos.get("video_url", "") # Recibe el link de YouTube
         }
-        
         resultado = proyectos_collection.insert_one(nuevo_proyecto)
-        
-        return jsonify({
-            "mensaje": "¡Proyecto guardado con éxito!", 
-            "id": str(resultado.inserted_id)
-        }), 201
+        return jsonify({"mensaje": "¡Proyecto completo guardado!", "id": str(resultado.inserted_id)}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
@@ -101,6 +98,25 @@ def obtener_proyecto(id):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+
+
+@app.route('/api/proyectos/<id>', methods=['DELETE'])
+def eliminar_proyecto(id):
+    try:
+        # Intentamos borrar el proyecto que coincida con ese ID
+        resultado = proyectos_collection.delete_one({"_id": ObjectId(id)})
+        
+        if resultado.deleted_count > 0:
+            return jsonify({"mensaje": "Proyecto eliminado correctamente"}), 200
+        else:
+            return jsonify({"error": "No se encontró el proyecto para eliminar"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+    
     
 
 
