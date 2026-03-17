@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Contacto from '../components/Contacto';
 import './Galeria_proyectos.css';
+import transformarImagen from '../components/TransformarImagen';
+
 
 function Galeria_proyectos() {
 
@@ -47,7 +49,7 @@ function Galeria_proyectos() {
                             <Link key={proyecto._id} to={`/pagina_proyecto/${proyecto._id}`} className="link_galeria_proyecto">
                                 <div className="container_galeria_proyectos">
                                     {/* OJO: Usamos 'imagen_url' porque así lo llamamos en tu formulario de admin */}
-                                    <img src={proyecto.imagen_url} alt={`Imagen de ${proyecto.titulo}`} />
+                                    <img src={transformarImagen(proyecto.imagen_url, 400)} alt={proyecto.titulo} />
                                     <p className="descripcion">{proyecto.titulo}</p> 
                                 </div>
                             </Link>

@@ -73,7 +73,7 @@ function PaginaProyecto() {
             <div className="proyecto">
                 <div className="tarjeta_proyecto">
                     <img 
-                        src={proyecto.imagen_url} 
+                        src={transformarImagen(proyecto.imagen_url, 1200)}
                         alt={proyecto.titulo} 
                         style={{ objectFit: 'cover' }}
                     />
@@ -91,7 +91,7 @@ function PaginaProyecto() {
             <div className="fotos_proyectos">
                 {galeriaFotos.map((foto, index) => (
                     <div className="foto" key={index} onClick={() => abrirLightbox(index)}>
-                        <img className="foto_img" src={foto} alt={`Foto ${index + 1}`} style={{cursor: 'pointer'}} />
+                        <img className="foto_img" src={transformarImagen(foto, 200)} alt={`Foto ${index + 1}`} style={{cursor: 'pointer'}} />
                         <p>Vista de la obra</p>
                     </div>
                 ))}
@@ -114,7 +114,7 @@ function PaginaProyecto() {
                 <h2 style={{ marginBottom: '20px' }}>Proceso de Construcción</h2>
                 <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.3)' }}>
                     <iframe 
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                        style={{ position: 'absolute', top: 0, left: 0, width: '150px', height: '150px' }}
                         src={obtenerEmbedUrl(proyecto.video_url)}
                         title="YouTube video player"
                         frameBorder="0"
