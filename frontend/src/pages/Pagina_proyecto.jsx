@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './Pagina_proyecto.css';
 import Contacto from '../components/Contacto'; 
+import transformarImagen from '../components/TransformarImagen';
 
 function PaginaProyecto() {
     const { idUrl } = useParams();
@@ -110,19 +111,31 @@ function PaginaProyecto() {
 
         {/* --- SECCIÓN DE VIDEO OPCIONAL --- */}
         {proyecto.video_url && (
-            <section className="seccion_video" style={{ padding: '20px', maxWidth: '1000px', margin: '40px auto', textAlign: 'center' }}>
-                <h2 style={{ marginBottom: '20px' }}>Proceso de Construcción</h2>
-                <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.3)' }}>
-                    <iframe 
-                        style={{ position: 'absolute', top: 0, left: 0, width: '150px', height: '150px' }}
-                        src={obtenerEmbedUrl(proyecto.video_url)}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    ></iframe>
-                </div>
-            </section>
+            <section className="seccion_video" style={{ padding: '20px', maxWidth: '800px', margin: '30px auto', textAlign: 'center' }}>
+            <h2 style={{ marginBottom: '20px', fontSize: '1.6rem', color: '#0B2126' }}>Proceso de Construcción</h2>
+            
+            {/* Contenedor del video con tamaño controlado */}
+            <div style={{ 
+                position: 'relative', 
+                paddingBottom: '56.25%', // Esto mantiene la proporción de YouTube (16:9)
+                height: 0, 
+                width: '100%', 
+                maxWidth: '1000px', // <--- Aquí ajustas qué tan pequeño lo quieres
+                margin: '0 auto', 
+                overflow: 'hidden', 
+                borderRadius: '12px', 
+                boxShadow: '0 4px 15px rgba(0,0,0,0.2)' 
+            }}>
+                <iframe 
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                    src={obtenerEmbedUrl(proyecto.video_url)}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
+            </div>
+        </section>
         )}
 
         <Contacto />
