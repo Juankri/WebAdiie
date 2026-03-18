@@ -8,6 +8,9 @@ function Navbar() {
     const navRef = useRef(null);
     const { carrito } = useContext(CarritoContext);
 
+    // 1. Agregamos solo la variable para saber si estás logueado
+    const estaLogueado = !!localStorage.getItem('token_adiie');
+
     const toggleMenu = () => {
         setMenuAbierto(!menuAbierto); 
     };
@@ -40,6 +43,16 @@ function Navbar() {
 
             {/* CONTENEDOR MÓVIL: Carrito + Hamburguesa (Oculto en Escritorio) */}
             <div className="nav-controles-movil">
+                
+                {/* 2. ICONO DE ADMIN MÓVIL (Justo al lado del carrito, sin romper tu div) */}
+                <Link 
+                    to={estaLogueado ? "/admin_proyecto" : "/login"} 
+                    onClick={cerrarMenu} 
+                    style={{ textDecoration: 'none', fontSize: '20px', margin: '0', opacity: estaLogueado ? 1 : 0.6, filter: estaLogueado ? 'none' : 'grayscale(100%)' }}
+                >
+                    {estaLogueado ? "⚙️" : "👤"}
+                </Link>
+
                 <Link to="/carrito" className="carrito-movil" onClick={cerrarMenu}>
                     🛒 <span className="carrito-badge">{carrito.length}</span>
                 </Link>
@@ -74,7 +87,18 @@ function Navbar() {
                     <li style={{ whiteSpace: 'nowrap' }}><Link to="/en_construccion" onClick={cerrarMenu}>Proyectos en venta</Link></li>
                     <li><HashLink smooth to="/#Contacto" onClick={cerrarMenu}>Contacto</HashLink></li>
                     
-                    {/* CARRITO DE ESCRITORIO (Oculto en Móvil) */}
+                    {/* 3. ICONO DE ADMIN ESCRITORIO (Usa la misma clase de tu carrito para no romper nada) */}
+                    <li className="carrito-desktop" style={{ whiteSpace: 'nowrap' }}>
+                        <Link 
+                            to={estaLogueado ? "/admin_proyecto" : "/login"} 
+                            onClick={cerrarMenu} 
+                            style={{ textDecoration: 'none', fontSize: '20px',  opacity: estaLogueado ? 1 : 0.6, filter: estaLogueado ? 'none' : 'grayscale(100%)' }}
+                        >
+                            {estaLogueado ? "⚙️" : "👤"}
+                        </Link>
+                    </li>
+
+                    {/* CARRITO DE ESCRITORIO ORIGINAL (Oculto en Móvil) */}
                     <li className="carrito-desktop" style={{ whiteSpace: 'nowrap' }}>
                         <Link 
                             to="/carrito" 
