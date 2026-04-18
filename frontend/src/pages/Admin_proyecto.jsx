@@ -85,7 +85,7 @@ const AdminProyectos = () => {
         body: JSON.stringify(proyecto)
       });
       if (respuesta.ok) {
-        alert('¡Guardado con éxito! ✨');
+        alert('¡Guardado con éxito! ');
         cancelarEdicion();
         obtenerProyectos();
       } else {
