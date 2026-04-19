@@ -40,8 +40,8 @@ function Navbar() {
                     <img className="logo" src="/img/logo/LOGO_BLANCO.png" alt="Logo ADIIE" />
                     </Link>
 
-                    <div className="icono-admin-escritorio" style={{ marginLeft: '20px' }}>
-                        <Link to={estaLogueado ? "/admin_proyecto" : "/login"} className="admin-icon-nav" style={{ textDecoration: 'none', fontSize: '1.2rem' }}>
+                    <div className="icono-admin-escritorio">
+                        <Link to={estaLogueado ? "/admin_proyecto" : "/login"} className="admin-icon-nav">
                             {estaLogueado ? <Settings size={24} /> : <User size={24} />}
                         </Link>
                     

@@ -117,7 +117,13 @@
     margin-right: auto; 
     display: flex;
     align-items: center;
+    
 }
+
+.icono-admin-escritorio{
+    margin-left: 20px;
+}
+
 
 .nav-controles-movil {
   display: none; 
