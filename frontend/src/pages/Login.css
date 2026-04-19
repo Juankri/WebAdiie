@@ -1,19 +1,23 @@
-.login_container{
-    padding-top: 200px;
+.login_container {
+    
+    min-height: 80vh; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    
+    padding-top: 200px; 
     padding-bottom: 50px;
-    max-width: 400px;
-    margin: 0 auto;
-    text-align: center;
-    font-family: sans-serif;
-
+    background-color: #f0f2f5; 
 }
 
-.login_form{
-    background: #f9f9f9;
-    padding: 30px;
+.login_form {
+    background: #ffffff;
+    padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
+    width: 100%;
+    max-width: 400px; 
 }
 
 .login_titulo{

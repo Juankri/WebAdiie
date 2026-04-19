@@ -16,6 +16,7 @@ import AdminProyectos from './pages/Admin_proyecto';
 import Login from './pages/Login';
 
 
+
 import './App.css'; 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                 <a href="https://facebook.com/tu-pagina" target="_blank" rel="noopener noreferrer">
                     <i className="fab fa-facebook"></i>
                 </a>
+
                 <a href="https://www.instagram.com/estudioadiie/" target="_blank" rel="noopener noreferrer">
                     <i className="fab fa-instagram"></i>
                 </a>

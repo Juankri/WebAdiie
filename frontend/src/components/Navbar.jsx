@@ -3,6 +3,14 @@ import {Link} from "react-router-dom";
 import {HashLink} from "react-router-hash-link";
 import {CarritoContext} from "../context/CarritoContext";
 import '../styles/Navbar.css';
+import { 
+  User, 
+  Settings, 
+  ShoppingCart, 
+   
+  ChevronDown 
+} from 'lucide-react';
+
 
 
 function Navbar() {
@@ -25,24 +33,27 @@ function Navbar() {
         return () => document.removeEventListener('mousedown', manejarClickFuera);
     }, [menuAbierto]);
 
-    return (
+    return  (
             <nav className="nav" ref={navRef}>
                 <div className="nav-logo">
                     <Link to="/">
                     <img className="logo" src="/img/logo/LOGO_BLANCO.png" alt="Logo ADIIE" />
                     </Link>
+
+                    <div className="icono-admin-escritorio" style={{ marginLeft: '20px' }}>
+                        <Link to={estaLogueado ? "/admin_proyecto" : "/login"} className="admin-icon-nav" style={{ textDecoration: 'none', fontSize: '1.2rem' }}>
+                            {estaLogueado ? <Settings size={24} /> : <User size={24} />}
+                        </Link>
+                    
                 </div>
+            
+            </div> 
 
                 <div className="nav-controles-movil">
-                    <Link
-                        to={estaLogueado ? "admin_proyecto" : "/login"}
-                        className="admin-icon-nav"
-                        style={{ opacity: estaLogueado ? 1 : 0.6}}>
-                            {estaLogueado ? "⚙️" : "👤"}
-                    </Link>
 
                     <Link to="/carrito" className="carrito-movil">
-                    🛒 <span className="carrito-badge">{carrito.length}</span>
+                    <ShoppingCart size={22} />
+                   <span className="carrito-badge">{carrito.length}</span>
                     </Link>
 
                     <button className="menubtn" onClick={toggleMenu}>
@@ -53,7 +64,11 @@ function Navbar() {
                 {/* LINKS DE ESCRITORIO */}
 
                 <div className="nav-link-container">
+                    
                     <ul className={`nav-links ${menuAbierto ? 'active' : ''}`}>
+
+                        
+
                         <li>
                             <Link to="/" onClick={cerrarMenu}>Inicio</Link>
                         </li>
@@ -65,7 +80,7 @@ function Navbar() {
                         </li>
 
                         <li className="dropdown-container">
-                            <Link to="/servicio-express" onClick={cerrarMenu}>Servicio Express</Link>
+                            <Link to="/servicio-express" onClick={cerrarMenu}>Servicio Express <ChevronDown size={14} /></Link>
                             <ul className="dropdown-menu">
                                 <li><Link to="/servicio-express" state={{ abrirModal: "Diseño de baño" }} onClick={cerrarMenu}>Baño</Link></li>
                                 <li><Link to="/servicio-express" state={{ abrirModal: "Comedor" }} onClick={cerrarMenu}>Comedor</Link></li>
@@ -79,22 +94,18 @@ function Navbar() {
                         <li style={{ whiteSpace: 'nowrap' }}><Link to="/en_construccion" onClick={cerrarMenu}>Proyectos en venta</Link></li>
                         <li><HashLink smooth to="/#Contacto" onClick={cerrarMenu}>Contacto</HashLink></li>
 
-                            {/* ICONOS ADMIN Y CARRITO ESCRITORIO */}
-                        <li className="icono-admin-desktop">
-                        <Link to={estaLogueado ? "/admin_proyecto" : "/login"} className="admin-icon-nav">
-                            {estaLogueado ? "⚙️" : "👤"}
-                        </Link>
-                        </li>
+                            {/*CARRITO ESCRITORIO */}
                         
-                        <li className="carrito-desktop">
+                        
+                        <li className="carrito-escritorio">
                         <Link to="/carrito" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            🛒 <span>({carrito.length})</span>
+                            <ShoppingCart size={26} /> <span>({carrito.length})</span>
                         </Link>
                         </li>
                     </ul>
                 </div>
             </nav>
-  );
+    );
 }
 
 export default Navbar;
