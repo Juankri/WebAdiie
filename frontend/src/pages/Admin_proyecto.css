@@ -1,0 +1,192 @@
+/* CONTENEDOR PRINCIPAL */
+.admin-container {
+    padding-top: 150px;
+    padding-bottom: 100px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* HEADER DEL PANEL */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.admin-header h2 {
+    color: #0B2126;
+    margin: 0;
+}
+
+.btn-logout {
+    background: #666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s;
+}
+
+.btn-logout:hover {
+    background: #444;
+}
+
+/* FORMULARIO */
+.admin-form {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.admin-form h3 {
+    margin-bottom: 10px;
+    color: #0B2126;
+}
+
+.admin-title-icon {
+    position: relative;
+    top: 3px;
+}
+
+.admin-input, .admin-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.admin-textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* ACCIONES DEL FORMULARIO (Botones de Guardar y Cancelar) */
+.admin-form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-submit-project {
+    margin: 0;
+    flex: 1;
+}
+
+.admin-save-icon {
+    margin-right: 8px;
+}
+
+.btn-cancel {
+    background-color: #999;
+}
+
+.btn-cancel:hover {
+    background-color: #777;
+}
+
+/* BOTONES DE CLOUDINARY */
+.btn-upload {
+    padding: 10px 15px;
+    background: #D4AF37;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #0B2126;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-upload:hover {
+    background: #b5952f;
+}
+
+/* GALERÍA DE PREVISUALIZACIÓN */
+.gallery-preview {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.mini-img-container {
+    position: relative;
+}
+
+.mini-img {
+    padding-top: 10px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.btn-delete-mini {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+/* LISTADO DE PROYECTOS EN LA NUBE */
+.projects-list-container {
+    margin-top: 50px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.project-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.project-item:last-child {
+    border-bottom: none;
+}
+
+.btn-edit {
+    margin-right: 10px;
+    padding: 6px 12px;
+    background: #0B2126;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    color: #ff4d4d;
+    border: 1px solid #ff4d4d;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background: #ff4d4d;
+    color: white;
+}
