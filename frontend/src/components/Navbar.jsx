@@ -41,7 +41,7 @@ function Navbar() {
                     </Link>
 
                     <div className="icono-admin-escritorio">
-                        <Link to={estaLogueado ? "/admin_proyecto" : "/login"} className="admin-icon-nav">
+                        <Link to={estaLogueado ? "/admin_dashboard" : "/login"} className="admin-icon-nav">
                             {estaLogueado ? <Settings size={24} /> : <User size={24} />}
                         </Link>
                     

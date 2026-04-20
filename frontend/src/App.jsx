@@ -13,11 +13,13 @@ import Galeria_diseños_personalizados from './pages/Galeria_diseños_personaliz
 import PaginaProyecto from './pages/Pagina_proyecto';
 import Carrito from './pages/Carrito';
 import AdminProyectos from './pages/Admin_proyecto';
+import AdminDisenos from './pages/Admin_disenos';
+import AdminDashboard from './pages/Admin_dashboard';
 import Login from './pages/Login';
 
 
-
 import './App.css'; 
+
 
 function App() {
   return (
@@ -49,7 +51,10 @@ function App() {
         {/* Tu ruta personalizada exactamente como la querías */}
         <Route path="/pagina_proyecto/:idUrl" element={<PaginaProyecto />} />
         <Route path="/admin_proyecto" element={<AdminProyectos />} />
+        <Route path="/admin_disenos" element={<AdminDisenos />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin_dashboard" element={<AdminDashboard/>} />
+        
       </Routes>
 
       <Footer />
