@@ -4,7 +4,7 @@ import './Pagina_proyecto.css';
 import Contacto from '../components/Contacto'; 
 import transformarImagen from '../components/TransformarImagen';
 
-function PaginaProyecto() {
+function PaginaDiseno() {
     const { idUrl } = useParams();
     
     const [proyecto, setProyecto] = useState(null);
@@ -143,4 +143,4 @@ function PaginaProyecto() {
     );
 }
 
-export default PaginaProyecto;
+export default PaginaDiseno;

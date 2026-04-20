@@ -1,9 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { LayoutGrid, PencilRuler, LogOut } from 'lucide-react';
 import './Admin_proyecto.css'; 
+import { useEffect } from 'react';
+
+const token = localStorage.getItem('token_adiie');
+
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // 2. Si el carnet NO existe, lo mandamos de vuelta al login inmediatamente
+        if (!token) {
+            navigate('/login');
+        }
+    }, [token, navigate]);
 
     const cerrarSesion = () => {
         localStorage.removeItem('token_adiie');
