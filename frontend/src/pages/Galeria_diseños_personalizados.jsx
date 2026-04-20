@@ -39,7 +39,7 @@ function Galeria_diseños_personalizados() {
                     <div className="galeria_planos">
                         {disenos.map((diseno) => (
                             /* Usamos _id de Mongo y la ruta dinámica */
-                            <Link key={diseno._id} to={`/pagina_proyecto/${diseno._id}`} className="link_galeria_planos">
+                            <Link key={diseno._id} to={`/pagina_diseno/${diseno._id}`} className="link_galeria_planos">
                                 <div className="container_galeria_planos">
                                     {/* Imagen optimizada con Cloudinary */}
                                     <img 

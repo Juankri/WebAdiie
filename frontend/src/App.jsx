@@ -11,6 +11,7 @@ import En_construccion from './pages/En_construccion';
 import Galeria_proyectos from './pages/Galeria_proyectos'; 
 import Galeria_diseños_personalizados from './pages/Galeria_diseños_personalizados';
 import PaginaProyecto from './pages/Pagina_proyecto';
+import PaginaDiseno from './pages/Pagina_diseno';
 import Carrito from './pages/Carrito';
 import AdminProyectos from './pages/Admin_proyecto';
 import AdminDisenos from './pages/Admin_disenos';
@@ -50,6 +51,7 @@ function App() {
         <Route path="/carrito" element={<Carrito/>} />
         {/* Tu ruta personalizada exactamente como la querías */}
         <Route path="/pagina_proyecto/:idUrl" element={<PaginaProyecto />} />
+        <Route path="/pagina_diseno/:idUrl" element={<PaginaDiseno />} />
         <Route path="/admin_proyecto" element={<AdminProyectos />} />
         <Route path="/admin_disenos" element={<AdminDisenos />} />
         <Route path="/login" element={<Login />} />
