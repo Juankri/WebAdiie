@@ -9,7 +9,8 @@ import {
     CheckCircle, 
     ImageIcon,
     Save,
-    ArrowLeft
+    ArrowLeft,
+    ArrowRight
 } from 'lucide-react';
 import './Admin_proyecto.css'
 
@@ -134,19 +135,19 @@ const AdminDisenos = () => {
         <div className="admin-container">
             <div className="admin-header">
                 <div style={{display: 'flex', alignItems: 'center', gap: '15px'}}>
-                    <button onClick={() => navigate('/admin_proyecto')} className="btn-edit" style={{background: '#eee', color: '#333'}}>
-                        <ArrowLeft size={16} /> Volver
+                    <button onClick={() => navigate('/admin_dashboard')} className="btn-volver">
+                        <ArrowLeft size={18} /> Volver
                     </button>
-                    <h2>Admin: Diseños Conceptuales</h2>
+                    <h2>Panel de Diseños</h2>
                 </div>
-                <button onClick={cerrarSesion} className="btn-logout">
-                    Salir <LogOut size={18} />
+                <button onClick={() => navigate('/admin_proyecto')}  className="btn-logout">
+                    Proyectos <ArrowRight size={18} />
                 </button>
             </div>
             
             <form onSubmit={enviarDiseno} className="admin-form">
                 <h3>
-                    {editandoId ? <Edit size={20} /> : <PlusSquare size={20} />} 
+                    {editandoId ? <Edit size={20} className="admin-title-icon" /> : <PlusSquare size={20} className="admin-title-icon" />} 
                     {editandoId ? ' Editar Diseño' : ' Nuevo Diseño para la Galería'}
                 </h3>
                 

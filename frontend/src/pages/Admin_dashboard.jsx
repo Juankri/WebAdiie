@@ -18,7 +18,7 @@ const AdminDashboard = () => {
 
     const cerrarSesion = () => {
         localStorage.removeItem('token_adiie');
-        navigate('/login');
+        window.location.href = '/login';
     };
 
     return (
@@ -26,7 +26,7 @@ const AdminDashboard = () => {
             <div className="admin-header">
                 <h2>Panel de Control EstudioAdiie</h2>
                 <button onClick={cerrarSesion} className="btn-logout">
-                    Salir <LogOut size={18} />
+                    Cerrar Sesión <LogOut size={18} />
                 </button>
             </div>
 

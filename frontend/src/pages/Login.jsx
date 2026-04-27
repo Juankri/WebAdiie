@@ -34,7 +34,7 @@ const Login = () => {
       if (respuesta.ok) {
         localStorage.setItem('token_adiie', datos.token);
         alert('¡Bienvenido!');
-        navigate('/admin_proyecto');
+        window.location.href = '/admin_dashboard';
       } else {
         setError(datos.error || 'Credenciales incorrectas');
       }

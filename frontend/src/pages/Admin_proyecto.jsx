@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
+    ArrowLeft,
+    ArrowRight,
     LogOut, 
     PlusSquare, 
     Edit, 
@@ -128,9 +130,14 @@ const AdminProyectos = () => {
         <div className="admin-container">
             
             <div className="admin-header">
-                <h2>Panel de Administración</h2>
-                <button onClick={cerrarSesion} className="btn-logout">
-                    Cerrar Sesión <LogOut size={18} />
+                <div style={{display: 'flex', alignItems: 'center', gap: '15px'}}>
+                    <button onClick={() => navigate('/admin_dashboard')} className="btn-volver">
+                        <ArrowLeft size={18} /> Volver
+                    </button>
+                    <h2>Panel de Proyectos</h2>
+                </div>
+                <button onClick={() => navigate('/admin_disenos')} className="btn-logout">
+                    Diseños <LogOut size={18} />
                 </button>
             </div>
             
