@@ -137,7 +137,7 @@ const AdminProyectos = () => {
                     <h2>Panel de Proyectos</h2>
                 </div>
                 <button onClick={() => navigate('/admin_disenos')} className="btn-logout">
-                    Diseños <LogOut size={18} />
+                    Diseños <ArrowRight size={18} />
                 </button>
             </div>
             
@@ -202,7 +202,7 @@ const AdminProyectos = () => {
             </form>
 
             <div className="projects-list-container">
-                <h3>Proyectos en Portafolio ({proyectos.length})</h3>
+                <h3>Proyectos Publicados ({proyectos.length})</h3>
                 {proyectos.map(p => (
                     <div key={p._id} className="project-item">
                         <span><strong>{p.titulo}</strong></span>

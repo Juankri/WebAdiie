@@ -153,18 +153,18 @@ const AdminDisenos = () => {
                 
                 <input 
                     className="admin-input" 
-                    type="text" name="titulo" placeholder="Ej: Concepto Living Minimalista" 
+                    type="text" name="titulo" placeholder="Titulo del Diseño" 
                     value={diseno.titulo} onChange={manejarCambio} required 
                 />
                 
                 <textarea 
                     className="admin-textarea" 
-                    name="descripcion" placeholder="Explica la idea de este diseño..." 
+                    name="descripcion" placeholder="Descripción detallada..." 
                     value={diseno.descripcion} onChange={manejarCambio} required 
                 />
                 
                 <div className="upload-section">
-                    <label>Imagen Principal (Portada):</label>
+                    <label>Imagen de Portada: </label>
                     <button type="button" onClick={() => abrirWidgetSubida(true)} className="btn-upload">
                         {diseno.imagen_url ? <CheckCircle size={18} /> : <Upload size={18} />}
                         {diseno.imagen_url ? "Imagen Cargada" : "Subir Portada"}
@@ -173,9 +173,9 @@ const AdminDisenos = () => {
                 </div>
 
                 <div className="upload-section">
-                    <label>Más imágenes del diseño (Galería):</label>
+                    <label>Galería de Fotos:</label>
                     <button type="button" onClick={() => abrirWidgetSubida(false)} className="btn-upload">
-                        <ImageIcon size={18} /> Añadir Vistas
+                        <ImageIcon size={18} /> Añadir Fotos
                     </button>
                     <div className="gallery-preview">
                         {diseno.galeria.map((url, i) => (
@@ -187,10 +187,16 @@ const AdminDisenos = () => {
                     </div>
                 </div>
 
+                <input 
+                    className="admin-input" 
+                    type="text" name="video_url" placeholder="URL de Video (YouTube/Vimeo)" 
+                    value={diseno.video_url} onChange={manejarCambio} 
+                />
+
                 <div style={{ display: 'flex', gap: '10px' }}>
                     <button type="submit" className="btn-enviar-cotizacion" style={{margin: 0, flex: 1}}>
                         <Save size={18} style={{marginRight: '8px'}} />
-                        {editandoId ? 'Actualizar Diseño' : 'Publicar en Galería'}
+                        {editandoId ? 'Actualizar Diseño' : 'Publicar Diseño'}
                     </button>
                     {editandoId && (
                         <button type="button" onClick={cancelarEdicion} className="btn-logout" style={{background: '#999'}}>
@@ -207,7 +213,7 @@ const AdminDisenos = () => {
                         <span>{d.titulo}</span>
                         <div className="project-actions">
                             <button onClick={() => prepararEdicion(d)} className="btn-edit">
-                                <Edit size={14} />
+                                <Edit size={14} />Editar
                             </button>
                             <button onClick={() => borrarDiseno(d._id, d.titulo)} className="btn-delete">
                                 <Trash2 size={14} />
