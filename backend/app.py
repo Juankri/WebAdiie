@@ -12,6 +12,7 @@ from routes.proyectos import proyectos_bp
 from routes.disenos import disenos_bp
 from routes.correos import correos_bp
 from routes.auth import auth_bp
+from routes.pagos import pagos_bp
 
 # Cargar variables secretas
 load_dotenv()
@@ -20,7 +21,7 @@ app = Flask(__name__)
 CORS(app) 
 
 # Configuración de Seguridad
-app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "123456789")
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 jwt.init_app(app)
 bcrypt.init_app(app)
 
@@ -29,6 +30,7 @@ app.register_blueprint(proyectos_bp)
 app.register_blueprint(disenos_bp)
 app.register_blueprint(correos_bp)
 app.register_blueprint(auth_bp)
+app.register_blueprint(pagos_bp)
 
 # Rutas base (Health checks)
 @app.route('/')

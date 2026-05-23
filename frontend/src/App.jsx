@@ -17,6 +17,9 @@ import AdminProyectos from './pages/Admin_proyecto';
 import AdminDisenos from './pages/Admin_disenos';
 import AdminDashboard from './pages/Admin_dashboard';
 import Login from './pages/Login';
+import PagoExitoso from './components/PagoExitoso';
+import PagoFallido from './components/PagoFallido';
+import PagoPendiente from './components/PagoPendiente';
 
 
 import './App.css'; 
@@ -56,6 +59,9 @@ function App() {
         <Route path="/admin_disenos" element={<AdminDisenos />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin_dashboard" element={<AdminDashboard/>} />
+        <Route path="/pago-exitoso" element={<PagoExitoso />} />
+        <Route path="/pago-fallido" element={<PagoFallido />} />
+        <Route path="/pago-pendiente" element={<PagoPendiente />} />
         
       </Routes>
 

@@ -4,6 +4,7 @@ import Contacto from '../components/Contacto';
 import { useState, useEffect, useContext } from 'react'; // 🌟 Importamos useContext
 import { useLocation } from 'react-router-dom';
 import { CarritoContext } from '../context/CarritoContext'; // 🌟 Importamos el cerebro del carrito
+import BotonPago from '../components/BotonPago';
 
 function ServicioExpress() {
 
@@ -209,9 +210,10 @@ function ServicioExpress() {
 
                                     {/* 🌟 Los campos de nombre y correo desaparecen de aquí */}
 
-                                    <button type="submit" style={{ backgroundColor: '#D4AF37', color: '#fff' }}>
-                                        + Agregar a mi Cotización
-                                    </button>
+                                    <BotonPago 
+                                    tituloServicio="Servicio Express - Habitación Mediana" 
+                                    precioServicio={250000} 
+                                    />
                                 </form>
                             </div>
                         </div>
