@@ -159,6 +159,43 @@
     background-color: #1a3a44;
 }
 
+/* Estilo del Select */
+.select-nivel {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: white;
+    cursor: pointer;
+    color: #333;
+}
+
+.select-nivel:focus {
+    border-color: #0B2126;
+    outline: none;
+}
+
+/* Estilo del nuevo Botón */
+.btn-agregar-completo {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #0B2126;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-agregar-completo:hover {
+    background-color: #1a3a44;
+}
+
 /* Keyframes para animaciones */
 @keyframes fadeIn {
     from { opacity: 0; }

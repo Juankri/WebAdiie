@@ -6,6 +6,13 @@ import { useLocation } from 'react-router-dom';
 import { CarritoContext } from '../context/CarritoContext'; // 🌟 Importamos el cerebro del carrito
 import BotonPago from '../components/BotonPago';
 
+
+const NIVELES_SERVICIO = [
+    { id: 'basico', titulo: 'Espacio Funcional', m2: '0-15 m²', precio: 140000 },
+    { id: 'estandar', titulo: 'Espacio Social', m2: '15-30 m²', precio: 220000 },
+    { id: 'premium', titulo: 'Espacio Integrado', m2: '30-50 m²', precio: 350000 }
+];
+
 function ServicioExpress() {
 
     // 1. NUESTRA BASE DE DATOS LOCAL
@@ -84,19 +91,10 @@ function ServicioExpress() {
         }
     ];
     
-    const location = useLocation(); 
-    
-    // 🌟 Conectamos con la memoria global para sacar la función que agrega al carrito
     const { agregarAlCarrito } = useContext(CarritoContext);
-
     const [modalAbierto, setModalAbierto] = useState(false);
     const [servicioActivo, setServicioActivo] = useState(null);
-    
-    // 🌟 Quitamos nombre y correo de aquí. Solo necesitamos saber cómo quieren el espacio.
-    const [datosForm, setDatosForm] = useState({
-        estilo: 'moderno', 
-        metros: '10-20'
-    });
+    const [nivelSeleccionado, setNivelSeleccionado] = useState(NIVELES_SERVICIO[0]);
 
     const abrirModal = (servicio) => {
         setServicioActivo(servicio);
@@ -108,72 +106,42 @@ function ServicioExpress() {
         setServicioActivo(null);
     };
 
-    useEffect(() => {
-        if (location.state && location.state.abrirModal) {
-            const servicioEncontrado = listaServicios.find(
-                (s) => s.titulo === location.state.abrirModal
-            );
-            if (servicioEncontrado) {
-                abrirModal(servicioEncontrado);
-            }
-        }
-    }, [location]); 
-
-    const manejarCambio = (e) => {
-        setDatosForm({ ...datosForm, [e.target.name]: e.target.value });
-    };
-
-    // 🌟 Esta función ya no llama a Python. Ahora guarda en el carrito local.
-    const manejarAgregarAlCarrito = (e) => {
-        e.preventDefault();
-        
-        // Armamos el paquete con los datos del servicio + las opciones elegidas
+    const manejarAgregarAlCarrito = (nivel) => {
         const itemParaElCarrito = {
-            titulo: servicioActivo.titulo,
-            precioBase: servicioActivo.precio,
+            titulo: `${servicioActivo.titulo} - ${nivel.titulo}`,
+            precio: nivel.precio,
             imagen: servicioActivo.imagen,
-            estilo: datosForm.estilo,
-            metros: datosForm.metros,
-            // Le damos un ID único por si agregan dos baños distintos
-            idUnico: Date.now() 
+            idUnico: Date.now()
         };
 
-        // Lo mandamos al Context
         agregarAlCarrito(itemParaElCarrito);
-        
-        alert(`¡${servicioActivo.titulo} agregado a tu cotización! 🛒`);
-        
-        // Reseteamos y cerramos
-        setDatosForm({ estilo: 'moderno', metros: '10-20' });
-        cerrarModal(); 
+        alert(`¡${itemParaElCarrito.titulo} agregado a tu cotización! 🛒`);
+        cerrarModal();
     };
 
     return (
         <>
-        <main className="main-servicios">
-            <h1 className="titulo-servicios">Diseño de Interiores Express</h1>
-            <p className="subtitulo-servicios">Selecciona los espacios que quieres diseñar y arma tu cotización a medida.</p>
+            <main className="main-servicios">
+                <h1 className="titulo-servicios">Diseño de Interiores Express</h1>
+                <p className="subtitulo-servicios">Selecciona el espacio y el nivel de diseño que necesitas.</p>
 
-            <div className="servicios-grid">
-                {listaServicios.map((servicio, index) => (
-                    <div 
-                        key={index} 
-                        className="servicio-item" 
-                        onClick={() => abrirModal(servicio)} 
-                        style={{ cursor: 'pointer' }}
-                    >
-                        <img src={servicio.imagen} alt={servicio.titulo} loading="lazy" />
-                        <h3>{servicio.titulo}<br/><span style={{ fontSize: '0.8em' }}>{servicio.precio}</span></h3>
-                    </div>
-                ))}
-            </div>
+                <div className="servicios-grid">
+                    {listaServicios.map((servicio, index) => (
+                        <div key={index} className="servicio-item" onClick={() => abrirModal(servicio)}>
+                            <img src={servicio.imagen} alt={servicio.titulo} loading="lazy" />
+                            <h3>{servicio.titulo}</h3>
+                            <p>{servicio.precio}</p>
+                        </div>
+                    ))}
+                </div>
 
-            {modalAbierto && servicioActivo && (
-                <div id="servicio-modal" className="modal" style={{ display: 'block' }}>
+                {modalAbierto && servicioActivo && (
+                <div className="modal" style={{ display: 'block' }}>
                     <div className="modal-contenido">
-                        <span className="modal-cerrar" onClick={cerrarModal} style={{ cursor: 'pointer' }}>&times;</span>
+                        <span className="modal-cerrar" onClick={cerrarModal}>&times;</span>
                         
                         <div className="modal-body-grid">
+                            
                             <div className="modal-imagen-container">
                                 <img src={servicioActivo.imagen} alt={servicioActivo.titulo} />
                             </div>
@@ -181,47 +149,41 @@ function ServicioExpress() {
                             <div className="modal-info-container">
                                 <h2>{servicioActivo.titulo}</h2>
                                 <p>{servicioActivo.descripcion}</p>
-                                
-                                {/* 🌟 Cambiamos la función onSubmit */}
-                                <form id="modal-formulario" onSubmit={manejarAgregarAlCarrito}>
-                                    <h3>Personaliza este espacio</h3>
-                                    
-                                    <div className="form-grupo">
-                                        <label>Preferencia de Estilo:</label>
-                                        <select name="estilo" value={datosForm.estilo} onChange={manejarCambio}>
-                                            <option value="moderno">Moderno</option>
-                                            <option value="minimalista">Minimalista</option>
-                                            <option value="industrial">Industrial</option>
-                                            <option value="rustico">Rústico</option>
-                                            <option value="no-seguro">No estoy seguro</option>
-                                        </select>
-                                    </div>
 
-                                    <div className="form-grupo">
-                                        <label>Metros Cuadrados (m²):</label>
-                                        <select name="metros" value={datosForm.metros} onChange={manejarCambio}>
-                                            <option value="menos-10">Menos de 10 m²</option>
-                                            <option value="10-20">10 - 20 m²</option>
-                                            <option value="20-30">20 - 30 m²</option>
-                                            <option value="30-50">30 - 50 m²</option>
-                                            <option value="mas-50">Más de 50 m²</option>
-                                        </select>
-                                    </div>
+                                {/* El nuevo Select simple */}
+                                <div className="form-grupo" style={{ marginTop: '20px' }}>
+                                    <label>Selecciona tu plan:</label>
+                                    <select 
+                                        className="select-nivel"
+                                        value={nivelSeleccionado.id} 
+                                        onChange={(e) => {
+                                            const nivel = NIVELES_SERVICIO.find(n => n.id === e.target.value);
+                                            setNivelSeleccionado(nivel);
+                                        }}
+                                    >
+                                        {NIVELES_SERVICIO.map((nivel) => (
+                                            <option key={nivel.id} value={nivel.id}>
+                                                {nivel.titulo} ({nivel.m2}) - ${nivel.precio.toLocaleString()}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
 
-                                    {/* 🌟 Los campos de nombre y correo desaparecen de aquí */}
-
-                                    <BotonPago 
-                                    tituloServicio="Servicio Express - Habitación Mediana" 
-                                    precioServicio={250000} 
-                                    />
-                                </form>
+                                {/* El único botón de agregar */}
+                                <button 
+                                    className="btn-agregar-completo" 
+                                    onClick={() => manejarAgregarAlCarrito(nivelSeleccionado)}
+                                >
+                                    Agregar al Carrito - ${nivelSeleccionado.precio.toLocaleString()}
+                                </button>
                             </div>
+
                         </div>
                     </div>
                 </div>
             )}
-        </main>
-        <Contacto />
+            </main>
+            <Contacto />
         </>
     );
 }
