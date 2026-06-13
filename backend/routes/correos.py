@@ -1,74 +1,57 @@
-from flask import Blueprint, request, jsonify
 import os
 import resend
+from flask import Blueprint, request, jsonify
 
-correos_bp = Blueprint('correos', __name__)
+# Configuramos Resend
+resend.api_key = os.getenv("RESEND_API_KEY")
 
-# Configurar Resend
-resend.api_key = os.environ.get('RESEND_API_KEY')
+formularios_bp = Blueprint('formularios_bp', __name__)
 
-@correos_bp.route('/api/contacto', methods=['POST'])
-def contacto():
-    print("Recibiendo datos del formulario de contacto...")
-    datos = request.json
-    nombre = datos.get('nombre')
-    correo = datos.get('email')
-    mensaje = datos.get('mensaje')
-
+@formularios_bp.route('/api/enviar-formulario-express', methods=['POST'])
+def enviar_formulario_express():
     try:
-        r = resend.Emails.send({
-            "from": "onboarding@resend.dev",
-            "to": "juancri687@gmail.com", 
-            "subject": f"Nuevo Cliente Web: {nombre}",
-            "html": f"""
-                <h3>Nuevo Contacto desde Adiie.cl</h3>
-                <p><strong>Cliente:</strong> {nombre}</p>
-                <p><strong>Correo:</strong> {correo}</p>
-                <p><strong>Mensaje:</strong></p>
-                <blockquote style="background: #f1f1f1; padding: 10px;">{mensaje}</blockquote>
-            """,
-            "reply_to": correo
-        })
-        return jsonify({"status": "success", "mensaje": "Mensaje enviado"}), 200
-    except Exception as e:
-        return jsonify({"status": "error", "mensaje": str(e)}), 500
-
-@correos_bp.route('/api/enviar-cotizacion', methods=['POST'])
-def enviar_cotizacion():
-    try:
-        datos = request.json
-        nombre = datos.get('nombre', 'Sin Nombre')
-        correo = datos.get('correo', 'Sin Correo')
-        mensaje = datos.get('mensaje', 'Sin mensaje adicional')
-        servicios = datos.get('servicios', [])
-
-        lista_html = ""
-        for item in servicios:
-            lista_html += f"""
-            <li style="margin-bottom: 10px;">
-                <strong>{item.get('titulo')}</strong><br>
-                Estilo: {item.get('estilo')} | Metros: {item.get('metros')} m²
-            </li>
-            """
-
-        cuerpo_correo = f"""
-        <div style="font-family: Arial, sans-serif; color: #333;">
-            <h2 style="color: #D4AF37;">Nueva Cotización de Servicio Express</h2>
-            <p><strong>Cliente:</strong> {nombre}</p>
-            <p><strong>Correo:</strong> {correo}</p>
-            <p><strong>Mensaje del cliente:</strong> {mensaje}</p>
-            <hr>
-            <h3>Espacios seleccionados ({len(servicios)}):</h3>
-            <ul>{lista_html}</ul>
-        </div>
+        # Extraer los textos
+        data = request.form
+        nombre = data.get('nombre', 'Sin nombre')
+        
+        # Construimos el cuerpo HTML profesional (Resend ama el HTML)
+        html_content = f"""
+        <h1>🚀 Nuevo Servicio Express: {nombre}</h1>
+        <p>Has recibido un nuevo formulario de diseño.</p>
+        <ul>
+            <li><strong>Cliente:</strong> {nombre}</li>
+            <li><strong>WhatsApp:</strong> {data.get('whatsapp')}</li>
+            <li><strong>Espacio:</strong> {data.get('tipoEspacio')}</li>
+            <li><strong>Medidas:</strong> {data.get('medidas')}</li>
+        </ul>
+        <p>Revisa los archivos adjuntos en la plataforma de Resend.</p>
         """
 
-        resend.Emails.send({
-            "from": "onboarding@resend.dev",
-            "to": ["juancri687@gmail.com"],
-            "subject": f"Nueva Cotización Express de {nombre}",
-            "html": cuerpo_correo
-        })
-        return jsonify({'mensaje': 'Cotización procesada y correo enviado'}), 200
+        # Preparamos los adjuntos (si existen)
+        attachments = []
+        for key in ['fotos', 'croquis', 'inspiracion']:
+            if key in request.files:
+                file = request.files[key]
+                if file.filename != '':
+                    # Resend requiere el contenido en base64 o binario
+                    attachments.append({
+                        "filename": file.filename,
+                        "content": list(file.read()) 
+                    })
+
+        # Disparamos el correo
+        params = {
+            "from": "onboarding@resend.dev", # Nota: Resend requiere dominio verificado para usar tu correo real
+            "to": "juancri687@gmail.com",
+            "subject": f"Nuevo Proyecto Express: {nombre}",
+            "html": html_content,
+            "attachments": attachments
+        }
+
+        resend.Emails.send(params)
+
+        return jsonify({'mensaje': 'Formulario enviado con éxito vía Resend'}), 200
+
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        print(f"Error con Resend: {e}")
+        return jsonify({'error': 'No se pudo enviar el correo'}), 500

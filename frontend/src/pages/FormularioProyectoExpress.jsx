@@ -121,7 +121,7 @@ const FormularioProyectoExpress = () => {
     try {
       // 3. ENVIAMOS AL BACKEND EN PYTHON
       // (Cambia el localhost por la URL de tu backend en Render cuando lo subas)
-      const respuesta = await fetch('http://localhost:5000/api/enviar-formulario-express', {
+      const respuesta = await fetch('https://webadiie-backend.onrender.com/api/enviar-formulario-express', {
         method: 'POST',
         body: formData, // Mandamos la caja con las fotos y datos
       });
