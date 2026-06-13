@@ -38,7 +38,7 @@ function Galeria_proyectos() {
                 {/* 3. PANTALLA DE CARGA: Mientras los datos viajan por internet */}
                 {cargando ? (
                     <h3 style={{ textAlign: 'center', margin: '50px 0', color: '#0B2126' }}>
-                        Cargando proyectos desde la base de datos... ⏳
+                        Cargando proyectos desde la base de datos... 
                     </h3>
                 ) : (
                     <div className="galeria_proyectos">

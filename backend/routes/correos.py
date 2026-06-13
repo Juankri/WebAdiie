@@ -5,9 +5,9 @@ from flask import Blueprint, request, jsonify
 # Configuramos Resend
 resend.api_key = os.getenv("RESEND_API_KEY")
 
-formularios_bp = Blueprint('formularios_bp', __name__)
+correos_bp = Blueprint('correos_bp', __name__)
 
-@formularios_bp.route('/api/enviar-formulario-express', methods=['POST'])
+@correos_bp.route('/api/enviar-formulario-express', methods=['POST'])
 def enviar_formulario_express():
     try:
         # Extraer los textos
