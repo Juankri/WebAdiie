@@ -23,6 +23,7 @@ import PagoPendiente from './components/PagoPendiente';
 
 
 import './App.css'; 
+import InfoServicioExpress from './components/infoServicioExpress';
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
         <Route path="/pago-exitoso" element={<PagoExitoso />} />
         <Route path="/pago-fallido" element={<PagoFallido />} />
         <Route path="/pago-pendiente" element={<PagoPendiente />} />
+        <Route path="/infoservicioexpress" element={<InfoServicioExpress/>} />
         
       </Routes>
 

@@ -7,6 +7,7 @@ import { CarritoContext } from '../context/CarritoContext'; // 🌟 Importamos e
 import BotonPago from '../components/BotonPago';
 
 
+
 const NIVELES_SERVICIO = [
     { id: 'basico', titulo: 'Espacio Funcional', m2: '0-15 m²', precio: 140000 },
     { id: 'estandar', titulo: 'Espacio Social', m2: '15-30 m²', precio: 220000 },
@@ -122,12 +123,13 @@ function ServicioExpress() {
     return (
         <>
             <main className="main-servicios">
-                <h1 className="titulo-servicios">Diseño de Interiores Express</h1>
+                <h1 className="titulo-servicios">Comienza Tu Diseño Express!</h1>
+                
                 <p className="subtitulo-servicios">Selecciona el espacio y el nivel de diseño que necesitas.</p>
 
                 <div className="servicios-grid">
                     {listaServicios.map((servicio, index) => (
-                        <div key={index} className="servicio-item" onClick={() => abrirModal(servicio)}>
+                        <div key={index} className="servicio-item  text-white" onClick={() => abrirModal(servicio)}>
                             <img src={servicio.imagen} alt={servicio.titulo} loading="lazy" />
                             <h3>{servicio.titulo}</h3>
                             <p>{servicio.precio}</p>
