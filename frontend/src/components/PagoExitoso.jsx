@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const PagoExitoso = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-green-50 px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-green-50 px-4 mg-top">
       <div className="bg-white p-8 rounded-lg shadow-md max-w-md text-center">
         <h1 className="text-3xl font-bold text-green-600 mb-4">¡Pago Exitoso! 🎉</h1>
         <p className="text-gray-600 mb-6">
