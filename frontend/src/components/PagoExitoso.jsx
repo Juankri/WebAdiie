@@ -46,7 +46,7 @@ const PagoExitoso = () => {
 
         {/* Botón principal de acción */}
         <Link 
-          to="/formulario-diseno" /* Cambia esto a la ruta de tu formulario post-pago */
+          to="/formularioproyectoexpress" /* Cambia esto a la ruta de tu formulario post-pago */
           className="btn btn-lg w-100 mb-3" 
           style={{ 
             backgroundColor: '#0B2126', 
