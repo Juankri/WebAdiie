@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { useSearchParams } from 'react-router-dom';
 
 
 
@@ -9,6 +10,9 @@ import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal); // Esto prepara la librería para usarla en React
 
 const FormularioProyectoExpress = () => {
+
+  const [searchParams] = useSearchParams();
+  const ordenId = searchParams.get('orden') || 'Venta Directa / Sin Orden';
   // 1. ESTADO PARA CONTROLAR EN QUÉ PASO ESTAMOS (Del 1 al 4)
   const [pasoActual, setPasoActual] = useState(1);
 
@@ -89,6 +93,7 @@ const FormularioProyectoExpress = () => {
     // --- NUEVO: PREPARAR LOS DATOS PARA EL BACKEND ---
     // Usamos FormData porque tenemos archivos (imágenes), no podemos usar JSON normal.
     const formData = new FormData();
+    formData.append('orden_id', ordenId);
     formData.append('nombre', datosFormulario.nombre);
     formData.append('whatsapp', datosFormulario.whatsapp);
     formData.append('tipoEspacio', datosFormulario.tipoEspacio);
@@ -171,6 +176,14 @@ const FormularioProyectoExpress = () => {
               <h3 className="mb-0" style={{ color: '#D4AF37', fontFamily: "'Montserrat', sans-serif" }}>
                 Detalles de tu Proyecto Express
               </h3>
+
+              {/* 4. MEDALLA MOSTRANDO EL NÚMERO DE ORDEN (Si existe) */}
+              {ordenId !== 'Venta Directa / Sin Orden' && (
+                <span className="badge mt-2" style={{ backgroundColor: '#D4AF37', color: '#0B2126', fontSize: '14px' }}>
+                  Orden #{ordenId}
+                </span>
+              )}
+              
               <p className="mb-0 mt-2" style={{ fontSize: '14px' }}>Paso {pasoActual} de 4</p>
             </div>
 
