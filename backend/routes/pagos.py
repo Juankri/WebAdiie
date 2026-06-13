@@ -1,17 +1,18 @@
-from flask import Blueprint, request, jsonify
+import os
+import resend
 import mercadopago
+from flask import Blueprint, request, jsonify
 
 pagos_bp = Blueprint('pagos', __name__)
 
-# 👇 Pon tu token de prueba aquí (el que empieza con TEST-)
+# Configuración de llaves (Idealmente mueve el token de MP a tu .env pronto)
 sdk = mercadopago.SDK("APP_USR-4673614381035123-052217-9598653dccc9cc17eb3e5e69027e16b0-3421390750")
+resend.api_key = os.getenv("RESEND_API_KEY")
 
 @pagos_bp.route('/api/crear_preferencia', methods=['POST'])
 def crear_preferencia():
     data = request.json
     
-    # Armamos el carrito EXACTAMENTE como lo pide Mercado Pago
-    # Armamos el carrito engañando a Mercado Pago con un https falso
     preference_data = {
         "items": [
             {
@@ -25,27 +26,90 @@ def crear_preferencia():
             "failure": "https://webadiie-1.onrender.com/pago-fallido",
             "pending": "https://webadiie-1.onrender.com/pago-pendiente"
         },
-        "auto_return": "approved"
+        "auto_return": "approved",
+        
+        # 👇 1. LE AVISAMOS A MERCADO PAGO DÓNDE ESTÁ NUESTRO WEBHOOK
+        # IMPORTANTE: Cambia "tu-backend" por el link real de tu backend en Render
+        "notification_url": "https://webadiie-backend.onrender.com/api/webhook-pagos"
     }
 
     print("====== ENVIANDO DATOS A MP ======")
-    print(preference_data)
-
     try:
         result = sdk.preference().create(preference_data)
-        print("RESPUESTA MP:", result)
-
         if result["status"] in [200, 201]:
             return jsonify({
                 "id": result["response"]["id"], 
                 "init_point": result["response"]["init_point"]
             }), 200
         else:
-            return jsonify({
-                "error": "Mercado Pago rechazó la petición", 
-                "detalle": result["response"]
-            }), 400
+            return jsonify({"error": "Mercado Pago rechazó la petición", "detalle": result["response"]}), 400
             
     except Exception as e:
         print(f"Error interno en Python: {str(e)}")
         return jsonify({"error": "Hubo un problema en el servidor"}), 500
+
+
+# ==========================================
+# 👇 2. NUEVA RUTA: EL RECEPTOR INVISIBLE (WEBHOOK)
+# ==========================================
+@pagos_bp.route('/api/webhook-pagos', methods=['POST'])
+def webhook_pagos():
+    try:
+        data = request.json
+        print("====== AVISO DE MERCADO PAGO RECIBIDO ======", data)
+        
+        # Verificamos que sea un evento de "pago"
+        if data and data.get("type") == "payment":
+            payment_id = data.get("data", {}).get("id")
+            
+            # Le preguntamos a MP los detalles exactos de este pago
+            payment_info = sdk.payment().get(payment_id)
+            payment = payment_info["response"]
+            
+            # Si el pago está aprobado, disparamos el correo
+            if payment.get("status") == "approved":
+                email_cliente = payment.get("payer", {}).get("email")
+                orden_id = payment.get("id")
+                
+                # Si tenemos el correo, ejecutamos la función de Resend
+                if email_cliente:
+                    enviar_link_formulario(email_cliente, orden_id)
+                
+        # Siempre hay que devolver 200 OK a MP rápido para que no reintente enviar el aviso
+        return jsonify({"status": "ok"}), 200
+
+    except Exception as e:
+        print(f"Error en el webhook: {e}")
+        return jsonify({"error": "Error interno"}), 500
+
+
+# ==========================================
+# 👇 3. FUNCIÓN PARA MANDAR EL CORREO CON RESEND
+# ==========================================
+def enviar_link_formulario(email_cliente, orden_id):
+    # Armamos el link dinámico apuntando a tu frontend
+    link_formulario = f"https://webadiie-1.onrender.com/formulario-express?orden={orden_id}"
+    
+    html_content = f"""
+    <div style="font-family: Arial, sans-serif; color: #0B2126;">
+        <h2 style="color: #D4AF37;">¡Pago Exitoso! Bienvenido al Estudio Adiie</h2>
+        <p>Hemos recibido correctamente tu pago (Orden #{orden_id}).</p>
+        <p>Tu arquitecto está listo para empezar. Por favor, haz clic en el siguiente botón para enviarnos las medidas y fotos de tu espacio:</p>
+        <a href="{link_formulario}" style="display: inline-block; padding: 12px 24px; background-color: #0B2126; color: #D4AF37; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px;">
+            Ir al Formulario del Proyecto
+        </a>
+    </div>
+    """
+
+    params = {
+        "from": "onboarding@resend.dev", 
+        "to": email_cliente,
+        "subject": f"Siguiente paso: Detalles de tu Diseño Express (Orden #{orden_id})",
+        "html": html_content
+    }
+
+    try:
+        resend.Emails.send(params)
+        print(f"¡Link enviado con éxito a {email_cliente} para la orden {orden_id}!")
+    except Exception as e:
+        print(f"Error enviando correo Resend: {e}")
