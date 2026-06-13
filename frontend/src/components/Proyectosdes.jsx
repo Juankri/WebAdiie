@@ -50,7 +50,7 @@ function Proyectosdes() {
                     return (
                         <div 
                             key={index} 
-                            className={`slide-proyecto fade ${esActivo ? 'activo' : ''}`}
+                            className={`slide-proyecto mi_fade ${esActivo ? 'activo' : ''}`}
                             // Ocultamos con CSS los que no están activos para que no estorben
                             style={{ display: esActivo ? '' : 'none' }} 
                         >
