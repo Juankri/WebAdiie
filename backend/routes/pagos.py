@@ -116,3 +116,34 @@ def enviar_link_formulario(email_cliente, orden_id):
         print(f"¡Link enviado con éxito a {email_cliente} para la orden {orden_id}!")
     except Exception as e:
         print(f"Error enviando correo Resend: {e}")
+
+
+
+@pagos_bp.route('/api/validar-orden/<payment_id>', methods=['GET'])
+def validar_orden(payment_id):
+    try:
+        # 1. Le preguntamos directamente a Mercado Pago si este ID existe
+        payment_info = sdk.payment().get(payment_id)
+        payment = payment_info["response"]
+        
+        # 2. Verificamos que el estado sea estrictamente 'approved'
+        if payment.get("status") == "approved":
+            
+            # OPTIONAL: Si ya estás usando MongoDB, aquí puedes verificar que no se haya usado antes:
+            # orden_existente = db.formularios.find_one({"orden_id": payment_id})
+            # if orden_existente:
+            #     return jsonify({"valido": False, "error": "Esta orden ya completó su formulario"}), 400
+            
+            return jsonify({
+                "valido": True, 
+                "mensaje": "Orden confirmada y vigente",
+                "cliente": payment.get("payer", {}).get("email")
+            }), 200
+            
+        else:
+            return jsonify({"valido": False, "error": "El pago asociado a esta orden no está aprobado"}), 400
+            
+    except Exception as e:
+        # Si Mercado Pago no encuentra el ID, lanzará un error y caerá aquí
+        print(f"Intento de fraude o ID inexistente: {payment_id}. Error: {e}")
+        return jsonify({"valido": False, "error": "El número de orden no existe en el sistema"}), 444

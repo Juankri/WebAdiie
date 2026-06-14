@@ -13,6 +13,12 @@ const FormularioProyectoExpress = () => {
 
   const [searchParams] = useSearchParams();
   const ordenId = searchParams.get('orden') || 'Venta Directa / Sin Orden';
+
+  // ESTADOS DE SEGURIDAD
+  const [verificando, setVerificando] = useState(true);
+  const [esValido, setEsValido] = useState(false);
+  const [mensajeError, setMensajeError] = useState('');
+
   // 1. ESTADO PARA CONTROLAR EN QUÉ PASO ESTAMOS (Del 1 al 4)
   const [pasoActual, setPasoActual] = useState(1);
 
@@ -40,11 +46,11 @@ const FormularioProyectoExpress = () => {
   const siguientePaso = () => {
     setBloqueoFantasma(true); // 🛡️ Levantamos el escudo protector
     setPasoActual((prev) => prev + 1);
-    
+
     // 🛡️ Bajamos el escudo medio segundo después (500 milisegundos)
     setTimeout(() => {
       setBloqueoFantasma(false);
-    }, 500); 
+    }, 500);
   };
   const pasoAnterior = () => setPasoActual((prev) => prev - 1);
 
@@ -60,7 +66,7 @@ const FormularioProyectoExpress = () => {
     setDatosFormulario({ ...datosFormulario, [name]: files[0] });
   };
 
-  
+
   // Función final para cuando le dan al botón "Enviar a mi Arquitecto"
   // Función final para cuando le dan al botón "Enviar a mi Arquitecto"
   const handleSubmit = async (e) => {
@@ -68,7 +74,7 @@ const FormularioProyectoExpress = () => {
 
     // 🛡️ SI EL ESCUDO ESTÁ ARRIBA, IGNORAMOS EL CLIC EN SILENCIO
     if (bloqueoFantasma) {
-      return; 
+      return;
     }
 
     // 1. Si estamos en los pasos 1, 2 o 3, solo avanzamos
@@ -105,7 +111,7 @@ const FormularioProyectoExpress = () => {
     formData.append('colores', datosFormulario.colores);
     formData.append('actividades', datosFormulario.actividades);
     formData.append('mueblesConservar', datosFormulario.mueblesConservar);
-    
+
     // Adjuntamos los archivos
     formData.append('fotos', datosFormulario.fotos);
     formData.append('croquis', datosFormulario.croquis);
@@ -137,15 +143,15 @@ const FormularioProyectoExpress = () => {
           title: '¡Proyecto Recibido!',
           text: 'Tu arquitecto ya tiene toda la información para empezar a trabajar.',
           icon: 'success',
-          iconColor: '#D4AF37',             
+          iconColor: '#D4AF37',
           confirmButtonText: 'Entendido',
-          confirmButtonColor: '#0B2126',    
-          background: '#f9f9f9',            
+          confirmButtonColor: '#0B2126',
+          background: '#f9f9f9',
           backdrop: `rgba(11, 33, 38, 0.4)`,
           customClass: { title: 'fs-4' }
         }).then((result) => {
           if (result.isConfirmed) {
-             window.location.href = "/"; // Redirige al inicio
+            window.location.href = "/"; // Redirige al inicio
           }
         });
       } else {
@@ -166,11 +172,72 @@ const FormularioProyectoExpress = () => {
   // Calculamos el porcentaje de la barra de progreso
   const porcentajeProgreso = (pasoActual / 4) * 100;
 
+  useEffect(() => {
+    const comprobarSeguridad = async () => {
+      // Si ni siquiera viene un parámetro 'orden' en la URL, bloqueamos de inmediato
+      if (!ordenId) {
+        setEsValido(false);
+        setMensajeError('Acceso denegado: No se detectó ningún número de orden de compra.');
+        setVerificando(false);
+        return;
+      }
+
+      try {
+        // Consultamos al backend en Render si la orden es real
+        const respuesta = await fetch(`https://webadiie-backend.onrender.com/api/validar-orden/${ordenId}`);
+        const resultado = await respuesta.json();
+
+        if (respuesta.ok && resultado.valido) {
+          setEsValido(true);
+        } else {
+          setEsValido(false);
+          setMensajeError(resultado.error || 'La orden no es válida.');
+        }
+      } catch (error) {
+        setEsValido(false);
+        setMensajeError('Error al conectar con el módulo de seguridad.');
+      } finally {
+        setVerificando(false);
+      }
+    };
+
+    comprobarSeguridad();
+  }, [ordenId]);
+
+  // Pantalla de carga mientras el backend habla con Mercado Pago
+  if (verificando) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+        <div className="spinner-border text-dark" role="status">
+          <span className="visually-hidden">Verificando credenciales de pago...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // 🛡️ PANTALLA DE BLOQUEO SI ALGUIEN INTENTÓ BURLAR EL LINK
+  if (!esValido) {
+    return (
+      <div className="container text-center py-5" style={{ marginTop: '150px' }}>
+        <div className="card border-danger mx-auto shadow" style={{ maxWidth: '500px', borderRadius: '15px' }}>
+          <div className="card-body p-5">
+            <i className="bi bi-shield-slash-fill text-danger mb-4" style={{ fontSize: '60px' }}></i>
+            <h3 className="text-danger fw-bold mb-3">Acceso No Autorizado</h3>
+            <p className="text-muted">{mensajeError}</p>
+            <hr />
+            <p className="small text-secondary">Esta sección está protegida criptográficamente. Cada intento de acceso forzado queda registrado.</p>
+            <Link to="/" className="btn btn-dark w-100 mt-3">Volver a la Página Principal</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div style={{marginTop:'150px'}} className="container py-5">
+    <div style={{ marginTop: '150px' }} className="container py-5">
       <div className="row justify-content-center">
         <div className="col-lg-8">
-          
+
           <div className="card shadow-lg border-0" style={{ borderRadius: '15px' }}>
             <div className="card-header text-white text-center py-4" style={{ backgroundColor: '#0B2126', borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}>
               <h3 className="mb-0" style={{ color: '#D4AF37', fontFamily: "'Montserrat', sans-serif" }}>
@@ -183,27 +250,27 @@ const FormularioProyectoExpress = () => {
                   Orden #{ordenId}
                 </span>
               )}
-              
+
               <p className="mb-0 mt-2" style={{ fontSize: '14px' }}>Paso {pasoActual} de 4</p>
             </div>
 
             <div className="card-body p-4 p-md-5">
-              
+
               {/* BARRA DE PROGRESO BOOTSTRAP */}
               <div className="progress mb-4" style={{ height: '10px' }}>
-                <div 
-                  className="progress-bar progress-bar-striped progress-bar-animated" 
-                  role="progressbar" 
+                <div
+                  className="progress-bar progress-bar-striped progress-bar-animated"
+                  role="progressbar"
                   style={{ width: `${porcentajeProgreso}%`, backgroundColor: '#D4AF37' }}
-                  aria-valuenow={porcentajeProgreso} 
-                  aria-valuemin="0" 
+                  aria-valuenow={porcentajeProgreso}
+                  aria-valuemin="0"
                   aria-valuemax="100"
                 ></div>
               </div>
 
               {/* FORMULARIO */}
               <form onSubmit={handleSubmit}>
-                
+
                 {/* --- PASO 1: INFO GENERAL --- */}
                 {pasoActual === 1 && (
                   <div className="animation-fade-in">
