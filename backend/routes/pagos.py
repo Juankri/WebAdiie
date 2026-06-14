@@ -2,6 +2,8 @@ import os
 import resend
 import mercadopago
 from flask import Blueprint, request, jsonify
+from database import db
+from datetime import datetime
 
 pagos_bp = Blueprint('pagos', __name__)
 
@@ -74,10 +76,26 @@ def webhook_pagos():
             if payment.get("status") == "approved":
                 # 🌟 AQUÍ ESTÁ EL TRUCO: Extraemos el correo real que guardamos en la preferencia
                 email_cliente_real = payment.get("external_reference")
-                orden_id = payment.get("id") # Este número gigante ES el ID oficial de la orden
+                orden_id = str(payment.get("id")) # Lo pasamos a texto por seguridad
                 
-                if email_cliente_real:
-                    enviar_link_formulario(email_cliente_real, orden_id)
+                # 🛡️ 1. CREAMOS EL COMPROBANTE EN LA BASE DE DATOS
+                # Si la colección "comprobantes" no existe, Mongo la crea en este exacto instante.
+                comprobante = {
+                    "orden_id": orden_id,
+                    "email_cliente": email_cliente_real,
+                    "estado_pago": "aprobado",
+                    "formulario_completado": False, # <--- Este es el candado clave
+                    "fecha_pago": datetime.now()
+                }
+                
+                # Buscamos si ya existe para no duplicar (Mercado Pago a veces manda avisos dobles)
+                existe = db.comprobantes.find_one({"orden_id": orden_id})
+                if not existe:
+                    db.comprobantes.insert_one(comprobante)
+                    
+                    # 2. Disparamos el correo solo si es la primera vez
+                    if email_cliente_real:
+                        enviar_link_formulario(email_cliente_real, orden_id)
                 
         return jsonify({"status": "ok"}), 200
 
@@ -122,28 +140,28 @@ def enviar_link_formulario(email_cliente, orden_id):
 @pagos_bp.route('/api/validar-orden/<payment_id>', methods=['GET'])
 def validar_orden(payment_id):
     try:
-        # 1. Le preguntamos directamente a Mercado Pago si este ID existe
-        payment_info = sdk.payment().get(payment_id)
-        payment = payment_info["response"]
+        # 1. Buscamos el comprobante en nuestra base de datos
+        orden = db.comprobantes.find_one({"orden_id": str(payment_id)})
         
-        # 2. Verificamos que el estado sea estrictamente 'approved'
-        if payment.get("status") == "approved":
-            
-            # OPTIONAL: Si ya estás usando MongoDB, aquí puedes verificar que no se haya usado antes:
-            # orden_existente = db.formularios.find_one({"orden_id": payment_id})
-            # if orden_existente:
-            #     return jsonify({"valido": False, "error": "Esta orden ya completó su formulario"}), 400
-            
+        if not orden:
             return jsonify({
-                "valido": True, 
-                "mensaje": "Orden confirmada y vigente",
-                "cliente": payment.get("payer", {}).get("email")
-            }), 200
+                "valido": False, 
+                "error": "Esta orden no existe en nuestros registros de pago."
+            }), 404
             
-        else:
-            return jsonify({"valido": False, "error": "El pago asociado a esta orden no está aprobado"}), 400
+        # 2. Revisamos el candado (Si ya se completó el formulario)
+        if orden.get("formulario_completado") == True:
+            return jsonify({
+                "valido": False, 
+                "error": "Este enlace ya fue utilizado para enviar un proyecto. Si necesitas otro diseño, debes generar una nueva cotización."
+            }), 403
             
+        # 3. Si existe y el formulario es 'False', le damos luz verde a React
+        return jsonify({
+            "valido": True, 
+            "mensaje": "Orden válida"
+        }), 200
+        
     except Exception as e:
-        # Si Mercado Pago no encuentra el ID, lanzará un error y caerá aquí
-        print(f"Intento de fraude o ID inexistente: {payment_id}. Error: {e}")
-        return jsonify({"valido": False, "error": "El número de orden no existe en el sistema"}), 444
+        print(f"Error validando orden en BD: {e}")
+        return jsonify({"valido": False, "error": "Error interno del servidor"}), 500
