@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // 1. Añadimos useSearchParams a la importación
 import { Link, useSearchParams } from 'react-router-dom';
 
@@ -6,6 +6,72 @@ const PagoExitoso = () => {
   const [searchParams] = useSearchParams();
   // Capturamos el ID de pago que Mercado Pago inyectó en la URL de redirección
   const paymentId = searchParams.get('payment_id') || 'SinID';
+
+   // ESTADOS DE SEGURIDAD
+    const [verificando, setVerificando] = useState(true);
+    const [esValido, setEsValido] = useState(false);
+    const [mensajeError, setMensajeError] = useState('');
+
+  useEffect(() => {
+      const comprobarSeguridad = async () => {
+        // Si ni siquiera viene un parámetro 'orden' en la URL, bloqueamos de inmediato
+        if (!ordenId) {
+          setEsValido(false);
+          setMensajeError('Acceso denegado: No se detectó ningún número de orden de compra.');
+          setVerificando(false);
+          return;
+        }
+  
+        try {
+          // Consultamos al backend en Render si la orden es real
+          const respuesta = await fetch(`https://webadiie-backend.onrender.com/api/validar-orden/${ordenId}`);
+          const resultado = await respuesta.json();
+  
+          if (respuesta.ok && resultado.valido) {
+            setEsValido(true);
+          } else {
+            setEsValido(false);
+            setMensajeError(resultado.error || 'La orden no es válida.');
+          }
+        } catch (error) {
+          setEsValido(false);
+          setMensajeError('Error al conectar con el módulo de seguridad.');
+        } finally {
+          setVerificando(false);
+        }
+      };
+  
+      comprobarSeguridad();
+    }, [ordenId]);
+  
+    // Pantalla de carga mientras el backend habla con Mercado Pago
+    if (verificando) {
+      return (
+        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+          <div className="spinner-border text-dark" role="status">
+            <span className="visually-hidden">Verificando credenciales de pago...</span>
+          </div>
+        </div>
+      );
+    }
+  
+    // 🛡️ PANTALLA DE BLOQUEO SI ALGUIEN INTENTÓ BURLAR EL LINK
+    if (!esValido) {
+      return (
+        <div className="container text-center py-5" style={{ marginTop: '150px' }}>
+          <div className="card border-danger mx-auto shadow" style={{ maxWidth: '500px', borderRadius: '15px' }}>
+            <div className="card-body p-5">
+              <i className="bi bi-shield-slash-fill text-danger mb-4" style={{ fontSize: '60px' }}></i>
+              <h3 className="text-danger fw-bold mb-3">Acceso No Autorizado</h3>
+              <p className="text-muted">{mensajeError}</p>
+              <hr />
+              <p className="small text-secondary">Esta sección está protegida criptográficamente. Cada intento de acceso forzado queda registrado.</p>
+              <Link to="/" className="btn btn-dark w-100 mt-3">Volver a la Página Principal</Link>
+            </div>
+          </div>
+        </div>
+      );
+    }
   
   return (
     // Contenedor principal: Ocupa toda la pantalla y centra la tarjeta
