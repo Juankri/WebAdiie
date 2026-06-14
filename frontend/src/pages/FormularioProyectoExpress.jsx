@@ -174,11 +174,11 @@ const FormularioProyectoExpress = () => {
   useEffect(() => {
     const comprobarSeguridad = async () => {
       // Si ni siquiera viene un parámetro 'orden' en la URL, bloqueamos de inmediato
-      if (!ordenId) {
+      if (!ordenId || ordenId === 'SinID' || ordenId === 'Venta Directa / Sin Orden') {
         setEsValido(false);
-        setMensajeError('Acceso denegado: No se detectó ningún número de orden de compra.');
+        setMensajeError('Acceso denegado: Enlace de diseño inválido o incompleto.');
         setVerificando(false);
-        return;
+        return; // Detiene la función aquí mismo, ya no molesta al backend
       }
 
       try {
