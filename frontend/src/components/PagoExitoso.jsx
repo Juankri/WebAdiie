@@ -6,7 +6,7 @@ const PagoExitoso = () => {
   const paymentId = searchParams.get('payment_id') || 'SinID';
   
   return (
-    <div className="container-fluid d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f9f9f9', paddingTop: '150px', paddingBottom: '50px' }}>
+    <div className="container-fluid d-flex justify-content-center align-items-center"  style={{ minHeight: '100vh', backgroundColor: '#f9f9f9', paddingTop: '150px', paddingBottom: '50px' }}>
       <div className="card text-center shadow-lg border-0" style={{ borderRadius: '20px', padding: '40px', maxWidth: '500px', width: '100%' }}>
         
         <div className="mb-4">

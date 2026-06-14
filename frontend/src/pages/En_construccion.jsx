@@ -8,7 +8,7 @@ function En_Construccion() {
             justifyContent: 'center',
             alignItems: 'center',
             // Usamos minHeight en vez de 100vh para que conviva bien con el Navbar y Footer
-            minHeight: '65vh', 
+            minHeight: '75vh', 
             backgroundColor: '#ffffff', // Fondo blanco
             textAlign: 'center',
             padding: '20px',

@@ -217,7 +217,7 @@ const FormularioProyectoExpress = () => {
   // 🛡️ PANTALLA DE BLOQUEO SI ALGUIEN INTENTÓ BURLAR EL LINK
   if (!esValido) {
     return (
-      <div className="container text-center py-5" style={{ marginTop: '150px' }}>
+      <div className="container text-center py-5" style={{ marginTop: '150px', minHeight: '70vh' }}>
         <div className="card border-danger mx-auto shadow" style={{ maxWidth: '500px', borderRadius: '15px' }}>
           <div className="card-body p-5">
             <i className="bi bi-shield-slash-fill text-danger mb-4" style={{ fontSize: '60px' }}></i>

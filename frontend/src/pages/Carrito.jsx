@@ -69,7 +69,7 @@ function Carrito() {
 
     return (
         <>
-            <main className="carrito-main">
+            <main style={{ marginTop: '150px', minHeight: '70vh' }} className="carrito-main">
                 <h1 className="titulo-servicios">Tu Cotización</h1>
 
                 {carrito.length === 0 ? (
