@@ -12,6 +12,9 @@ resend.api_key = os.getenv("RESEND_API_KEY")
 @pagos_bp.route('/api/crear_preferencia', methods=['POST'])
 def crear_preferencia():
     data = request.json
+
+    correo_real = data.get("correo")
+    nombre_real = data.get("nombre")
     
     preference_data = {
         "items": [
@@ -21,6 +24,11 @@ def crear_preferencia():
                 "unit_price": float(data.get("precio", 0))
             }
         ],
+        "payer": {
+            "name": nombre_real,
+            "email": correo_real
+        },
+        "external_reference": correo_real,
         "back_urls": {
             "success": "https://webadiie-1.onrender.com/pago-exitoso",
             "failure": "https://webadiie-1.onrender.com/pago-fallido",
@@ -56,26 +64,21 @@ def crear_preferencia():
 def webhook_pagos():
     try:
         data = request.json
-        print("====== AVISO DE MERCADO PAGO RECIBIDO ======", data)
         
-        # Verificamos que sea un evento de "pago"
         if data and data.get("type") == "payment":
             payment_id = data.get("data", {}).get("id")
             
-            # Le preguntamos a MP los detalles exactos de este pago
             payment_info = sdk.payment().get(payment_id)
             payment = payment_info["response"]
             
-            # Si el pago está aprobado, disparamos el correo
             if payment.get("status") == "approved":
-                email_cliente = payment.get("payer", {}).get("email")
-                orden_id = payment.get("id")
+                # 🌟 AQUÍ ESTÁ EL TRUCO: Extraemos el correo real que guardamos en la preferencia
+                email_cliente_real = payment.get("external_reference")
+                orden_id = payment.get("id") # Este número gigante ES el ID oficial de la orden
                 
-                # Si tenemos el correo, ejecutamos la función de Resend
-                if email_cliente:
-                    enviar_link_formulario(email_cliente, orden_id)
+                if email_cliente_real:
+                    enviar_link_formulario(email_cliente_real, orden_id)
                 
-        # Siempre hay que devolver 200 OK a MP rápido para que no reintente enviar el aviso
         return jsonify({"status": "ok"}), 200
 
     except Exception as e:

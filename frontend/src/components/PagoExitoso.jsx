@@ -1,7 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// 1. Añadimos useSearchParams a la importación
+import { Link, useSearchParams } from 'react-router-dom';
 
 const PagoExitoso = () => {
+  const [searchParams] = useSearchParams();
+  // Capturamos el ID de pago que Mercado Pago inyectó en la URL de redirección
+  const paymentId = searchParams.get('payment_id') || 'SinID';
+  
   return (
     // Contenedor principal: Ocupa toda la pantalla y centra la tarjeta
     <div 
@@ -37,7 +42,8 @@ const PagoExitoso = () => {
         <div className="p-3 mb-4 text-start" style={{ backgroundColor: '#f1f1f1', borderLeft: '5px solid #D4AF37', borderRadius: '5px' }}>
           <p className="mb-1" style={{ fontSize: '14px', color: '#333' }}>
             <i className="bi bi-receipt me-2" style={{ color: '#0B2126' }}></i>
-            <strong>Nº de Orden:</strong> #{(Math.floor(Math.random() * 90000) + 10000)}
+            {/* 2. Mostramos el ID de pago REAL en lugar del número aleatorio */}
+            <strong>Nº de Orden:</strong> #{paymentId}
           </p>
           <p className="mb-0" style={{ fontSize: '13px', color: '#666' }}>
             Se ha enviado un recibo a tu correo electrónico.
@@ -45,8 +51,9 @@ const PagoExitoso = () => {
         </div>
 
         {/* Botón principal de acción */}
+        {/* 3. Inyectamos el ID de la orden directamente en el link hacia el formulario */}
         <Link 
-          to="/formularioproyectoexpress" /* Cambia esto a la ruta de tu formulario post-pago */
+          to={`/formularioproyectoexpress?orden=${paymentId}`} 
           className="btn btn-lg w-100 mb-3" 
           style={{ 
             backgroundColor: '#0B2126', 
@@ -55,7 +62,7 @@ const PagoExitoso = () => {
             borderRadius: '8px',
             transition: 'all 0.3s ease' 
           }}
-          onMouseEnter={(e) => { e.target.style.backgroundColor = '#153b43'; }} // Un azul un poco más claro al pasar el mouse
+          onMouseEnter={(e) => { e.target.style.backgroundColor = '#153b43'; }} 
           onMouseLeave={(e) => { e.target.style.backgroundColor = '#0B2126'; }}
         >
           Completar Detalles del Proyecto <i className="bi bi-arrow-right ms-2"></i>
