@@ -5,7 +5,7 @@ function Servicios() {
     // Es mucho más limpio y fácil de editar en el futuro.
     const listaServicios = [
         {
-            enlace: "/servicio-express",
+            enlace: "/infoservicioexpress",
             icono: "/img/sol.png", // Recuerda que las imágenes ahora viven en 'public/img/'
             titulo: "Servicio Express",
             descripcion: ["Un servicio para quienes buscan la decoración de su espacio en poco tiempo. Pensado para que se animan a implementar el diseño por su cuenta y así lograr un importante ahorro."]

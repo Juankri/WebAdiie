@@ -20,7 +20,7 @@ import Login from './pages/Login';
 import PagoExitoso from './components/PagoExitoso';
 import PagoFallido from './components/PagoFallido';
 import PagoPendiente from './components/PagoPendiente';
-
+import Not404 from './pages/Not404';
 
 import './App.css'; 
 import InfoServicioExpress from './components/infoServicioExpress';
@@ -66,6 +66,7 @@ function App() {
         <Route path="/pago-pendiente" element={<PagoPendiente />} />
         <Route path="/infoservicioexpress" element={<InfoServicioExpress/>} />
         <Route path="/formularioproyectoexpress" element={<FormularioProyectoExpress/>} />
+        <Route path="*" element={<Not404/>} />
       </Routes>
 
       <Footer />

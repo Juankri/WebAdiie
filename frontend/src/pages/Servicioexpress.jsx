@@ -1,10 +1,11 @@
 
-import './Servicioexpress.css'; 
+import './Servicioexpress.css';
 import Contacto from '../components/Contacto';
 import { useState, useEffect, useContext } from 'react'; // 🌟 Importamos useContext
 import { useLocation } from 'react-router-dom';
 import { CarritoContext } from '../context/CarritoContext'; // 🌟 Importamos el cerebro del carrito
 import BotonPago from '../components/BotonPago';
+import Swal from 'sweetalert2';
 
 
 
@@ -91,7 +92,7 @@ function ServicioExpress() {
             imagen: "/img/servicio_express/masterplan.webp"
         }
     ];
-    
+
     const { agregarAlCarrito } = useContext(CarritoContext);
     const [modalAbierto, setModalAbierto] = useState(false);
     const [servicioActivo, setServicioActivo] = useState(null);
@@ -116,7 +117,33 @@ function ServicioExpress() {
         };
 
         agregarAlCarrito(itemParaElCarrito);
-        alert(`¡${itemParaElCarrito.titulo} agregado a tu cotización! 🛒`);
+        
+        // 🌟 CONFIGURACIÓN DEL TOAST ELEGANTE
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end', // Aparece arriba a la derecha
+            showConfirmButton: false,
+            timer: 3000, // Desaparece en 3 segundos
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+
+        // Disparamos la alerta
+        Toast.fire({
+            icon: 'success',
+            title: '¡Agregado a tu cotización!',
+            text: itemParaElCarrito.titulo,
+            color: '#0B2126',
+            iconColor: '#D4AF37', // Tu dorado
+            background: '#f9f9f9',
+            customClass: {
+                title: 'fs-6 fw-bold'
+            }
+        });
+
         cerrarModal();
     };
 
@@ -124,7 +151,7 @@ function ServicioExpress() {
         <>
             <main className="main-servicios">
                 <h1 className="titulo-servicios">Comienza Tu Diseño Express!</h1>
-                
+
                 <p className="subtitulo-servicios">Selecciona el espacio y el nivel de diseño que necesitas.</p>
 
                 <div className="servicios-grid">
@@ -138,52 +165,52 @@ function ServicioExpress() {
                 </div>
 
                 {modalAbierto && servicioActivo && (
-                <div className="modal" style={{ display: 'block' }}>
-                    <div className="modal-contenido">
-                        <span className="modal-cerrar" onClick={cerrarModal}>&times;</span>
-                        
-                        <div className="modal-body-grid">
-                            
-                            <div className="modal-imagen-container">
-                                <img src={servicioActivo.imagen} alt={servicioActivo.titulo} />
-                            </div>
-                            
-                            <div className="modal-info-container">
-                                <h2>{servicioActivo.titulo}</h2>
-                                <p>{servicioActivo.descripcion}</p>
+                    <div className="modal" style={{ display: 'block' }}>
+                        <div className="modal-contenido">
+                            <span className="modal-cerrar" onClick={cerrarModal}>&times;</span>
 
-                                {/* El nuevo Select simple */}
-                                <div className="form-grupo" style={{ marginTop: '20px' }}>
-                                    <label>Selecciona tu plan:</label>
-                                    <select 
-                                        className="select-nivel"
-                                        value={nivelSeleccionado.id} 
-                                        onChange={(e) => {
-                                            const nivel = NIVELES_SERVICIO.find(n => n.id === e.target.value);
-                                            setNivelSeleccionado(nivel);
-                                        }}
-                                    >
-                                        {NIVELES_SERVICIO.map((nivel) => (
-                                            <option key={nivel.id} value={nivel.id}>
-                                                {nivel.titulo} ({nivel.m2}) - ${nivel.precio.toLocaleString()}
-                                            </option>
-                                        ))}
-                                    </select>
+                            <div className="modal-body-grid">
+
+                                <div className="modal-imagen-container">
+                                    <img src={servicioActivo.imagen} alt={servicioActivo.titulo} />
                                 </div>
 
-                                {/* El único botón de agregar */}
-                                <button 
-                                    className="btn-agregar-completo" 
-                                    onClick={() => manejarAgregarAlCarrito(nivelSeleccionado)}
-                                >
-                                    Agregar al Carrito - ${nivelSeleccionado.precio.toLocaleString()}
-                                </button>
-                            </div>
+                                <div className="modal-info-container">
+                                    <h2>{servicioActivo.titulo}</h2>
+                                    <p>{servicioActivo.descripcion}</p>
 
+                                    {/* El nuevo Select simple */}
+                                    <div className="form-grupo" style={{ marginTop: '20px' }}>
+                                        <label>Selecciona tu plan:</label>
+                                        <select
+                                            className="select-nivel"
+                                            value={nivelSeleccionado.id}
+                                            onChange={(e) => {
+                                                const nivel = NIVELES_SERVICIO.find(n => n.id === e.target.value);
+                                                setNivelSeleccionado(nivel);
+                                            }}
+                                        >
+                                            {NIVELES_SERVICIO.map((nivel) => (
+                                                <option key={nivel.id} value={nivel.id}>
+                                                    {nivel.titulo} ({nivel.m2}) - ${nivel.precio.toLocaleString()}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {/* El único botón de agregar */}
+                                    <button
+                                        className="btn-agregar-completo"
+                                        onClick={() => manejarAgregarAlCarrito(nivelSeleccionado)}
+                                    >
+                                        Agregar al Carrito - ${nivelSeleccionado.precio.toLocaleString()}
+                                    </button>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
             </main>
             <Contacto />
         </>

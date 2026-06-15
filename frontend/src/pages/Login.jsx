@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate} from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import './Login.css';
 
@@ -20,7 +21,16 @@ const Login = () => {
 
  const iniciarSesion = async (e) => {
     e.preventDefault();
-    setError('')
+    setError('');
+
+    // 🌟 1. MOSTRAMOS SPINNER DE CARGA MIENTRAS CONECTA
+    Swal.fire({
+      title: 'Verificando credenciales...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
 
     try {
       const respuesta = await fetch('https://webadiie-backend.onrender.com/api/login', {
@@ -33,15 +43,33 @@ const Login = () => {
 
       if (respuesta.ok) {
         localStorage.setItem('token_adiie', datos.token);
-        alert('¡Bienvenido!');
-        window.location.href = '/admin_dashboard';
+        
+        // 🌟 2. ALERTA DE ÉXITO QUE REDIRIGE AUTOMÁTICAMENTE
+        Swal.fire({
+          icon: 'success',
+          title: '¡Bienvenido al Panel!',
+          text: 'Redirigiendo de forma segura...',
+          iconColor: '#D4AF37', // Dorado Adiie
+          showConfirmButton: false, // Ocultamos el botón
+          timer: 1500, // Espera 1.5 segundos para que se vea el mensaje
+          background: '#f9f9f9',
+          color: '#0B2126'
+        }).then(() => {
+          // Redirigimos una vez que la alerta se cierra
+          window.location.href = '/admin_dashboard';
+        });
+
       } else {
+        // Cerramos el spinner si hay error y mostramos el texto rojo
+        Swal.close(); 
         setError(datos.error || 'Credenciales incorrectas');
       }
     } catch (error) {
-      setError('Error de conexion con el servidor');
+      // Cerramos el spinner si se cae el servidor
+      Swal.close(); 
+      setError('Error de conexión con el servidor. ¿Está activo en Render?');
     }
- }
+  };
 
 
 return(

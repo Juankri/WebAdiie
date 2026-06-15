@@ -13,6 +13,7 @@ import {
     ArrowRight
 } from 'lucide-react';
 import './Admin_proyecto.css'
+import Swal from 'sweetalert2';
 
 const AdminDisenos = () => {
     const navigate = useNavigate();
@@ -107,18 +108,70 @@ const AdminDisenos = () => {
     };
 
     const borrarDiseno = async (id, titulo) => {
-        if (window.confirm(`¿Seguro que quieres eliminar el diseño "${titulo}"?`)) {
-            try {
-                const res = await fetch(`https://webadiie-backend.onrender.com/api/disenos/${id}`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                if (res.ok) {
-                    obtenerDisenos();
-                }
-            } catch (error) { alert('No se pudo eliminar el diseño'); }
+    // 1. ALERTA DE CONFIRMACIÓN ELEGANTE
+    const confirmacion = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: `Vas a eliminar el diseño "${titulo}". Esta acción no se puede deshacer.`,
+      icon: 'warning',
+      iconColor: '#dc3545', // Rojo sutil
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545', // Botón rojo para peligro
+      cancelButtonColor: '#0B2126', // Botón oscuro para cancelar
+      confirmButtonText: '<i className="bi bi-trash"></i> Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      background: '#f9f9f9',
+      color: '#0B2126'
+    });
+
+    // Si el usuario confirma
+    if (confirmacion.isConfirmed) {
+      // 2. SPINNER DE CARGA
+      Swal.fire({
+        title: 'Eliminando diseño...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
         }
-    };
+      });
+
+      try {
+        const res = await fetch(`https://webadiie-backend.onrender.com/api/disenos/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (res.ok) {
+          // Refrescamos la lista de diseños en pantalla
+          obtenerDisenos();
+          
+          // 3. TOAST DE ÉXITO SILENCIOSO
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Diseño eliminado con éxito',
+            showConfirmButton: false,
+            timer: 2500,
+            iconColor: '#dc3545', 
+            background: '#f9f9f9',
+            color: '#0B2126'
+          });
+        } else {
+          throw new Error('Respuesta fallida del servidor');
+        }
+      } catch (error) {
+        // 4. MANEJO DE ERRORES
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al borrar',
+          text: 'No se pudo eliminar el diseño. Por favor, intenta nuevamente.',
+          confirmButtonColor: '#0B2126',
+          background: '#f9f9f9',
+          color: '#0B2126'
+        });
+      }
+    }
+  };
 
     const prepararEdicion = (d) => {
         setEditandoId(d._id);
@@ -148,7 +201,7 @@ const AdminDisenos = () => {
             <form onSubmit={enviarDiseno} className="admin-form">
                 <h3>
                     {editandoId ? <Edit size={20} className="admin-title-icon" /> : <PlusSquare size={20} className="admin-title-icon" />} 
-                    {editandoId ? ' Editar Diseño' : ' Nuevo Diseño para la Galería'}
+                    {editandoId ? ' Editar Diseño' : ' Nuevo Diseño '}
                 </h3>
                 
                 <input 
