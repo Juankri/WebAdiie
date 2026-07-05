@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2'; // Importamos las alertas elegantes
 
 function Contacto() {
     // 1. ESTADO DEL FORMULARIO
@@ -8,7 +9,10 @@ function Contacto() {
         mensaje: ''
     });
 
-    // 2. FUNCIÓN PARA ACTUALIZAR EL ESTADO
+    // 2. ESTADO DE CARGA (Para bloquear el botón mientras se envía)
+    const [enviando, setEnviando] = useState(false);
+
+    // 3. FUNCIÓN PARA ACTUALIZAR EL ESTADO
     const manejarCambio = (e) => {
         const { name, value } = e.target;
         setDatosFormulario({
@@ -17,40 +21,69 @@ function Contacto() {
         });
     };
 
-    // 3. FUNCIÓN PARA ENVIAR
+    // 4. FUNCIÓN PARA ENVIAR
     const manejarEnvio = async (e) => {
         e.preventDefault(); 
         
-        console.log("Enviando datos al servidor...");
+        // Bloqueamos el botón y mostramos alerta de carga
+        setEnviando(true);
+        Swal.fire({
+            title: 'Enviando mensaje...',
+            text: 'Por favor, espera un momento.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading(); // Muestra el spinner de carga
+            }
+        });
         
         try {
-            // Usamos 'fetch' para golpear la puerta de Python
+            // Hacemos la petición a tu backend en Render
             const respuesta = await fetch('https://webadiie-backend.onrender.com/api/contacto', {
                 method: 'POST',
-                headers: { // CORRECCIÓN: Con "s" al final
+                headers: { 
                     'Content-Type': 'application/json' 
                 },
-                body: JSON.stringify(datosFormulario) // CORRECCIÓN: Nombre correcto de tu variable
+                body: JSON.stringify(datosFormulario) 
             });
 
-            // 4. Revisamos si Python nos respondió con un "OK"
+            // Si el backend (Flask/Python) nos responde con éxito
             if (respuesta.ok) {
-                alert("¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.");
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Mensaje Enviado!',
+                    text: 'Nos pondremos en contacto contigo muy pronto.',
+                    iconColor: '#D4AF37', // Tu color dorado
+                    confirmButtonColor: '#0B2126' // Tu color azul oscuro
+                });
 
-                // CORRECCIÓN: Usamos el nombre correcto de tu actualizador
+                // Limpiamos el formulario
                 setDatosFormulario({
                     nombre: '',
                     correo: '',
                     mensaje: ''
                 });
             } else {
-                alert("Hubo un problema al enviar el mensaje. Intenta nuevamente.");
+                // Si el servidor responde pero hay un error lógico
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ups...',
+                    text: 'Hubo un problema al procesar tu mensaje. Intenta nuevamente.',
+                    confirmButtonColor: '#0B2126'
+                });
             }
             
         } catch (error) {
-            // Si hay un error de tipeo o el servidor está apagado, cae aquí
             console.error("Error de conexión:", error);
-            alert("Error de conexión con el servidor. ¿Está Python corriendo?");
+            // Mensaje profesional sin mencionar "Python" ni errores técnicos
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No pudimos conectar con el servidor. Por favor, revisa tu conexión a internet o intenta más tarde.',
+                confirmButtonColor: '#0B2126'
+            });
+        } finally {
+            // Sin importar si falló o fue exitoso, quitamos el estado de carga
+            setEnviando(false);
         }
     };
 
@@ -68,6 +101,7 @@ function Contacto() {
                         value={datosFormulario.nombre}
                         onChange={manejarCambio}
                         required 
+                        disabled={enviando} // Se desactiva si está cargando
                     />
 
                     <label>Correo</label>
@@ -77,6 +111,7 @@ function Contacto() {
                         value={datosFormulario.correo}
                         onChange={manejarCambio}
                         required 
+                        disabled={enviando}
                     />
 
                     <label>Mensaje</label>
@@ -86,9 +121,16 @@ function Contacto() {
                         value={datosFormulario.mensaje}
                         onChange={manejarCambio}
                         required 
+                        disabled={enviando}
                     ></textarea>
 
-                    <button type="submit">Enviar</button>
+                    <button 
+                        type="submit" 
+                        disabled={enviando}
+                        style={{ opacity: enviando ? 0.7 : 1, cursor: enviando ? 'not-allowed' : 'pointer' }}
+                    >
+                        {enviando ? 'Enviando...' : 'Enviar'}
+                    </button>
                 </form>
             </div>
         </section>

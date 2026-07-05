@@ -10,7 +10,8 @@ resend.api_key = os.getenv("RESEND_API_KEY")
 correos_bp = Blueprint('correos_bp', __name__)
 
 @correos_bp.route('/api/enviar-formulario-express', methods=['POST'])
-def enviar_formulario_express():
+def enviar_formulario_express():  
+
     try:
         # Extraer los textos
         data = request.form
@@ -88,3 +89,55 @@ def enviar_formulario_express():
     except Exception as e:
         print(f"Error con Resend: {e}")
         return jsonify({'error': 'No se pudo enviar el correo'}), 500
+
+
+
+
+@correos_bp.route('/api/contacto', methods=['POST'])
+def enviar_contacto():
+    try:
+        # Como en React (Contacto.jsx) enviamos un JSON, extraemos los datos así:
+        data = request.get_json()
+        nombre = data.get('nombre', 'Sin nombre')
+        correo = data.get('correo', 'Sin correo')
+        mensaje = data.get('mensaje', 'Sin mensaje')
+
+        # Construimos un HTML muy elegante usando tus colores corporativos
+        html_content = f"""
+        <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+            <div style="background-color: #0B2126; padding: 20px; text-align: center;">
+                <h2 style="color: #D4AF37; margin: 0;">Nuevo Mensaje de Contacto</h2>
+            </div>
+            <div style="padding: 20px;">
+                <p>Tienes un nuevo mensaje desde la sección de contacto de tu sitio web.</p>
+                <p><strong>👤 Cliente:</strong> {nombre}</p>
+                <p><strong>✉️ Correo:</strong> {correo}</p>
+                
+                <h3 style="color: #0B2126; border-bottom: 2px solid #D4AF37; padding-bottom: 5px; margin-top: 30px;">Mensaje:</h3>
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; border-left: 4px solid #0B2126;">
+                    <p style="white-space: pre-wrap; margin: 0;">{mensaje}</p>
+                </div>
+            </div>
+            <div style="background-color: #f1f1f1; padding: 15px; text-align: center; font-size: 12px; color: #666;">
+                Este correo fue generado automáticamente desde la web de Estudio Adiie.
+            </div>
+        </div>
+        """
+
+        # Preparamos el envío
+        params = {
+            "from": "onboarding@resend.dev", # Nota: Cambiar por tu correo .cl cuando lo verifiques en Resend (ej: "contacto@estudioadiie.cl")
+            "to": "juancri687@gmail.com",
+            "subject": f"Mensaje de {nombre} - Web Estudio Adiie",
+            "html": html_content
+        }
+
+        # Disparamos el correo
+        resend.Emails.send(params)
+
+        # Si todo sale bien, le respondemos "OK" a React
+        return jsonify({'mensaje': 'Mensaje de contacto enviado con éxito'}), 200
+
+    except Exception as e:
+        print(f"Error con Resend en contacto: {e}")
+        return jsonify({'error': 'No se pudo enviar el correo de contacto'}), 500
