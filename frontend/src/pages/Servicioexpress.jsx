@@ -12,24 +12,24 @@ function ServicioExpress() {
     const listaServicios = [
         {
             titulo: "Diseño de baño",
-            precio: "desde $180,000",
+            precio: "Desde $150,000",
             descripcion: "Un espacio de relajación y funcionalidad. Optimizamos la distribución y seleccionamos materiales resistentes y elegantes para crear un baño moderno y confortable.",
             imagen: "/img/servicio_express/baño.webp",
             opciones: [
-                { id: 'bano_peq', titulo: 'Baño Pequeño / Visitas', m2: 'Hasta 4 m²', precio: 180000 },
-                { id: 'bano_med', titulo: 'Baño Estándar', m2: '4 a 6 m²', precio: 220000 },
-                { id: 'bano_prin', titulo: 'Baño Principal / En Suite', m2: 'Más de 6 m²', precio: 280000 }
+                { id: 'bano_peq', titulo: 'Baño Pequeño / Visitas', m2: 'Hasta 5 m²', precio: 150000 },
+                { id: 'bano_med', titulo: 'Baño Estándar', m2: '6 a 10 m²', precio: 200000 },
+                { id: 'bano_prin', titulo: 'Baño Principal / En Suite', m2: 'Más de 10 m²', precio: 250000 }
             ]
         },
         {
             titulo: "Comedor",
-            precio: "desde $150,000",
+            precio: "Desde $150,000",
             descripcion: "El punto de encuentro familiar. Diseñamos un comedor acogedor y funcional, seleccionando el mobiliario y la iluminación perfecta para compartir momentos inolvidables.",
             imagen: "/img/servicio_express/comedor.webp",
             opciones: [
-                { id: 'comedor_peq', titulo: 'Comedor Diario', m2: 'Hasta 10 m²', precio: 150000 },
-                { id: 'comedor_est', titulo: 'Comedor Estándar', m2: '10 a 20 m²', precio: 200000 },
-                { id: 'comedor_amp', titulo: 'Comedor Amplio / Integrado', m2: 'Más de 20 m²', precio: 260000 }
+                { id: 'comedor_peq', titulo: 'Comedor Diario', m2: 'Hasta 15 m²', precio: 150000 },
+                { id: 'comedor_est', titulo: 'Comedor Estándar', m2: '16 a 30 m²', precio: 250000 },
+                { id: 'comedor_amp', titulo: 'Comedor Amplio / Integrado', m2: 'Más de 30 m²', precio: 350000 }
             ]
         },
         {
@@ -45,13 +45,13 @@ function ServicioExpress() {
         },
         {
             titulo: "Dormitorios",
-            precio: "desde $150,000",
+            precio: "Desde $150,000",
             descripcion: "Tu refugio de descanso. Creamos un ambiente sereno y equilibrado, combinando texturas, colores e iluminación para garantizar el máximo confort y un sueño reparador.",
             imagen: "/img/servicio_express/dormitorio.webp",
             opciones: [
-                { id: 'dorm_sim', titulo: 'Dormitorio Simple', m2: 'Hasta 12 m²', precio: 150000 },
-                { id: 'dorm_dob', titulo: 'Dormitorio Doble', m2: '12 a 20 m²', precio: 220000 },
-                { id: 'dorm_suite', titulo: 'Master Suite', m2: 'Más de 20 m²', precio: 320000 }
+                { id: 'dorm_sim', titulo: 'Dormitorio Simple', m2: 'Hasta 10 m²', precio: 150000 },
+                { id: 'dorm_dob', titulo: 'Dormitorio Doble', m2: '11 a 15 m²', precio: 200000 },
+                { id: 'dorm_suite', titulo: 'Master Suite', m2: 'Más de 15 m²', precio: 250000 }
             ]
         },
         {

@@ -30,8 +30,8 @@ function Footer() {
                         {/* Usamos HashLink para las secciones de la página principal */}
                         <li><HashLink smooth to="/#Servicios">Servicios</HashLink></li>
                         
-                        <li><Link to="/servicio-express">Servicio Express</Link></li>
-                        <li><Link to="/proyectos-venta">Proyectos en venta</Link></li>
+                        <li><Link to="/infoservicioexpress">Servicio Express</Link></li>
+                        <li><Link to="/en_construccion">Proyectos en venta</Link></li>
                         
                         {/* Usamos HashLink también para Contacto */}
                         <li><HashLink smooth to="/#Contacto">Contacto</HashLink></li>

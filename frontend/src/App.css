@@ -232,7 +232,7 @@ a.container_servicios:hover {
 
 
 .container_servicios img{
-  
+  color: #D4AF37;
   width: 64px;           /* tamaño consistente para el icono */
   height: 64px;
   object-fit: contain;

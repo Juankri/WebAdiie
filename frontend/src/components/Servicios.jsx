@@ -62,11 +62,13 @@ function Servicios() {
 
             {/* 2. LA MAGIA DE REACT: Iteramos sobre la lista con .map() */}
             {listaServicios.map((servicio, index) => {
-                
+
                 // Creamos el interior de la tarjeta (para no repetir código)
                 const contenidoTarjeta = (
                     <>
-                        <img src={servicio.icono} alt={`Icono de ${servicio.titulo}`} />
+                        <img style={{
+                            
+                        }} src={servicio.icono} alt={`Icono de ${servicio.titulo}`} />
                         <h3>{servicio.titulo}</h3>
                         <ul>
                             {servicio.descripcion.map((item, i) => (
@@ -83,8 +85,8 @@ function Servicios() {
                             {contenidoTarjeta}
                         </a>
                     );
-                } 
-                
+                }
+
                 // Si NO tiene enlace, lo envolvemos en un <div> normal
                 return (
                     <div key={index} className="container_servicios">
