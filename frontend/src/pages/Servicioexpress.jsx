@@ -22,6 +22,17 @@ function ServicioExpress() {
             ]
         },
         {
+            titulo: "Diseño de Cocina",
+            precio: "desde $140,000",
+            descripcion: "Transformamos tu cocina en el corazón del hogar. Optimizamos la distribución, el almacenamiento y la iluminación, creando un espacio 100% funcional, moderno y a tu medida.",
+            imagen: "/img/servicio_express/cocina.webp",
+            opciones: [
+                { id: 'cocina_peq', titulo: 'Cocina Compacta (Kitchenette)', m2: 'Hasta 8 m²', precio: 140000 },
+                { id: 'cocina_med', titulo: 'Cocina Estándar', m2: '8 a 15 m²', precio: 220000 },
+                { id: 'cocina_isla', titulo: 'Cocina Amplia / Con Isla', m2: 'Más de 15 m²', precio: 320000 }
+            ]
+        },
+        {
             titulo: "Comedor",
             precio: "Desde $150,000",
             descripcion: "El punto de encuentro familiar. Diseñamos un comedor acogedor y funcional, seleccionando el mobiliario y la iluminación perfecta para compartir momentos inolvidables.",

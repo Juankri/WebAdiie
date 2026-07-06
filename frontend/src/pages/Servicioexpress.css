@@ -22,10 +22,10 @@
 }
 
 .servicios-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(2, auto);
-    gap: 25px; /* Espacio entre elementos */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Esto empuja los 2 últimos al centro */
+    gap: 2rem; /* El espacio entre tarjetas */
 }
 
 .servicio-item {
