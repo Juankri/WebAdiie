@@ -8,7 +8,7 @@ import './Login.css';
 
 
 const Login = () => {
-  const navigate = useNavigate(); // <-- Agrega esta línea
+ 
 
   const [credenciales, setCredenciales] = useState({ email: '', password: ''});
 
