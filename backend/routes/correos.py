@@ -65,7 +65,7 @@ def enviar_formulario_express():
         # Disparamos el correo a la bandeja corporativa
         params = {
             "from": "Sistema Adiie <notificaciones@estudioadiie.cl>", 
-            "to": "adiie.estudio@gmail.com",
+            "to": "estudio.adiie@gmail.com",
             "subject": f"Nuevo Proyecto Express: {nombre}",
             "html": html_content,
             "attachments": attachments
@@ -122,7 +122,7 @@ def enviar_contacto():
         # Preparamos el envío con el truco del reply_to
         params = {
             "from": "Web Estudio Adiie <contacto@estudioadiie.cl>",
-            "to": "adiie.estudio@gmail.com",
+            "to": "estudio.adiie@gmail.com",
             "reply_to": correo, # La magia para poder responderle directo al cliente desde Gmail
             "subject": f"Mensaje de {nombre} - Web Estudio Adiie",
             "html": html_content
