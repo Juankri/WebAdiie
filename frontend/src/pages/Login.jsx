@@ -8,6 +8,7 @@ import './Login.css';
 
 
 const Login = () => {
+  const navigate = useNavigate(); // <-- Agrega esta línea
 
   const [credenciales, setCredenciales] = useState({ email: '', password: ''});
 
@@ -49,14 +50,14 @@ const Login = () => {
           icon: 'success',
           title: '¡Bienvenido al Panel!',
           text: 'Redirigiendo de forma segura...',
-          iconColor: '#D4AF37', // Dorado Adiie
-          showConfirmButton: false, // Ocultamos el botón
-          timer: 1500, // Espera 1.5 segundos para que se vea el mensaje
+          iconColor: '#D4AF37',
+          showConfirmButton: false,
+          timer: 1500,
           background: '#f9f9f9',
           color: '#0B2126'
         }).then(() => {
-          // Redirigimos una vez que la alerta se cierra
-          window.location.href = '/admin_dashboard';
+          // 🌟 ¡AQUÍ ESTÁ LA MAGIA DE REACT! 🌟
+          navigate('/admin_dashboard'); 
         });
 
       } else {
