@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 import os
 from dotenv import load_dotenv
-
+from datetime import timedelta
 # 1. Importamos la conexión a BD y las herramientas de seguridad
 from database import db
 from extensions import jwt, bcrypt
