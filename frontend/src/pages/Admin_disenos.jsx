@@ -55,8 +55,8 @@ const AdminDisenos = () => {
     const abrirWidgetSubida = (esPortada) => {
         window.cloudinary.openUploadWidget(
             {
-                cloudName: 'dtiqi9fim',
-                uploadPreset: 'ml_default',
+                cloudName: 'd22tuzo6',
+                uploadPreset: 'adiie_disenos',
                 sources: ['local', 'url'],
                 styles: { palette: { window: '#0B2126', sourceTabIcon: '#D4AF37' } }
             },

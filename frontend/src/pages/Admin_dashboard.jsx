@@ -18,6 +18,7 @@ const AdminDashboard = () => {
 
     const cerrarSesion = () => {
         localStorage.removeItem('token_adiie'); // Destruimos el carnet (token)
+        window.dispatchEvent(new Event('estado_sesion_cambiado'));
         navigate('/login'); // Redirigimos suave y sin recargar la página 🚀
     };
     
