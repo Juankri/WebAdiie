@@ -38,13 +38,13 @@ function PaginaDiseno() {
     }, [idUrl]);
 
     if (cargando) {
-        return <h2 style={{ textAlign: 'center', marginTop: '150px' }}>Cargando el proyecto... ⏳</h2>;
+        return <h2 style={{ textAlign: 'center', marginTop: '150px' }}>Cargando el proyecto... </h2>;
     }
 
     if (!proyecto || proyecto.error) {
         return (
             <div style={{ textAlign: 'center', padding: '150px 20px', minHeight: '60vh' }}>
-                <h2>Proyecto no encontrado 🕵️‍♂️</h2>
+                <h2>Proyecto no encontrado </h2>
                 <Link to="/galeria_proyectos" style={{ color: '#D4AF37' }}>Volver a la Galería</Link>
             </div>
         );
