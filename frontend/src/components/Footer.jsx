@@ -30,11 +30,12 @@ function Footer() {
             </style>
 
             <div className="container pb-4">
-                {/* gy-4 da espacio vertical entre columnas cuando están apiladas en celular */}
-                <div className="row text-center text-md-start gy-4">
+                {/* 🌟 CAMBIO 1: Dejamos solo "text-center" para centrar el texto globalmente */}
+                <div className="row text-center gy-4 justify-content-center">
                     
                     {/* COLUMNA 1: LOGO Y ABOUT */}
-                    <div className="col-12 col-md-4 d-flex flex-column align-items-center align-items-md-start">
+                    {/* 🌟 CAMBIO 2: Dejamos solo "align-items-center" */}
+                    <div className="col-12 col-md-4 d-flex flex-column align-items-center">
                         <a href="/">
                             <img 
                                 src="/img/logo/azzul.png" 
@@ -43,7 +44,7 @@ function Footer() {
                                 style={{ height: '75px', objectFit: 'contain' }}
                             />
                         </a>
-                        <p className="small mt-2" style={{ maxWidth: '300px', lineHeight: '1.6' }}>
+                        <p className="small mt-2 mx-auto" style={{ maxWidth: '300px', lineHeight: '1.6' }}>
                             Transformando espacios con diseño y funcionalidad. Arquitectura y remodelaciones a tu medida.
                         </p>
                     </div>
@@ -64,7 +65,8 @@ function Footer() {
                     {/* COLUMNA 3: REDES SOCIALES */}
                     <div className="col-12 col-md-4">
                         <h5 className="text-white fw-bold mb-3">Síguenos</h5>
-                        <div className="d-flex justify-content-center justify-content-md-start gap-3 mt-2">
+                        {/* 🌟 CAMBIO 3: Dejamos solo "justify-content-center" para los íconos */}
+                        <div className="d-flex justify-content-center gap-3 mt-2">
                             <a href="https://facebook.com/tu-pagina" target="_blank" rel="noopener noreferrer" className="social-icon">
                                 <i className="fab fa-facebook"></i>
                             </a>
