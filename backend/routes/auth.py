@@ -10,11 +10,12 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/api/login', methods=['POST'])
 def login():
     datos = request.json
-    user_en_db = db.usuarios.find_one({"usuario": datos.get('usuario')})
+    # 1. Buscamos por "email" en vez de "usuario"
+    user_en_db = db.usuarios.find_one({"email": datos.get('email')})
 
     if user_en_db and bcrypt.check_password_hash(user_en_db['password'], datos.get('password')):
-        # Entregamos el token si la contraseña hace "match"
-        token = create_access_token(identity=datos.get('usuario'))
+        # 2. El token ahora guardará el correo del administrador
+        token = create_access_token(identity=datos.get('email'))
         return jsonify({"token": token}), 200
     
-    return jsonify({"error": "Usuario o clave incorrectos"}), 401
+    return jsonify({"error": "Correo o clave incorrectos"}), 401
