@@ -258,7 +258,7 @@ function ServicioExpress() {
                 }
             `}</style>
 
-            <main className="container py-5" style={{ paddingTop: '150px' }}>
+            <main className="container py-5" style={{ paddingTop: '200px', marginTop: '100px' }}>
                 
                 {/* ENCABEZADO */}
                 <div className="text-center mb-5 mt-4">
