@@ -2,19 +2,16 @@ import { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { CarritoContext } from "../context/CarritoContext";
-import '../styles/Navbar.css';
+import '../styles/Navbar.css'; 
 import {
     User,
     Settings,
     ShoppingCart,
-
-    ChevronDown
+    ChevronDown,
+    Menu 
 } from 'lucide-react';
 
-
-
 function Navbar() {
-
     const [menuAbierto, setMenuAbierto] = useState(false);
     const navRef = useRef(null);
     const { carrito } = useContext(CarritoContext);
@@ -34,54 +31,52 @@ function Navbar() {
     }, [menuAbierto]);
 
     return (
-        <nav className="nav" ref={navRef}>
-            <div className="nav-logo">
+        // FONDO ACTUALIZADO: Quitamos bg-white y agregamos el backgroundColor #0B2126
+        <nav className="shadow-sm position-fixed top-0 w-100 d-flex justify-content-between align-items-center z-3" 
+             style={{ backgroundColor: '#0B2126', height: '90px' }} 
+             ref={navRef}>
+             
+            {/* LADO IZQUIERDO: LOGO Y ADMIN */}
+            <div className="d-flex align-items-center ms-3 ms-lg-4">
                 <Link to="/">
-                    <img className="logo" src="/img/logo/LOGO_BLANCO.png" alt="Logo ADIIE" />
+                    <img src="/img/logo/azzul.png" alt="Logo ADIIE" style={{ height: '75px', objectFit: 'contain' }} />
                 </Link>
-
-                <div className="icono-admin-escritorio">
-                    <Link to={estaLogueado ? "/admin_dashboard" : "/login"} className="admin-icon-nav">
+                <div className="ms-3 ms-lg-4">
+                    <Link to={estaLogueado ? "/admin_dashboard" : "/login"} className="icon-admin-custom text-decoration-none">
                         {estaLogueado ? <Settings size={24} /> : <User size={24} />}
                     </Link>
-
                 </div>
-
             </div>
 
-            <div className="nav-controles-movil">
-
-                <Link to="/carrito" className="carrito-movil">
-                    <ShoppingCart size={22} />
-                    <span className="carrito-badge">{carrito.length}</span>
+            {/* CONTROLES MÓVILES (Solo visibles en pantallas pequeñas < 992px) */}
+            <div className="d-flex d-lg-none align-items-center me-3">
+                {/* ICONO Y TEXTO A BLANCO */}
+                <Link to="/carrito" className="text-decoration-none text-white position-relative me-3">
+                    <ShoppingCart size={24} />
+                    {/* BADGE A DORADO: Para que resalte sobre el fondo azul oscuro */}
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-dark" style={{ backgroundColor: '#D4AF37' }}>
+                        {carrito.length}
+                    </span>
                 </Link>
-
-                <button className="menubtn" onClick={toggleMenu}>
-                    <span>&#9776;</span>
+                <button className="btn p-0 border-0 text-white" onClick={toggleMenu}>
+                    <Menu size={32} />
                 </button>
             </div>
 
-            {/* LINKS DE ESCRITORIO */}
+            {/* LADO DERECHO: LINKS ESCRITORIO Y MENÚ BURBUJA MÓVIL */}
+            <div className={`nav-links-container me-lg-5 ${menuAbierto ? 'active' : ''}`}>
+                <ul className="d-flex flex-column flex-lg-row align-items-center list-unstyled m-0 gap-4">
+                    
+                    <li><Link className="nav-link-custom" to="/" onClick={cerrarMenu}>Inicio</Link></li>
+                    <li><Link className="nav-link-custom" to="/portafolio" onClick={cerrarMenu}>Portafolio</Link></li>
+                    <li><HashLink className="nav-link-custom" smooth to="/#Servicios" onClick={cerrarMenu}>Servicios</HashLink></li>
 
-            <div className="nav-link-container">
-
-                <ul className={`nav-links ${menuAbierto ? 'active' : ''}`}>
-
-
-
-                    <li>
-                        <Link to="/" onClick={cerrarMenu}>Inicio</Link>
-                    </li>
-                    <li>
-                        <Link to="/portafolio" onClick={cerrarMenu}>Portafolio</Link>
-                    </li>
-                    <li>
-                        <HashLink smooth to="/#Servicios" onClick={cerrarMenu}>Servicios</HashLink>
-                    </li>
-
-                    <li className="dropdown-container">
-                        <Link to="/infoservicioexpress" onClick={cerrarMenu}>Servicio Express <ChevronDown size={14} /></Link>
-                        <ul className="dropdown-menu">
+                    {/* MENÚ DESPLEGABLE SERVICIO EXPRESS */}
+                    <li className="dropdown-container position-relative">
+                        <Link to="/infoservicioexpress" className="nav-link-custom d-flex align-items-center gap-1" onClick={cerrarMenu}>
+                            Servicio Express <ChevronDown size={14} />
+                        </Link>
+                        <ul className="dropdown-menu-custom">
                             <li><Link to="/servicio-express" state={{ abrirModal: "Diseño de baño" }} onClick={cerrarMenu}>Baño</Link></li>
                             <li><Link to="/servicio-express" state={{ abrirModal: "Comedor" }} onClick={cerrarMenu}>Comedor</Link></li>
                             <li><Link to="/servicio-express" state={{ abrirModal: "Muebles" }} onClick={cerrarMenu}>Muebles</Link></li>
@@ -89,17 +84,15 @@ function Navbar() {
                             <li><Link to="/servicio-express" state={{ abrirModal: "Oficina" }} onClick={cerrarMenu}>Oficina</Link></li>
                             <li><Link to="/servicio-express" state={{ abrirModal: "Terraza/Quincho" }} onClick={cerrarMenu}>Terraza</Link></li>
                         </ul>
-
                     </li>
-                    <li style={{ whiteSpace: 'nowrap' }}><Link to="/en_construccion" onClick={cerrarMenu}>Proyectos en venta</Link></li>
-                    <li><HashLink smooth to="/#Contacto" onClick={cerrarMenu}>Contacto</HashLink></li>
 
-                    {/*CARRITO ESCRITORIO */}
+                    <li className="text-nowrap"><Link className="nav-link-custom" to="/en_construccion" onClick={cerrarMenu}>Proyectos en venta</Link></li>
+                    <li><HashLink className="nav-link-custom" smooth to="/#Contacto" onClick={cerrarMenu}>Contacto</HashLink></li>
 
-
-                    <li className="carrito-escritorio">
-                        <Link to="/carrito" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <ShoppingCart size={26} /> <span>({carrito.length})</span>
+                    {/* CARRITO ESCRITORIO */}
+                    <li className="d-none d-lg-block">
+                        <Link to="/carrito" className="nav-link-custom d-flex align-items-center gap-1">
+                            <ShoppingCart size={22} /> <span>({carrito.length})</span>
                         </Link>
                     </li>
                 </ul>

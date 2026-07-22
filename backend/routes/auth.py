@@ -5,14 +5,7 @@ from extensions import bcrypt
 
 auth_bp = Blueprint('auth', __name__)
 
-@auth_bp.route('/api/setup-admin', methods=['POST'])
-def setup_admin():
-    if db.usuarios.count_documents({"usuario": "admin"}) == 0:
-        # Aquí usamos bcrypt que importamos de extensions.py
-        password_encriptada = bcrypt.generate_password_hash("Adiie2026").decode('utf-8')
-        db.usuarios.insert_one({"usuario": "admin", "password": password_encriptada})
-        return jsonify({"mensaje": "Usuario admin creado con éxito"}), 201
-    return jsonify({"error": "El usuario ya existe"}), 400
+
 
 @auth_bp.route('/api/login', methods=['POST'])
 def login():

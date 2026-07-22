@@ -16,7 +16,8 @@ def crear_proyecto():
             "descripcion": datos.get("descripcion"),
             "imagen_url": datos.get("imagen_url"),
             "galeria": datos.get("galeria", []),
-            "video_url": datos.get("video_url", "")
+            "video_url": datos.get("video_url", ""),
+            "destacado": datos.get("destacado", False) # 👇 NUEVO CAMPO
         }
         resultado = proyectos_collection.insert_one(nuevo_proyecto)
         return jsonify({"mensaje": "¡Proyecto guardado!", "id": str(resultado.inserted_id)}), 201
@@ -69,7 +70,8 @@ def editar_proyecto(id):
                 "descripcion": datos.get("descripcion"),
                 "imagen_url": datos.get("imagen_url"),
                 "galeria": datos.get("galeria", []),
-                "video_url": datos.get("video_url", "")
+                "video_url": datos.get("video_url", ""),
+                "destacado": datos.get("destacado", False) # 👇 NUEVO CAMPO
             }}
         )
         if resultado.matched_count > 0:

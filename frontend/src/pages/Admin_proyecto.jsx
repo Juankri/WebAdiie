@@ -11,7 +11,8 @@ import {
     CheckCircle, 
     XCircle, 
     Image as ImageIcon,
-    Save
+    Save,
+    Star // 🌟 Agregamos la estrella para el destacado
 } from 'lucide-react';
 import './Admin_proyecto.css'
 import Swal from 'sweetalert2';
@@ -20,8 +21,10 @@ const AdminProyectos = () => {
     const navigate = useNavigate();
     const [proyectos, setProyectos] = useState([]);
     const [editandoId, setEditandoId] = useState(null);
+    
+    // 1. NUEVO: Agregamos destacado: false al estado inicial
     const [proyecto, setProyecto] = useState({
-        titulo: '', descripcion: '', imagen_url: '', galeria: [], video_url: ''
+        titulo: '', descripcion: '', imagen_url: '', galeria: [], video_url: '', destacado: false
     });
 
     const token = localStorage.getItem('token_adiie');
@@ -42,8 +45,13 @@ const AdminProyectos = () => {
         } catch (error) { console.error("Error:", error); }
     };
 
+    // 2. ACTUALIZADO: Ahora sabe detectar si es un checkbox o un input de texto normal
     const manejarCambio = (e) => {
-        setProyecto({ ...proyecto, [e.target.name]: e.target.value });
+        const { name, value, type, checked } = e.target;
+        setProyecto({ 
+            ...proyecto, 
+            [name]: type === 'checkbox' ? checked : value 
+        });
     };
 
     const cerrarSesion = () => {
@@ -103,24 +111,21 @@ const AdminProyectos = () => {
     };
 
     const borrarProyecto = async (id, titulo) => {
-    // 1. ALERTA DE CONFIRMACIÓN ELEGANTE
     const confirmacion = await Swal.fire({
       title: '¿Estás seguro?',
       text: `Vas a eliminar el proyecto "${titulo}". Esta acción no se puede deshacer.`,
       icon: 'warning',
-      iconColor: '#dc3545', // Rojo sutil para acciones destructivas
+      iconColor: '#dc3545',
       showCancelButton: true,
-      confirmButtonColor: '#dc3545', // Botón rojo para confirmar el peligro
-      cancelButtonColor: '#0B2126', // Botón oscuro para cancelar y volver a salvo
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#0B2126',
       confirmButtonText: '<i className="bi bi-trash"></i> Sí, eliminar',
       cancelButtonText: 'Cancelar',
       background: '#f9f9f9',
       color: '#0B2126'
     });
 
-    // Si el usuario hace clic en "Sí, eliminar"
     if (confirmacion.isConfirmed) {
-      // 2. SPINNER DE CARGA MIENTRAS EL BACKEND TRABAJA
       Swal.fire({
         title: 'Eliminando proyecto...',
         allowOutsideClick: false,
@@ -136,10 +141,7 @@ const AdminProyectos = () => {
         });
 
         if (res.ok) {
-          // Refrescamos la lista de proyectos en la pantalla
           obtenerProyectos();
-          
-          // 3. TOAST DE ÉXITO (Pequeño y no intrusivo)
           Swal.fire({
             toast: true,
             position: 'top-end',
@@ -155,7 +157,6 @@ const AdminProyectos = () => {
           throw new Error('Error en la respuesta del servidor');
         }
       } catch (error) {
-        // 4. MANEJO DE ERRORES PROFESIONAL
         Swal.fire({
           icon: 'error',
           title: 'Error al borrar',
@@ -170,13 +171,15 @@ const AdminProyectos = () => {
 
     const prepararEdicion = (p) => {
         setEditandoId(p._id);
-        setProyecto({ ...p, galeria: p.galeria || [] });
+        // NUEVO: Aseguramos que cargue el estado de destacado al editar (por si no tenía, será false)
+        setProyecto({ ...p, galeria: p.galeria || [], destacado: p.destacado || false });
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const cancelarEdicion = () => {
         setEditandoId(null);
-        setProyecto({ titulo: '', descripcion: '', imagen_url: '', galeria: [], video_url: '' });
+        // NUEVO: Reseteamos el estado destacado al limpiar el formulario
+        setProyecto({ titulo: '', descripcion: '', imagen_url: '', galeria: [], video_url: '', destacado: false });
     };
 
     return (
@@ -240,6 +243,22 @@ const AdminProyectos = () => {
                     type="text" name="video_url" placeholder="URL de Video (YouTube/Vimeo)" 
                     value={proyecto.video_url} onChange={manejarCambio} 
                 />
+
+                {/* 3. NUEVO: CHECKBOX DE PROYECTO DESTACADO */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '20px 0', padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '8px', border: '1px solid #ddd' }}>
+                    <input 
+                        type="checkbox" 
+                        id="destacado" 
+                        name="destacado" 
+                        checked={proyecto.destacado} 
+                        onChange={manejarCambio}
+                        style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+                    />
+                    <label htmlFor="destacado" style={{ cursor: 'pointer', fontWeight: 'bold', color: '#0B2126', display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
+                        <Star size={20} color="#D4AF37" fill={proyecto.destacado ? "#D4AF37" : "none"} /> 
+                        Mostrar en "Proyectos Destacados" de la página de Inicio
+                    </label>
+                </div>
                 
                 <div className="admin-form-actions">
                     <button type="submit" className="btn-enviar-cotizacion btn-submit-project">
@@ -258,7 +277,11 @@ const AdminProyectos = () => {
                 <h3>Proyectos Publicados ({proyectos.length})</h3>
                 {proyectos.map(p => (
                     <div key={p._id} className="project-item">
-                        <span><strong>{p.titulo}</strong></span>
+                        {/* Agregamos una estrellita al título en la lista para que sepa cuáles son destacados */}
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {p.destacado && <Star size={16} color="#D4AF37" fill="#D4AF37" />}
+                            <strong>{p.titulo}</strong>
+                        </span>
                         <div className="project-actions">
                             <button onClick={() => prepararEdicion(p)} className="btn-edit">
                                 <Edit size={14} /> Editar

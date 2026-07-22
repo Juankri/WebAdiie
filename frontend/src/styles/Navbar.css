@@ -1,345 +1,154 @@
-.header{
-  width: 100%;
-  height: 140px;
-  display: grid;
-  grid-template-rows: 1fr 1fr ;
-  position: fixed; 
-  top: 0; 
-  z-index: 1000; 
-  background-color: #fff; 
-  
-  box-shadow: 0 4px 14px rgba(0,0,0,0.12); 
- 
+/* =========================================
+   COLORES CORPORATIVOS Y LINKS BASE
+   ========================================= */
+.z-3 { z-index: 1000 !important; }
+
+.nav-link-custom {
+    font-size: 11px;
+    text-decoration: none;
+    color: #ffffff; /* AHORA SON BLANCOS POR DEFECTO */
+    font-weight: 700;
+    transition: all 0.2s ease;
+    display: inline-block;
 }
 
-.social{
-  background-color: #0B2126;
-  width: 100%;
-  height: 50px;
-  display: grid;
-
-}
-
-.social-icons{
-  width: auto;
-  height: auto;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: flex-end;
-  justify-self: end;
-  margin-right: 20px;
-
-}
-
-.social-icons a{
-  color: #fff;
-  font-size: 28px;
-
-}
-
-.social-icons a:hover{
-  color: #616161;
-}
-
-.nav{
-  background-color: white;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 90px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.nav-logo{
-  
-  margin-left: 30px;
-  display: flex;
-  align-items: center;
-  
-
-}
-
-.logo {
-  
-  height: 75px; 
-  width: auto; 
-  object-fit: contain; 
-  display: block; 
-}
-
-.nav-link-container{
-  
-  
-  
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  justify-content: flex-end;
-  margin-right: 50px;
-}
-
-
-
-.nav-links{
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-  transition: all 0.3s ease;
-}
-
-.nav-links a{
-  font-size: 11px;
-  text-decoration: none;
-  color: #0B2126;
-  font-weight: 700;
-  transition: all 0.2s ease;
-
-}
-
-.nav-links a:hover{
-  opacity: 0.8;
-  transform: translateY(-2px);
-  color: #D4AF37; 
-  border-bottom-color: #D4AF37;
-}
-
-.menubtn{
-  background: none;
-  border: none;
-  color: #0B2126;
-  font-size: 1.5rem;
-  cursor: pointer;
-  display: none;
-
-}
-
-.admin-icon-nav{
-    margin-right: auto; 
-    display: flex;
-    align-items: center;
-    
-}
-
-.icono-admin-escritorio{
-    margin-left: 20px;
-}
-
-
-.nav-controles-movil {
-  display: none; 
+.nav-link-custom:hover {
+    color: #D4AF37; /* El dorado en hover se mantiene intacto */
+    transform: translateY(-2px);
 }
 
 /* =========================================
-   ESTILOS DEL DROPDOWN (MENÚ DESPLEGABLE)
+   ICONO ADMINISTRADOR
    ========================================= */
-
-.dropdown-container {
-    position: relative;
-    white-space: nowrap; /* ¡LA MAGIA! Prohíbe que "Servicio Express" se parta en dos */
+.icon-admin-custom svg {
+    stroke: #ffffff; /* AHORA ES BLANCO POR DEFECTO */
+    transition: stroke 0.3s ease, transform 0.3s ease;
 }
 
+.icon-admin-custom:hover svg {
+    stroke: #D4AF37;
+    transform: scale(1.1);
+}
 
-.dropdown-menu {
+/* =========================================
+   MAGIA 1: DROPDOWN ESCRITORIO (Burbuja vertical)
+   ========================================= */
+.dropdown-menu-custom {
     position: absolute;
-    top: 100%; 
+    top: 100%;
     left: 0;
-    width: 100%; 
-    background-color: #0B2126; 
+    width: 100%;
+    /* AHORA TIENE FONDO BLANCO */
+    background-color: #ffffff; 
     list-style: none;
-    padding: 0; 
+    padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    
-    /* MAGIA 1: El efecto "Burbuja" (Clip-path) igual al celular */
-    clip-path: circle(0px at 50% 0); /* Nace desde el centro superior */
-    pointer-events: none; /* Evita clics fantasmas cuando está cerrado */
-    transition: clip-path 0.4s ease-in-out; 
-    
+    clip-path: circle(0px at 50% 0);
+    pointer-events: none;
+    transition: clip-path 0.4s ease-in-out;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
     z-index: 2000;
 }
 
-.dropdown-menu li {
+.dropdown-menu-custom li {
     width: 100%;
-    border-bottom: 1px solid #333; 
-    
-    /* MAGIA 2: Preparamos los textos para que vengan desde abajo */
+    /* Borde sutil usando tu color corporativo oscuro con un poco de transparencia */
+    border-bottom: 1px solid rgba(11, 33, 38, 0.1); 
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.dropdown-menu li a {
+.dropdown-menu-custom li a {
     padding: 12px 5px;
     display: block;
-    color: #ffffff;
-    text-align: center; 
+    /* AHORA LAS LETRAS SON DEL COLOR OSCURO DE LA EMPRESA */
+    color: #0B2126; 
+    text-align: center;
     font-size: 0.85rem;
+    text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.dropdown-menu li a:hover {
-    background-color: #333333; 
-    color: #D4AF37; /* Le puse tu color dorado de hover para que combine */
+.dropdown-menu-custom li a:hover {
+    /* Un sombreado muy suave al pasar el mouse */
+    background-color: rgba(11, 33, 38, 0.05); 
+    /* Las letras se siguen poniendo doradas en hover */
+    color: #D4AF37; 
 }
 
-/* 1. Abrir la burbuja al pasar el mouse */
-.dropdown-container:hover .dropdown-menu {
+/* Acciones Hover Dropdown */
+.dropdown-container:hover .dropdown-menu-custom {
     clip-path: circle(150% at 50% 0);
     pointer-events: all;
 }
 
-/* 2. Mostrar los textos cuando se abre la burbuja */
-.dropdown-container:hover .dropdown-menu li {
+.dropdown-container:hover .dropdown-menu-custom li {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* 3. El efecto cascada (igual que en tu celular) */
-.dropdown-container:hover .dropdown-menu li:nth-child(1) { transition-delay: 0.1s; }
-.dropdown-container:hover .dropdown-menu li:nth-child(2) { transition-delay: 0.2s; }
-.dropdown-container:hover .dropdown-menu li:nth-child(3) { transition-delay: 0.3s; }
-.dropdown-container:hover .dropdown-menu li:nth-child(4) { transition-delay: 0.4s; }
-.dropdown-container:hover .dropdown-menu li:nth-child(5) { transition-delay: 0.5s; }
-.dropdown-container:hover .dropdown-menu li:nth-child(6) { transition-delay: 0.6s; }
+.dropdown-container:hover .dropdown-menu-custom li:nth-child(1) { transition-delay: 0.1s; }
+.dropdown-container:hover .dropdown-menu-custom li:nth-child(2) { transition-delay: 0.2s; }
+.dropdown-container:hover .dropdown-menu-custom li:nth-child(3) { transition-delay: 0.3s; }
+.dropdown-container:hover .dropdown-menu-custom li:nth-child(4) { transition-delay: 0.4s; }
+.dropdown-container:hover .dropdown-menu-custom li:nth-child(5) { transition-delay: 0.5s; }
+.dropdown-container:hover .dropdown-menu-custom li:nth-child(6) { transition-delay: 0.6s; }
 
 
-/* 1. Color base del icono (cuando no está logueado) */
-.admin-icon-nav svg {
-    stroke: #0B2126; /* Tu azul oscuro */
-    transition: stroke 0.3s ease, transform 0.3s ease;
-}
-
-/* 2. Color cuando el mouse pasa por encima (Hover) */
-.admin-icon-nav:hover svg {
-    stroke: #D4AF37; /* El dorado de ADIIE */
-    transform: scale(1.1); /* Un pequeño aumento para que se note el toque */
-}
-
-/* 3. Color especial cuando ya está logueado (La ruedita) */
-/* Si quieres que la ruedita tenga un color distinto de entrada */
-.admin-logged-in svg {
-    stroke: #D4AF37; /* Dorado de una vez porque es admin */
-}
-
-
-@media (max-width: 900px) {
-  .menubtn{
-    display: block;
-    color: #0B2126;
-    margin-left: auto;
-    margin-right: 20px;
-    
-    
-    font-size: 40px;
-  }
-
-  .nav-links {
-    position: fixed;
-    top: 140px; 
-    right: 0;   
-    width: 280px; 
-    background-color: #0B2126;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem 0; 
-    gap: 1.5rem; 
-    justify-content: flex-start;
-    
-    
-    clip-path: circle(0px at 100% 0); 
-    pointer-events: none;
-    transition: clip-path 0.4s ease-in-out;
-    border-bottom-left-radius: 8px;
-  }
-  
-  .nav-links.active{
-    clip-path: circle(150% at 100% 0); 
-    pointer-events: all;
-  }
-  
-  .nav-links a{
-    color: #fff;}
-
-  .nav-links li{
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity .3s ease, transform .3s ease;
-  }
-
-  .nav-links.active li {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .nav-links li:nth-child(1) { transition-delay: 0.1s; }
-  .nav-links li:nth-child(2) { transition-delay: 0.2s; }
-  .nav-links li:nth-child(3) { transition-delay: 0.3s; }
-  .nav-links li:nth-child(4) { transition-delay: 0.4s; }
-  .nav-links li:nth-child(5) { transition-delay: 0.5s; }
-  .nav-links li:nth-child(6) { transition-delay: 0.6s; }
-
-
-
-  .nav {
-    display: flex; /* Cambiamos a flex para alinear mejor en celular */
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 20px; /* Un poco de respiro al borde */
-  }
-
-  /* 2. Mostramos el contenedor de controles móviles */
-  .nav-controles-movil {
-    display: flex;
-    align-items: center;
-    gap: 15px; /* Espacio entre el carrito y la hamburguesa */
-    
-    /* 🌟 EL TRUCO MAGICO: Lo empuja a la derecha del todo */
-    margin-left: auto; 
-  }
-
-  /* 3. Estilos del Carrito Móvil */
-  .carrito-movil {
-    font-size: 1.5rem;
-    text-decoration: none;
-    position: relative;
-    color: #0B2126;
-  }
-
-  .carrito-movil .carrito-badge {
-    background-color: #0B2126;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: bold;
-    border-radius: 50%;
-    padding: 2px 6px;
-    position: absolute;
-    top: -5px;
-    right: -10px;
-  }
-
-  /* 4. Ajustamos la hamburguesa para que encaje bien */
-  .menubtn {
-    display: block; /* La volvemos a mostrar */
-    margin: 0; /* Quitamos los márgenes raros que tenía antes */
-  }
-
-  /* 5. Ocultamos el carrito de escritorio (el que está dentro de la lista) */
-  .carrito-escritorio {
-    display: none !important;
-  }
-
-  .dropdown-menu {
-        display: none !important; 
+/* =========================================
+   MAGIA 2: MENÚ BURBUJA MÓVIL (Menos de 992px)
+   ========================================= */
+@media (max-width: 991.98px) {
+    .nav-links-container {
+        position: fixed;
+        top: 90px;
+        right: 0;
+        width: 280px;
+        /* Un tono apenas un pelito más claro para que la burbuja se note 
+           al salir por encima de la página que estará atrás */
+        background-color: #102e35;
+        padding: 1.5rem 0;
+        clip-path: circle(0px at 100% 0);
+        pointer-events: none;
+        transition: clip-path 0.4s ease-in-out;
+        border-bottom-left-radius: 8px;
+        box-shadow: -4px 4px 15px rgba(0,0,0,0.3);
     }
 
-  /* 6. Ajustamos el contenedor de los links para que no estorbe */
-  .nav-link-container {
-    margin: 0; 
-    width: 0; 
-  }
+    .nav-links-container.active {
+        clip-path: circle(150% at 100% 0);
+        pointer-events: all;
+    }
 
+    .nav-links-container .nav-link-custom {
+        color: #ffffff;
+        font-size: 13px;
+    }
 
-  
+    .nav-links-container li {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-links-container.active li {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Cascada Menú Móvil */
+    .nav-links-container.active li:nth-child(1) { transition-delay: 0.1s; }
+    .nav-links-container.active li:nth-child(2) { transition-delay: 0.2s; }
+    .nav-links-container.active li:nth-child(3) { transition-delay: 0.3s; }
+    .nav-links-container.active li:nth-child(4) { transition-delay: 0.4s; }
+    .nav-links-container.active li:nth-child(5) { transition-delay: 0.5s; }
+    .nav-links-container.active li:nth-child(6) { transition-delay: 0.6s; }
+    .nav-links-container.active li:nth-child(7) { transition-delay: 0.7s; }
+
+    .dropdown-menu-custom {
+        display: none !important;
+    }
 }
