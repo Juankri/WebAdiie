@@ -23,8 +23,9 @@ app = Flask(__name__)
 origenes_permitidos = [
     "https://estudioadiie.cl",
     "https://www.estudioadiie.cl",
-    "https://estudioadiie-web.vercel.app", # Cambia esto por tu link real de Vercel
-    "http://localhost:5173" # Puerto de Vite para que sigas programando en tu PC
+    "https://web-adiie.vercel.app", # Cambia esto por tu link real de Vercel
+    "http://localhost:5173",
+      # Puerto de Vite para que sigas programando en tu PC
 ]
 
 CORS(app, resources={r"/*": {"origins": origenes_permitidos}}) 
