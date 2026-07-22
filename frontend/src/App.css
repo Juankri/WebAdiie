@@ -16,8 +16,18 @@
   
 }
 
-html, body{
-  overflow-x: hidden;
+html, body {
+  overflow-x: hidden !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+#root {
+  overflow-x: hidden !important;
+  width: 100%;
+  position: relative;
 }
 
 .body-no-scroll {
@@ -37,139 +47,6 @@ body{
   -webkit-text-size-adjust: 100%;       /* evitar escalados extra en móviles */
   /* mantener pesos de fuente reales para evitar "fake bold" */
   
-}
-
-.home-body{
-  position: relative;
-  min-height: 100vh;
-  /*top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;*/
-}
-
-
-
-
-
-
-/* MAIN DEL HOME */
-
-.home-main{
-  margin-top: 140px; /* Añadido para compensar el header fijo */
-  position: relative;
-  background-color: #1a1a1a; /* Fondo de seguridad */
-  grid-template-columns: 1fr 4fr 1fr;
-  height: 100%;
-  
-  background-position: 50% 30%;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  transition: background-image 1s ease-in-out;
-
-}
-
-/* Estilo compartido para ambas capas */
-.slider_fondo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    
-    /* Configuración de imagen */
-    background-size: cover;
-    background-position: center top; /* O como prefieras */
-    z-index: 0; /* Detrás del texto */
-    
-    /* Transición suave de opacidad */
-    transition: opacity 1.5s ease-in-out; 
-    opacity: 0; /* Por defecto invisibles */
-}
-
-/* La clase que las hace visibles */
-.slider_fondo_activo {
-    opacity: 1;
-    z-index: 1; /* Un poquito más arriba que la inactiva */
-}
-
-/* IMPORTANTE: Ponemos la primera foto fija en el CSS para que cargue rápido */
-#slider-1 {
-    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/static/img/Fondos/fondo1.webp');
-    background-position: 50% 30%;
-}
-
-.main-container{
-  position: relative;
-    z-index: 10;
-  grid-column: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-    gap: 5;  height: 450px;
-  
-  
-}
-
-.main-container_titulo{
-  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
-  
-  text-align: center;
-  font-size: 40px;
-  
-  
-  color: #fff;
-  margin-top: 60px;
-
-  font-family: 'Montserrat', sans-serif;
-    font-weight: 700px; /* Hace que se vea gordita y fuerte */
-    letter-spacing: 1px; /* Separa un poco las letras (queda muy elegante) */
-    text-transform: uppercase; /* Asegura que esté en mayúsculas */
-
-}
-.main-container_text{
-  
-  text-align: center;
-  
-  
-  
-  
-
-  font-family: 'Montserrat', sans-serif;
-    font-weight: 400;       /* Letra normal/fina, no negrita */
-    font-size: 16px;        /* Tamaño discreto */
-    letter-spacing: 4px;    /* EL SECRETO: Separar mucho las letras */
-    text-transform: uppercase; /* Todo en mayúsculas */
-    color: #f1f1f1;         /* Blanco un poco suave, no puro */
-  
-    
-    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8)
-}
-
-.main-container_link{
-  margin-top: auto;
-  margin-bottom: 50px;
-  background-color: #0B2126;
-  display: inline-block;
-  padding: 10px 20px;
-  text-decoration: none;
-  color: #fff;
-  font-weight: 700;
-  font-size: 18px;
-  height: 45px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-}
-
-.main-container_link:hover{
-  background-color: #5A6C73;
-  transform: translateY(-5px);
-
-}
-
-.main-container_link:active{
-  background-color: #000;
 }
 
 

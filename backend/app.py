@@ -13,6 +13,7 @@ from routes.disenos import disenos_bp
 from routes.correos import correos_bp
 from routes.auth import auth_bp
 from routes.pagos import pagos_bp
+from routes.fondos import fondos_bp
 
 # Cargar variables secretas
 load_dotenv()
@@ -31,6 +32,7 @@ app.register_blueprint(disenos_bp)
 app.register_blueprint(correos_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(pagos_bp)
+app.register_blueprint(fondos_bp)
 
 # Rutas base (Health checks)
 @app.route('/')

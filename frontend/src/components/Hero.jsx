@@ -1,38 +1,60 @@
 import { useState, useEffect } from 'react';
+import './Hero.css'; // Solo dejaremos la tipografía aquí
 
 function Hero() {
-    // Lista de fondos (Asegúrate de que estas fotos existan en tu carpeta public/img/)
-    const fondos = [
-        { url: '/img/Fondos/fondo1.webp', posicion: '50% 30%'},
-        { url: '/img/Fondos/fondo2.webp', posicion: '50% 30%' },
-        { url: '/img/Fondos/fondo3.webp', posicion: 'center'},
-        // Si no tienes estas fotos aún, puedes dejar solo una por ahora
-    ];
-
+    // 1. ESTADO: Iniciamos con una imagen por defecto para que no se vea vacío
+    const [fondos, setFondos] = useState([
+        { url: '/img/Fondos/fondo1.webp', posicion: 'center' }
+    ]);
     const [indice, setIndice] = useState(0);
 
-    // Efecto para rotar el fondo cada 5 segundos
+    // 2. OBTENER FONDOS DESDE LA BASE DE DATOS
     useEffect(() => {
+        const cargarFondos = async () => {
+            try {
+                // Preparado para conectarse a tu backend (crearemos esta ruta luego)
+                const res = await fetch('https://webadiie-backend.onrender.com/api/fondos_hero');
+                if (res.ok) {
+                    const data = await res.json();
+                    // Si el cliente subió fotos, las usamos. Si no, dejamos la de por defecto.
+                    if (data.length > 0) {
+                        setFondos(data);
+                    }
+                }
+            } catch (error) {
+                console.error("Error cargando los fondos del Hero:", error);
+            }
+        };
+
+        cargarFondos();
+    }, []);
+
+    // 3. EFECTO SLIDER (Cross-fade)
+    useEffect(() => {
+        // Si hay una sola foto, no tiene sentido hacer el intervalo
+        if (fondos.length <= 1) return;
+
         const intervalo = setInterval(() => {
             setIndice((prevIndice) => (prevIndice + 1) % fondos.length);
         }, 5000);
-        return () => clearInterval(intervalo); // Limpieza profesional al desmontar
+        return () => clearInterval(intervalo);
     }, [fondos.length]);
 
     return (
-        <main className="home-main" style={{ position: 'relative', backgroundColor: '#1a1a1a' }}>
+        // BOOTSTRAP: calc(100vh - 90px) descuenta exactamente la altura de tu Navbar
+        // d-flex flex-column centra todo perfectamente sin romper el diseño
+        <main className="position-relative w-100 d-flex flex-column justify-content-center align-items-center overflow-hidden" 
+              style={{ minHeight: 'calc(100vh - 90px)', marginTop: '90px', backgroundColor: '#1a1a1a' }}>
             
-            {/* Las dos capas para el Cross-fade (Transición suave) */}
+            {/* CAPAS DE FONDOS */}
             {fondos.map((fondo, i) => (
                 <div 
                     key={i}
-                    className={`slider_fondo ${i === indice ? 'slider_fondo_activo' : ''}`}
+                    className="position-absolute top-0 start-0 w-100 h-100"
                     style={{
-                        position: 'absolute',
-                        top: 0, left: 0, width: '100%', height: '100%',
-                        backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${fondo.url}')`,
+                        backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${fondo.url || fondo.imagen_url}')`,
                         backgroundSize: 'cover',
-                        backgroundPosition: fondo.posicion,
+                        backgroundPosition: fondo.posicion || 'center',
                         opacity: i === indice ? 1 : 0,
                         transition: 'opacity 1.5s ease-in-out',
                         zIndex: i === indice ? 1 : 0
@@ -40,14 +62,17 @@ function Hero() {
                 ></div>
             ))}
 
-            {/* Contenido Frontal */}
-            <div className="main-container" style={{ position: 'relative', zIndex: 10 }}>
-                <h1 className="main-container_titulo">EstudioAdiie</h1>
-                <p className="main-container_text">
-                    ARQUITECTURA Y CONSTRUCCION <br />
+            {/* CONTENIDO FRONTAL */}
+            {/* BOOTSTRAP: z-3 lo pone por encima de las fotos, container y px-3 evitan que toque los bordes en celular */}
+            <div className="container position-relative z-3 d-flex flex-column align-items-center text-center px-3">
+                <h1 className="hero-titulo text-white mb-3">EstudioAdiie</h1>
+                
+                <p className="hero-texto text-white mb-5">
+                    ARQUITECTURA Y CONSTRUCCIÓN <br />
                     NOSOTROS PROFESIONALIZAMOS TUS IDEAS
                 </p>
-                <a className="main-container_link" href="#Contacto">
+                
+                <a className="hero-btn shadow" href="#Contacto">
                     Cotiza ya!
                 </a>
             </div>

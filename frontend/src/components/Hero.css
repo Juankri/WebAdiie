@@ -1,0 +1,43 @@
+.hero-titulo {
+    font-family: 'Montserrat', sans-serif;
+    /* clamp(Mínimo, Ideal, Máximo) -> ¡Magia responsiva! */
+    font-size: clamp(2.5rem, 6vw, 4rem); 
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+.hero-texto {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    font-weight: 400;
+    letter-spacing: 4px; /* Tu secreto de elegancia */
+    text-transform: uppercase;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+    line-height: 1.6;
+    color: #f1f1f1;
+}
+
+.hero-btn {
+    background-color: #0B2126; /* Color corporativo */
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding: 12px 35px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.hero-btn:hover {
+    background-color: #D4AF37; /* El dorado espectacular de tu marca */
+    color: #0B2126;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+.hero-btn:active {
+    transform: translateY(0);
+    background-color: #000;
+}
