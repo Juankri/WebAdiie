@@ -1,60 +1,90 @@
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
-
-
 function Footer() {
     return (
-        <footer className="footer">
-            <div className="footer-container">
-                
-                <div className="footer-column">
-                    <a href="/">
-                        <img 
-                            className="logo_azul footer-logo" 
-                            src="/img/logo/azzul.png" 
-                            alt="Logo EstudioAdiie" 
-                        />
-                    </a>
-                    <p className="footer-about">
-                        Transformando espacios con diseño y funcionalidad. Arquitectura y remodelaciones a tu medida.
-                    </p>
-                </div>
+        <footer 
+            className="pt-5 w-100" 
+            style={{ backgroundColor: '#0B2126', color: '#EAF2F8' }}
+        >
+            {/* 🌟 ETIQUETA STYLE INTEGRADA: Para los efectos hover sin necesidad de CSS externo */}
+            <style>
+                {`
+                    .footer-link {
+                        color: #EAF2F8;
+                        text-decoration: none;
+                        transition: color 0.3s ease;
+                    }
+                    .footer-link:hover {
+                        color: #D4AF37;
+                    }
+                    .social-icon {
+                        color: #ffffff;
+                        font-size: 28px;
+                        transition: color 0.3s ease;
+                    }
+                    .social-icon:hover {
+                        color: #616161;
+                    }
+                `}
+            </style>
 
-                <div className="footer-column">
-                    <h4>Navegación</h4>
-                    <ul>
-                        <li><Link to="/">Inicio</Link></li>
-                        <li><Link to="/portafolio">Portafolio</Link></li>
-                        
-                        {/* Usamos HashLink para las secciones de la página principal */}
-                        <li><HashLink smooth to="/#Servicios">Servicios</HashLink></li>
-                        
-                        <li><Link to="/infoservicioexpress">Servicio Express</Link></li>
-                        <li><Link to="/en_construccion">Proyectos en venta</Link></li>
-                        
-                        {/* Usamos HashLink también para Contacto */}
-                        <li><HashLink smooth to="/#Contacto">Contacto</HashLink></li>
-                    </ul>
-                </div>
-
-                <div className="footer-column">
-                    <h4>Síguenos</h4>
-                    <div className="footer_social">
-                        <a href="https://facebook.com/tu-pagina" target="_blank" rel="noopener noreferrer">
-                            <i className="fab fa-facebook"></i>
+            <div className="container pb-4">
+                {/* gy-4 da espacio vertical entre columnas cuando están apiladas en celular */}
+                <div className="row text-center text-md-start gy-4">
+                    
+                    {/* COLUMNA 1: LOGO Y ABOUT */}
+                    <div className="col-12 col-md-4 d-flex flex-column align-items-center align-items-md-start">
+                        <a href="/">
+                            <img 
+                                src="/img/logo/azzul.png" 
+                                alt="Logo EstudioAdiie" 
+                                className="img-fluid mb-3"
+                                style={{ height: '75px', objectFit: 'contain' }}
+                            />
                         </a>
-                        <a href="https://www.instagram.com/estudioadiie/" target="_blank" rel="noopener noreferrer">
-                            <i className="fab fa-instagram"></i>
-                        </a>
+                        <p className="small mt-2" style={{ maxWidth: '300px', lineHeight: '1.6' }}>
+                            Transformando espacios con diseño y funcionalidad. Arquitectura y remodelaciones a tu medida.
+                        </p>
                     </div>
-                </div>
 
+                    {/* COLUMNA 2: NAVEGACIÓN */}
+                    <div className="col-12 col-md-4">
+                        <h5 className="text-white fw-bold mb-3">Navegación</h5>
+                        <ul className="list-unstyled mb-0">
+                            <li className="mb-2"><Link to="/" className="footer-link">Inicio</Link></li>
+                            <li className="mb-2"><Link to="/portafolio" className="footer-link">Portafolio</Link></li>
+                            <li className="mb-2"><HashLink smooth to="/#Servicios" className="footer-link">Servicios</HashLink></li>
+                            <li className="mb-2"><Link to="/infoservicioexpress" className="footer-link">Servicio Express</Link></li>
+                            <li className="mb-2"><Link to="/en_construccion" className="footer-link">Proyectos en venta</Link></li>
+                            <li className="mb-2"><HashLink smooth to="/#Contacto" className="footer-link">Contacto</HashLink></li>
+                        </ul>
+                    </div>
+
+                    {/* COLUMNA 3: REDES SOCIALES */}
+                    <div className="col-12 col-md-4">
+                        <h5 className="text-white fw-bold mb-3">Síguenos</h5>
+                        <div className="d-flex justify-content-center justify-content-md-start gap-3 mt-2">
+                            <a href="https://facebook.com/tu-pagina" target="_blank" rel="noopener noreferrer" className="social-icon">
+                                <i className="fab fa-facebook"></i>
+                            </a>
+                            <a href="https://www.instagram.com/estudioadiie/" target="_blank" rel="noopener noreferrer" className="social-icon">
+                                <i className="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
-            <div className="footer-bottom">
-                {/* Pequeño truco: usar Date().getFullYear() actualiza el año automáticamente 😉 */}
-                <p>&copy; {new Date().getFullYear()} EstudioAdiie. Todos los derechos reservados.</p>
+            {/* BOTTOM FOOTER */}
+            <div 
+                className="text-center py-3 border-top" 
+                style={{ borderColor: 'rgba(58, 80, 107, 0.5) !important', fontSize: '13px' }}
+            >
+                <p className="mb-0 text-white-50">
+                    &copy; {new Date().getFullYear()} EstudioAdiie. Todos los derechos reservados.
+                </p>
             </div>
         </footer>
     );

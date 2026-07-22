@@ -1,27 +1,27 @@
-import { useState } from "react";
+import { useEffect, useContext,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
+import { AuthContext } from '../context/AuthContext';
 import './Login.css';
 
 
 
 
 const Login = () => {
-
-
   const [credenciales, setCredenciales] = useState({ email: '', password: '' });
-
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
+  
+  // 🌟 2. Extraemos 'login' y 'estaLogueado' del Contexto
+  const { login, estaLogueado } = useContext(AuthContext);
 
   useEffect(() => {
-    const token = localStorage.getItem('token_adiie');
-    if (token) {
+    // Si el contexto dice que ya está logueado, lo mandamos directo al dashboard
+    if (estaLogueado) {
       navigate('/admin_dashboard');
     }
-  }, [navigate]);
+  }, [estaLogueado, navigate]);
 
   const manejarCambio = (e) => {
     setCredenciales({ ...credenciales, [e.target.name]: e.target.value });
@@ -31,7 +31,7 @@ const Login = () => {
     e.preventDefault();
     setError('');
 
-    // 🌟 1. MOSTRAMOS SPINNER DE CARGA MIENTRAS CONECTA
+    // 1. SPINNER DE CARGA
     Swal.fire({
       title: 'Verificando credenciales...',
       allowOutsideClick: false,
@@ -50,11 +50,11 @@ const Login = () => {
       const datos = await respuesta.json();
 
       if (respuesta.ok) {
-        localStorage.setItem('token_adiie', datos.token);
+        // 🌟 3. USAMOS LA FUNCIÓN OFICIAL DEL CONTEXTO
+        // Esto guarda el token en localStorage y notifica a toda la app (incluyendo al Navbar) al instante
+        login(datos.token);
 
-        window.dispatchEvent(new Event('estado_sesion_cambiado'));
-
-        // 🌟 2. ALERTA DE ÉXITO QUE REDIRIGE AUTOMÁTICAMENTE
+        // 4. ALERTA DE ÉXITO QUE REDIRIGE AUTOMÁTICAMENTE
         Swal.fire({
           icon: 'success',
           title: '¡Bienvenido al Panel!',
@@ -65,22 +65,18 @@ const Login = () => {
           background: '#f9f9f9',
           color: '#0B2126'
         }).then(() => {
-          // 🌟 ¡AQUÍ ESTÁ LA MAGIA DE REACT! 🌟
           navigate('/admin_dashboard');
         });
 
       } else {
-        // Cerramos el spinner si hay error y mostramos el texto rojo
         Swal.close();
         setError(datos.error || 'Credenciales incorrectas');
       }
     } catch (error) {
-      // Cerramos el spinner si se cae el servidor
       Swal.close();
       setError('Error de conexión con el servidor. ¿Está activo en Render?');
     }
   };
-
 
   return (
     <div className="login_container">

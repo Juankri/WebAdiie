@@ -64,7 +64,7 @@ function Hero() {
 
             {/* CONTENIDO FRONTAL */}
             {/* BOOTSTRAP: z-3 lo pone por encima de las fotos, container y px-3 evitan que toque los bordes en celular */}
-            <div className="container position-relative z-3 d-flex flex-column align-items-center text-center px-3">
+            <div className="container position-relative d-flex flex-column align-items-center text-center px-3">
                 <h1 className="hero-titulo text-white mb-3">EstudioAdiie</h1>
 
                 <p className="hero-texto text-white mb-5">

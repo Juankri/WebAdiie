@@ -92,7 +92,7 @@ const AdminFondos = () => {
     };
 
     return (
-        <div className="container" style={{ marginTop: '140px', marginBottom: '80px' }}>
+        <div className="container" style={{minHeight: '70vh', marginTop: '140px', marginBottom: '80px' }}>
             
             {/* ENCABEZADO Y BOTÓN DE SUBIDA */}
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 gap-3">

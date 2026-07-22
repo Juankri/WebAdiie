@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { CarritoContext } from "../context/CarritoContext";
 import '../styles/Navbar.css'; 
+import { AuthContext } from '../context/AuthContext';
 import {
     User,
     Settings,
@@ -10,15 +11,28 @@ import {
     ChevronDown,
     Menu 
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
     const [menuAbierto, setMenuAbierto] = useState(false);
     const navRef = useRef(null);
+    const navigate = useNavigate(); // Herramienta para navegar sin recargar
+
     const { carrito } = useContext(CarritoContext);
-    const estaLogueado = !!localStorage.getItem('token_adiie');
+    
+    // 🌟 2. ELIMINAMOS el localStorage y usamos el Contexto
+    // Extraemos la variable reactiva y la función para salir
+    const { estaLogueado, logout } = useContext(AuthContext); 
 
     const toggleMenu = () => setMenuAbierto(!menuAbierto);
     const cerrarMenu = () => setMenuAbierto(false);
+
+    // 🌟 3. NUEVA FUNCIÓN: Para el botón de "Cerrar Sesión" en tu HTML
+    const manejarCerrarSesion = () => {
+        logout(); // Destruye el token y cambia el estado global al instante
+        cerrarMenu(); // Cerramos el menú móvil (buena práctica UX)
+        navigate('/login'); // Redirigimos suavemente
+    };
 
     useEffect(() => {
         const manejarClickFuera = (evento) => {

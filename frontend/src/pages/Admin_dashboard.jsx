@@ -1,25 +1,25 @@
 import { useNavigate } from 'react-router-dom';
 import { LayoutGrid, PencilRuler, LogOut, Image as ImageIcon } from 'lucide-react'; // Agregamos ImageIcon
 import './Admin_proyecto.css';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
     
-    // Es mejor leer el token directamente dentro del componente para que se actualice correctamente
-    const token = localStorage.getItem('token_adiie');
+    // 🌟 3. Traemos el estado de autenticación y la función de salida desde el Contexto
+    const { estaLogueado, logout } = useContext(AuthContext);
 
     useEffect(() => {
-        // Si el carnet NO existe, lo mandamos de vuelta al login inmediatamente
-        if (!token) {
+        // 🌟 4. Si el contexto global dice que NO está logueado, lo mandamos al login de inmediato
+        if (!estaLogueado) {
             navigate('/login');
         }
-    }, [token, navigate]);
+    }, [estaLogueado, navigate]);
 
     const cerrarSesion = () => {
-        localStorage.removeItem('token_adiie'); // Destruimos el carnet (token)
-        window.dispatchEvent(new Event('estado_sesion_cambiado'));
-        navigate('/login'); // Redirigimos suave y sin recargar la página 🚀
+        logout(); // 🌟 5. Usamos la función oficial (borra el token de localStorage y avisa al Navbar en tiempo real)
+        navigate('/login'); // Redirigimos de forma fluida 🚀
     };
     
 
