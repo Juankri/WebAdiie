@@ -23,6 +23,7 @@ CORS(app)
 
 # Configuración de Seguridad
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=30)
 jwt.init_app(app)
 bcrypt.init_app(app)
 

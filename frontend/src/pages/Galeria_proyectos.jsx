@@ -1,24 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Contacto from '../components/Contacto';
-import './Galeria_proyectos.css';
 import transformarImagen from '../components/TransformarImagen';
-
+import './Galeria_proyectos.css'; 
 
 function Galeria_proyectos() {
-
-    // 1. PREPARAMOS LA MEMORIA: Ya no importamos el archivo local, creamos un estado vacío
     const [proyectos, setProyectos] = useState([]);
     const [cargando, setCargando] = useState(true);
 
-    // 2. CONECTAMOS A LA NUBE: Vamos a buscar los proyectos a tu backend de Render
     useEffect(() => {
         const obtenerProyectos = async () => {
             try {
                 const respuesta = await fetch('https://webadiie-backend.onrender.com/api/proyectos');
                 const datos = await respuesta.json();
                 
-                // Guardamos los datos reales de MongoDB
                 setProyectos(datos);
                 setCargando(false);
             } catch (error) {
@@ -32,36 +27,56 @@ function Galeria_proyectos() {
 
     return (
         <>
-            <main className="main_galeria_proyectos">
-                <h1 className="titulo_galeria_proyectos">Proyectos</h1>
+            <main className="container" style={{ marginTop: '140px', marginBottom: '80px' }}>
                 
-                {/* 3. PANTALLA DE CARGA: Mientras los datos viajan por internet */}
+                <h1 className="text-center fw-bold text-uppercase mb-5" style={{ color: '#0B2126', letterSpacing: '2px' }}>
+                    Proyectos
+                </h1>
+                
                 {cargando ? (
-                    <h3 style={{ textAlign: 'center', margin: '50px 0', color: '#0B2126' }}>
-                        Cargando proyectos desde la base de datos... 
-                    </h3>
+                    <div className="d-flex flex-column align-items-center justify-content-center my-5 py-5">
+                        <div className="spinner-border mb-3" style={{ color: '#0B2126' }} role="status"></div>
+                        <h3 className="h6 text-uppercase fw-bold m-0" style={{ color: '#0B2126', letterSpacing: '1px' }}>
+                            Cargando proyectos desde la base de datos...
+                        </h3>
+                    </div>
                 ) : (
-                    <div className="galeria_proyectos">
-                        
-                        {/* 4. RENDERIZAMOS LA NUBE: Usamos los datos de Mongo */}
+                    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
                         {proyectos.map((proyecto) => (
-                            // OJO: MongoDB usa '_id' en vez de 'id'
-                            <Link key={proyecto._id} to={`/pagina_proyecto/${proyecto._id}`} className="link_galeria_proyecto">
-                                <div className="container_galeria_proyectos">
-                                    {/* OJO: Usamos 'imagen_url' porque así lo llamamos en tu formulario de admin */}
-                                    <img src={transformarImagen(proyecto.imagen_url, 400)} alt={proyecto.titulo} />
-                                    <p className="descripcion">{proyecto.titulo}</p> 
-                                </div>
-                            </Link>
-                        ))}
+                            <div key={proyecto._id} className="col d-flex justify-content-center">
+                                
+                                <Link to={`/pagina_proyecto/${proyecto._id}`} className="text-decoration-none w-100" style={{ maxWidth: '360px' }}>
+                                    
+                                    {/* CONTENEDOR DE LA TARJETA */}
+                                    <div className="card h-100 border-0 shadow rounded overflow-hidden galeria-proyecto-card">
+                                        
+                                        {/* 🌟 NUEVO: TÍTULO FIJO ENCIMA DE LA IMAGEN */}
+                                        <div className="p-3 bg-white text-center">
+                                            <h3 className="h6 text-uppercase fw-bold m-0" style={{ color: '#0B2126', letterSpacing: '1px', lineHeight: '1.4' }}>
+                                                {proyecto.titulo}
+                                            </h3>
+                                        </div>
 
+                                        {/* IMAGEN DE ARQUITECTURA */}
+                                        <img 
+                                            src={transformarImagen(proyecto.imagen_url, 500)} 
+                                            alt={proyecto.titulo} 
+                                            className="w-100 object-fit-cover"
+                                            style={{ height: '280px' }} 
+                                        />
+
+                                    </div>
+                                </Link>
+                                
+                            </div>
+                        ))}
                     </div>
                 )}
             </main>
 
             <Contacto />
         </>
-    )
+    );
 }
 
 export default Galeria_proyectos;

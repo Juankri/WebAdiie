@@ -43,12 +43,12 @@ function Hero() {
     return (
         // BOOTSTRAP: calc(100vh - 90px) descuenta exactamente la altura de tu Navbar
         // d-flex flex-column centra todo perfectamente sin romper el diseño
-        <main className="position-relative w-100 d-flex flex-column justify-content-center align-items-center overflow-hidden" 
-              style={{ minHeight: 'calc(100vh - 90px)', marginTop: '90px', backgroundColor: '#1a1a1a' }}>
-            
+        <main className="position-relative w-100 d-flex flex-column justify-content-center align-items-center overflow-hidden"
+            style={{ minHeight: '100vh', paddingTop: '100px', backgroundColor: '#1a1a1a' }}>
+
             {/* CAPAS DE FONDOS */}
             {fondos.map((fondo, i) => (
-                <div 
+                <div
                     key={i}
                     className="position-absolute top-0 start-0 w-100 h-100"
                     style={{
@@ -66,12 +66,12 @@ function Hero() {
             {/* BOOTSTRAP: z-3 lo pone por encima de las fotos, container y px-3 evitan que toque los bordes en celular */}
             <div className="container position-relative z-3 d-flex flex-column align-items-center text-center px-3">
                 <h1 className="hero-titulo text-white mb-3">EstudioAdiie</h1>
-                
+
                 <p className="hero-texto text-white mb-5">
                     ARQUITECTURA Y CONSTRUCCIÓN <br />
                     NOSOTROS PROFESIONALIZAMOS TUS IDEAS
                 </p>
-                
+
                 <a className="hero-btn shadow" href="#Contacto">
                     Cotiza ya!
                 </a>

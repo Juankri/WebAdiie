@@ -25,6 +25,7 @@ import Not404 from './pages/Not404';
 import './App.css'; 
 import InfoServicioExpress from './components/infoServicioExpress';
 import FormularioProyectoExpress from './pages/FormularioProyectoExpress';
+import AdminFondos from './pages/AdminFondos';
 
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
         <Route path="/infoservicioexpress" element={<InfoServicioExpress/>} />
         <Route path="/formularioproyectoexpress" element={<FormularioProyectoExpress/>} />
         <Route path="*" element={<Not404/>} />
+        <Route path="/admin_fondos" element={<AdminFondos />} />
       </Routes>
 
       <Footer />

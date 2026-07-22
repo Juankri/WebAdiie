@@ -51,326 +51,52 @@ body{
 
 
 
-/* SECCION SERVICIOS*/
+/* =========================================
+   EFECTO HOVER PREMIUM DE TARJETAS
+   ========================================= */
 
-.seccion_servicios{
-  min-height: 60vh;                             /* ocupa al menos una parte de la pantalla */
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* columnas responsivas */
-  grid-auto-rows: auto;
-  gap: 24px;
-  background-color: #0B2126;
-  padding: 24px;
-  padding-bottom: 60px;
-  align-items: start;
-  justify-items: center;                        /* centra cada tarjeta en su columna */
-  box-sizing: border-box;
-
+.card-servicio-custom {
+    background-color: #ffffff;
+    border-radius: 8px !important;
+    max-width: 320px; /* Limita el ancho máximo para mantener una proporción elegante */
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+    border: 2px solid transparent !important; /* Reservamos el espacio del borde */
 }
 
-.seccion_servicios h2{
-  margin-top: 120px;
-  grid-column: 1 / -1;
-  
-  align-self: start;
-  justify-self: center;
-  color: #fff;
-
+/* Efecto cuando pasas el mouse por encima o si es un enlace activo */
+.card-servicio-custom:hover, 
+a.card-servicio-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24) !important;
+    border-color: #D4AF37 !important; /* Tu hermoso dorado corporativo */
 }
-
-
-
-
-.container_servicios{
-  justify-self: center;
-  display: grid;
-  grid-template-rows: auto auto 1fr; /* icono, título, contenido */
-  justify-items: center;             /* centra horizontalmente hijos */
-  align-items: start;
-  gap: 8px;                          /* espacio entre elementos */
-  background-color: #fff;
-  width: 100%;
-  max-width: 250px;
-  height: 100%;
-  border-radius: 8px;
-  padding: 16px;
-  border: 2px solid #fff;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  text-decoration: none; /* Elimina el subrayado si es un enlace */
-}
-
-a.container_servicios:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-  border-color: #D4AF37;
-  
-}
-
-
-.container_servicios img{
-  color: #D4AF37;
-  width: 64px;           /* tamaño consistente para el icono */
-  height: 64px;
-  object-fit: contain;
-  display: block;
-  margin: 0; 
-}
-
-.container_servicios h3{
-   text-align: center;
-   font-size: 18px;
-   color: #0B2126;
-
-}
-
-.container_servicios a{
-   text-align: center;
-   font-size: 18px;
-   color: #0B2126;
-
-}
-
-.container_servicios ul{
-  margin: 8px 0 0;
-  text-align: center;
-  line-height: 1.4;
-  color: #0B2126;
-  font-size: 14px;}
-
-
-
-
-
-
-
-
-
 
 
 
 
 /* PROYECTOS*/
 
-.home_proyectos{
-  min-height: 60vh;    
-  padding: 24px;
-  padding: 40px 24px;
-  display: grid;
-  
-  
-  gap: 24px;
-  align-items: center;  
-  background-color: #fff;
-  
+/* =========================================
+   ANIMACIÓN DEL SLIDER DE PROYECTOS
+   ========================================= */
 
-}
-
-/* El contenedor general */
-.slider-container {
-  justify-content: center;
-  position: relative; /* Para poder ubicar las flechas */
-  max-width: 1200px;
-  margin: auto;
-  overflow: hidden; /* Que nada se salga */
-  display: grid;
-    
-}
-.slider-container h1{
-  margin-left: 70px;
-  margin-bottom: 20px;
-}
-
-/* Cada Slide individual */
-.slide-proyecto {
-    display: none; /* Por defecto están ocultos */
-    /* Aquí replicamos tu diseño lado a lado: */
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-}
-
-/* SOLO mostramos el que tenga la clase 'activo' */
-.slide-proyecto.activo {
-  justify-content: center;
-  align-items: center;
-  max-height: 90%;
-  max-width: 90%;
-  margin: 0 auto;
-  display: grid; /* Se activa y se pone en modo Grid */
-  grid-template-columns: 2fr 1fr;
-}
-
-/* Ajustes de tus columnas (Imagen y Texto) */
-.slide-imagen, .slide-texto {
-    flex: 1; /* Mitad y mitad */
-}
-
-.slide-imagen img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px; /* Opcional */
-}
-
-.slide-texto {
-  padding: 10px;
-  display: grid;
-  grid-template-rows: 1fr 2fr 1fr;/* fila 1: título, fila 2: contenido, fila 3: botón */
-  gap: 20px;
-  border-radius: 8px; 
-  padding: 10px;
-  /*background-color: #0B2126;*/
-  background-color: #0B2126;
-  color: #fff;
-  grid-column: 2;
-  grid-row: 1;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
-  border: 2px solid #000;
-
-  height: 100%;
-  align-content: center;
-}
-
-.boton_info{
-  grid-row: 3;       /* asegurar que esté en la tercera fila */
-  grid-column: 1 / -1;
-    /* centrar horizontal dentro de su celda */
-  align-self: center;    /* centrar vertical dentro de su fila */
-  justify-self: start;
-  align-self: end;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 15px;
-  height: 50px;
-  min-width: 100px;
-  color: #000;
-  border: 2px solid #000;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 12px;
-  background-color: #fff;
-  cursor: pointer;
-  
-}
-
-/* LAS FLECHAS */
-.slider-btn {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -22px;
-    color: white; /* O un color que resalte */
-    font-weight: bold;
-    font-size: 25px;
-    border: none;
-    background-color: rgba(0,0,0,0.5); /* Fondo semitransparente */
-    border-radius: 50%;
-    user-select: none;
-    z-index: 10;
-    transition: 0.3s;
-}
-
-.slider-btn:hover {
-    background-color: rgba(0,0,0,0.8);
-}
-
-.prev { left: 10px; }
-.next { right: 10px; }
-
-/* Animación de desvanecimiento suave */
-.mi_fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
+.mi-fade {
+    animation: fade 1.2s cubic-bezier(0.39, 0.575, 0.565, 1);
 }
 
 @keyframes fade {
-    from {opacity: .4} 
-    to {opacity: 1}
-}
-
-/* Responsivo para celular: Poner uno debajo del otro */
-/*@media (max-width: 768px) {
-    .slide-proyecto.activo {
-        flex-direction: column;
+    from {
+        opacity: 0.3;
+        transform: scale(0.98);
+    } 
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
-}*/
-
-
-
-
-
-
-
-.seccion_contacto{
-  min-height: 60vh;                             /* ocupa al menos una parte de la pantalla */
-  display: grid;
-  grid-template-columns: 1fr ; /* columnas responsivas */
-  grid-template-rows:  1fr ;
-  gap: 24px;
-  background-color: #0B2126;
-  padding: 24px;
-  
-                         /* centra cada tarjeta en su columna */
-  box-sizing: border-box;
-
-}
-
-.seccion_contacto h2{
-  margin-top: 120px;
-  font-size: 28px;
-  padding: 10px ;
-  color: #fff;
-  grid-row: 1;
-
-}
-
-.seccion_formulario{
-  grid-row: 2;
-  padding: 10px;
-  align-items: start;
-
 }
 
 
-
-.formulario{
-  width: 60%;
-  
-  display: grid;
-  gap: 12px;
-  background: #fff;
-  padding: 18px;
-  border-radius: 8px;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-  color: #0B2126;
-}
-
-.formulario label{
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.formulario input[type="text"],
-.formulario input[type="email"],
-.formulario textarea{
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 6px;
-  font-size: 14px;
-  background: #fff;
-  box-sizing: border-box;
-
-}
-
-.formulario button{
-  color: #fff;
-  background-color: #0B2126;
-}
 
 /* --- FOOTER --- */
 
@@ -474,41 +200,8 @@ a.container_servicios:hover {
 /* Para tablets y móviles (pantallas de menos de 768px) */
 @media (max-width: 768px) {
 
+
   
-
-
-  /* --- SECCIÓN SERVICIOS --- */
-  .seccion_servicios {
-    grid-template-columns: 1fr 1fr; /* 2 columnas para tablets y móviles grandes */
-    
-  }
-
-  /* --- SECCIÓN PROYECTOS (HOME) --- */
-  .home_proyectos {
-    grid-template-columns: 1fr; /* Una sola columna */
-    gap: 20px;
-  }
-  .slide-proyecto.activo{
-    grid-template-columns: 1fr;
-    
-  }
-  .slider-btn{
-    top: 50%;
-  }
-
-  .slide-texto {
-    grid-row: 2; /* La info pasa debajo de la imagen */
-    grid-column: 1; /* Aseguramos que ocupe la única columna */
-  }
-
-  .slide-imagen img {
-    width: 100%; /* La imagen ocupa todo el ancho */
-  }
-
-  /* --- SECCIÓN CONTACTO --- */
-  .formulario {
-    width: 100%; /* El formulario ocupa todo el ancho */
-  }
 
   /* --- FOOTER --- */
   .footer-container {
@@ -536,13 +229,6 @@ a.container_servicios:hover {
 }
 
 
-
-/* Cuando la pantalla es menor a 480px (celulares verticales), pasamos a 1 columna */
-@media (max-width: 480px) {
-  .seccion_servicios {
-    grid-template-columns: 1fr;
-  }
-}
 
 
 
