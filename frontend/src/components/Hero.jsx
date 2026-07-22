@@ -64,7 +64,7 @@ function Hero() {
 
             {/* CONTENIDO FRONTAL */}
             {/* BOOTSTRAP: z-3 lo pone por encima de las fotos, container y px-3 evitan que toque los bordes en celular */}
-            <div className="container position-relative d-flex flex-column align-items-center text-center px-3">
+            <div className="container position-relative d-flex flex-column align-items-center text-center px-3" style={{ zIndex: 1 }}>
                 <h1 className="hero-titulo text-white mb-3">EstudioAdiie</h1>
 
                 <p className="hero-texto text-white mb-5">
@@ -72,8 +72,18 @@ function Hero() {
                     NOSOTROS PROFESIONALIZAMOS TUS IDEAS
                 </p>
 
-                <a className="hero-btn shadow" href="#Contacto">
-                    Cotiza ya!
+                {/* 🌟 BOTÓN ACTUALIZADO A WHATSAPP */}
+                <a
+                    className="hero-btn shadow d-inline-flex align-items-center" // Clases Bootstrap para alinear icono y texto
+                    // Recuerda cambiar el 569XXXXXXXX por el número real
+                    href="https://wa.me/56984604538?text=Hola%20EstudioAdiie,%20me%20gustaría%20cotizar%20un%20proyecto."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {/* Icono de WhatsApp - Heredará el color blanco por defecto ('me-2' es Bootstrap margin-end) */}
+                    <i className="fab fa-whatsapp me-2 fs-5"></i>
+                    {/* Texto actualizado */}
+                    Cotiza por WhatsApp
                 </a>
             </div>
         </main>
