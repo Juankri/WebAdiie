@@ -17,9 +17,10 @@ const AdminDashboard = () => {
     }, [token, navigate]);
 
     const cerrarSesion = () => {
-        localStorage.removeItem('token_adiie');
-        window.location.href = '/login';
+        localStorage.removeItem('token_adiie'); // Destruimos el carnet (token)
+        navigate('/login'); // Redirigimos suave y sin recargar la página 🚀
     };
+    
 
     return (
         <div className="admin-container" style={{ textAlign: 'center' }}>
