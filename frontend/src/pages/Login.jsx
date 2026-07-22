@@ -9,7 +9,7 @@ import './Login.css';
 
 const Login = () => {
 
-  const [credenciales, setCredenciales] = useState({ usuario: '', password: ''});
+  const [credenciales, setCredenciales] = useState({ email: '', password: ''});
 
   const [error, setError] = useState('');
 
@@ -80,9 +80,9 @@ return(
       {error && <p className="login_error">{error}</p>}
 
       <input
-        type="text"
-        name="usuario"
-        placeholder="Usuario"
+        type="email" // Ayuda a que el navegador valide que tiene un formato con @
+        name="email" // ¡ESTO ES LO MÁS IMPORTANTE!
+        placeholder="Correo electrónico"
         onChange={manejarCambio}
         required
         className="login_input"
