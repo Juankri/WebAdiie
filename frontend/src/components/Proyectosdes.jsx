@@ -38,7 +38,6 @@ function Proyectosdes() {
     };
 
     return (
-        // BOOTSTRAP: py-5 para espaciado, bg-white para el fondo
         <section id="Proyectos" className="py-5 bg-white">
             <div className="container position-relative py-4">
                 
@@ -49,12 +48,11 @@ function Proyectosdes() {
                 {cargando ? (
                     <p className="text-center fw-bold" style={{ color: '#0B2126' }}>Cargando proyectos espectaculares...</p>
                 ) : (
-                    // position-relative para poder anclar los botones a los lados
                     <div className="position-relative px-2 px-md-5">
 
-                        {/* BOTÓN ANTERIOR (Absoluto a la izquierda, centrado verticalmente) */}
+                        {/* 🌟 BOTÓN ANTERIOR: Cambiamos z-3 por z-1 🌟 */}
                         <button 
-                            className="btn btn-dark position-absolute top-50 start-0 translate-middle-y rounded-circle z-3 shadow border-0" 
+                            className="btn btn-dark position-absolute top-50 start-0 translate-middle-y rounded-circle z-1 shadow border-0" 
                             onClick={slideAnterior}
                             style={{ width: '50px', height: '50px', backgroundColor: 'rgba(0,0,0,0.6)' }}
                         >
@@ -63,16 +61,11 @@ function Proyectosdes() {
 
                         {/* SLIDER CONTENEDOR */}
                         {listaProyectos.map((proyecto, index) => {
-                            // En lugar de display:none, simplemente no renderizamos el que no está activo. 
-                            // Esto hace que la animación de CSS se ejecute fresca cada vez.
                             if (index !== slideActual) return null;
 
                             return (
-                                // BOOTSTRAP: row g-0 junta las columnas sin espacios. 
-                                // overflow-hidden y rounded crean los bordes redondeados globales
                                 <div key={proyecto._id || index} className="row g-0 shadow-lg rounded overflow-hidden mi-fade">
                                     
-                                    {/* LADO IZQUIERDO: IMAGEN (Ocupa 12 columnas en móvil, 8 en PC) */}
                                     <div className="col-12 col-lg-8">
                                         <img 
                                             src={proyecto.imagen_url} 
@@ -82,7 +75,6 @@ function Proyectosdes() {
                                         />
                                     </div>
 
-                                    {/* LADO DERECHO: TEXTO (Ocupa 12 columnas en móvil, 4 en PC) */}
                                     <div className="col-12 col-lg-4 d-flex flex-column p-4 p-md-5" 
                                          style={{ backgroundColor: '#0B2126', borderLeft: '2px solid #000' }}>
                                         
@@ -102,9 +94,9 @@ function Proyectosdes() {
                             );
                         })}
 
-                        {/* BOTÓN SIGUIENTE (Absoluto a la derecha, centrado verticalmente) */}
+                        {/* 🌟 BOTÓN SIGUIENTE: Cambiamos z-3 por z-1 🌟 */}
                         <button 
-                            className="btn btn-dark position-absolute top-50 end-0 translate-middle-y rounded-circle z-3 shadow border-0" 
+                            className="btn btn-dark position-absolute top-50 end-0 translate-middle-y rounded-circle z-1 shadow border-0" 
                             onClick={siguienteSlide}
                             style={{ width: '50px', height: '50px', backgroundColor: 'rgba(0,0,0,0.6)' }}
                         >

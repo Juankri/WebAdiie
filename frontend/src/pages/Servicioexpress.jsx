@@ -1,14 +1,11 @@
-import './Servicioexpress.css';
-import Contacto from '../components/Contacto';
 import { useState, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
 import { CarritoContext } from '../context/CarritoContext';
-import BotonPago from '../components/BotonPago';
+import Contacto from '../components/Contacto';
 import Swal from 'sweetalert2';
 
 function ServicioExpress() {
 
-    // 1. NUESTRA BASE DE DATOS LOCAL (Ahora cada servicio tiene sus propias "opciones")
+    // 1. BASE DE DATOS LOCAL
     const listaServicios = [
         {
             titulo: "Diseño de baño",
@@ -158,13 +155,10 @@ function ServicioExpress() {
     const { agregarAlCarrito } = useContext(CarritoContext);
     const [modalAbierto, setModalAbierto] = useState(false);
     const [servicioActivo, setServicioActivo] = useState(null);
-    
-    // 🌟 Modificación: Ya no inicia con un nivel fijo, inicia nulo
     const [nivelSeleccionado, setNivelSeleccionado] = useState(null);
 
     const abrirModal = (servicio) => {
         setServicioActivo(servicio);
-        // 🌟 Magia aquí: Toma automáticamente la primera opción DEL SERVICIO ESPECÍFICO
         setNivelSeleccionado(servicio.opciones[0]); 
         setModalAbierto(true);
     };
@@ -176,7 +170,6 @@ function ServicioExpress() {
     };
 
     const manejarAgregarAlCarrito = (nivel) => {
-        // Validación por si acaso
         if (!nivel) return;
 
         const itemParaElCarrito = {
@@ -188,7 +181,6 @@ function ServicioExpress() {
 
         agregarAlCarrito(itemParaElCarrito);
         
-        // 🌟 CONFIGURACIÓN DEL TOAST ELEGANTE
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -218,66 +210,178 @@ function ServicioExpress() {
 
     return (
         <>
-            <main className="main-servicios">
-                <h1 className="titulo-servicios">Comienza Tu Diseño Express!</h1>
-                <p className="subtitulo-servicios">Selecciona el espacio y el nivel de diseño que necesitas.</p>
+            {/* 🌟 ESTILOS MÍNIMOS EN LÍNEA PARA HOVER Y ANIMACIONES */}
+            <style>{`
+                .card-servicio {
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    cursor: pointer;
+                    background-color: #0B2126;
+                }
+                .card-servicio:hover {
+                    transform: translateY(-8px);
+                    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25) !important;
+                }
+                .btn-adiie {
+                    background-color: #0B2126;
+                    color: white;
+                    transition: all 0.3s ease;
+                }
+                .btn-adiie:hover {
+                    background-color: #1a3a44;
+                    color: #D4AF37;
+                }
+                .btn-volver-icon {
+                    width: 38px;
+                    height: 38px;
+                    background-color: #f8f9fa;
+                    color: #0B2126;
+                    transition: all 0.3s ease;
+                }
+                .btn-volver-icon:hover {
+                    background-color: #D4AF37;
+                    color: #0B2126;
+                    transform: translateX(-3px);
+                }
+                .modal-backdrop-custom {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    background-color: rgba(0, 0, 0, 0.65);
+                    z-index: 1050;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 1rem;
+                    overflow-y: auto;
+                }
+            `}</style>
 
-                <div className="servicios-grid">
+            <main className="container py-5" style={{ paddingTop: '150px' }}>
+                
+                {/* ENCABEZADO */}
+                <div className="text-center mb-5 mt-4">
+                    <h1 className="fw-bold display-5 mb-2" style={{ color: '#0B2126' }}>
+                        Comienza Tu Diseño Express!
+                    </h1>
+                    <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
+                        Selecciona el espacio y el nivel de diseño que necesitas para tu proyecto.
+                    </p>
+                </div>
+
+                {/* GRILLA DE SERVICIOS */}
+                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center mb-5">
                     {listaServicios.map((servicio, index) => (
-                        <div key={index} className="servicio-item text-white" onClick={() => abrirModal(servicio)}>
-                            <img src={servicio.imagen} alt={servicio.titulo} loading="lazy" />
-                            <h3>{servicio.titulo}</h3>
-                            <p>{servicio.precio}</p>
+                        <div key={index} className="col">
+                            <div 
+                                className="card card-servicio border-0 h-100 shadow-sm rounded-3 overflow-hidden text-white"
+                                onClick={() => abrirModal(servicio)}
+                            >
+                                <img 
+                                    src={servicio.imagen} 
+                                    className="card-img-top" 
+                                    alt={servicio.titulo} 
+                                    loading="lazy"
+                                    style={{ height: '160px', objectFit: 'cover' }}
+                                />
+                                <div className="card-body text-center d-flex flex-column justify-content-between p-3">
+                                    <h3 className="card-title fw-semibold fs-6 mb-2">{servicio.titulo}</h3>
+                                    <p className="card-text small mb-0 fw-bold" style={{ color: '#D4AF37' }}>
+                                        {servicio.precio}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>
 
+                {/* MODAL PERSONALIZADO BOOTSTRAP */}
                 {modalAbierto && servicioActivo && nivelSeleccionado && (
-                    <div className="modal" style={{ display: 'block' }}>
-                        <div className="modal-contenido">
-                            <span className="modal-cerrar" onClick={cerrarModal}>&times;</span>
+                    <div className="modal-backdrop-custom">
+                        <div 
+                            className="card border-0 shadow-lg rounded-4 overflow-hidden position-relative w-100" 
+                            style={{ maxWidth: '900px', backgroundColor: '#ffffff' }}
+                        >
+                            {/* 🌟 Botón Volver (Izquierda) */}
+                            <button 
+                                type="button" 
+                                className="btn btn-volver-icon rounded-circle position-absolute top-0 start-0 m-3 z-3 border-0 d-flex align-items-center justify-content-center shadow-sm"
+                                onClick={cerrarModal}
+                                title="Volver a los servicios"
+                            >
+                                <i className="fas fa-arrow-left fs-6"></i>
+                            </button>
 
-                            <div className="modal-body-grid">
-                                <div className="modal-imagen-container">
-                                    <img src={servicioActivo.imagen} alt={servicioActivo.titulo} />
-                                </div>
+                            {/* 🌟 Botón Cerrar (Derecha) */}
+                            <button 
+                                type="button" 
+                                className="btn-close position-absolute top-0 end-0 m-3 z-3 shadow-none" 
+                                onClick={cerrarModal}
+                                aria-label="Close"
+                            ></button>
 
-                                <div className="modal-info-container">
-                                    <h2>{servicioActivo.titulo}</h2>
-                                    <p>{servicioActivo.descripcion}</p>
-
-                                    {/* 🌟 El Select ahora mapea las opciones propias del servicio */}
-                                    <div className="form-grupo" style={{ marginTop: '20px' }}>
-                                        <label>Selecciona tu plan:</label>
-                                        <select
-                                            className="select-nivel"
-                                            value={nivelSeleccionado.id}
-                                            onChange={(e) => {
-                                                const nivel = servicioActivo.opciones.find(n => n.id === e.target.value);
-                                                setNivelSeleccionado(nivel);
-                                            }}
-                                        >
-                                            {servicioActivo.opciones.map((nivel) => (
-                                                <option key={nivel.id} value={nivel.id}>
-                                                    {nivel.titulo} ({nivel.m2}) - ${nivel.precio.toLocaleString()}
-                                                </option>
-                                            ))}
-                                        </select>
+                            <div className="card-body p-4 p-md-5 mt-4 mt-md-2">
+                                <div className="row g-4 align-items-center">
+                                    
+                                    {/* Imagen a la Izquierda */}
+                                    <div className="col-12 col-md-5 text-center">
+                                        <img 
+                                            src={servicioActivo.imagen} 
+                                            alt={servicioActivo.titulo} 
+                                            className="img-fluid rounded-3 shadow-sm w-100"
+                                            style={{ maxHeight: '280px', objectFit: 'cover' }}
+                                        />
                                     </div>
 
-                                    {/* El botón de agregar */}
-                                    <button
-                                        className="btn-agregar-completo"
-                                        onClick={() => manejarAgregarAlCarrito(nivelSeleccionado)}
-                                    >
-                                        Agregar al Carrito - ${nivelSeleccionado.precio.toLocaleString()}
-                                    </button>
+                                    {/* Información y Formulario a la Derecha */}
+                                    <div className="col-12 col-md-7 text-start">
+                                        <h2 className="fw-bold h3 mb-2" style={{ color: '#0B2126' }}>
+                                            {servicioActivo.titulo}
+                                        </h2>
+                                        <p className="text-secondary small mb-4" style={{ lineHeight: '1.6' }}>
+                                            {servicioActivo.descripcion}
+                                        </p>
+
+                                        {/* Selector de Plan */}
+                                        <div className="mb-4">
+                                            <label className="form-label fw-bold text-dark small mb-2">
+                                                Selecciona tu plan:
+                                            </label>
+                                            <select
+                                                className="form-select form-select-lg border-2 shadow-none fs-6"
+                                                style={{ borderColor: '#ddd', borderRadius: '8px' }}
+                                                value={nivelSeleccionado.id}
+                                                onChange={(e) => {
+                                                    const nivel = servicioActivo.opciones.find(n => n.id === e.target.value);
+                                                    setNivelSeleccionado(nivel);
+                                                }}
+                                            >
+                                                {servicioActivo.opciones.map((nivel) => (
+                                                    <option key={nivel.id} value={nivel.id}>
+                                                        {nivel.titulo} ({nivel.m2}) - ${nivel.precio.toLocaleString()}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+
+                                        {/* Botón Agregar al Carrito */}
+                                        <button
+                                            type="button"
+                                            className="btn btn-adiie btn-lg w-100 fw-bold py-3 rounded-3 shadow-sm"
+                                            onClick={() => manejarAgregarAlCarrito(nivelSeleccionado)}
+                                        >
+                                            Agregar al Carrito - ${nivelSeleccionado.precio.toLocaleString()}
+                                        </button>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 )}
             </main>
+
             <Contacto />
         </>
     );

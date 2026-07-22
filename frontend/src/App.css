@@ -22,6 +22,7 @@ html, body {
   margin: 0;
   padding: 0;
   position: relative;
+  scroll-behavior: smooth;
 }
 
 #root {
@@ -47,6 +48,15 @@ body{
   -webkit-text-size-adjust: 100%;       /* evitar escalados extra en móviles */
   /* mantener pesos de fuente reales para evitar "fake bold" */
   
+}
+
+/* Esto le dice al navegador que cuando viaje a un #id, deje un espacio arriba para el Navbar */
+#Servicios {
+    scroll-margin-top: 100px; /* Ajusta este valor según la altura real de tu Navbar */
+}
+
+#Contacto {
+    scroll-margin-top: 100px;
 }
 
 

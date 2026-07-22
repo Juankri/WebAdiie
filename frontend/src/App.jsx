@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-// ¡OJO AQUÍ! Solo importamos Routes, Route y useLocation (ya no BrowserRouter)
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom'; // Quitamos useLocation de aquí
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -21,7 +20,7 @@ import PagoExitoso from './components/PagoExitoso';
 import PagoFallido from './components/PagoFallido';
 import PagoPendiente from './components/PagoPendiente';
 import Not404 from './pages/Not404';
-
+import ScrollToTop from './components/ScrollToTop'; // 🌟 Tu vigilante importado
 import './App.css'; 
 import InfoServicioExpress from './components/infoServicioExpress';
 import FormularioProyectoExpress from './pages/FormularioProyectoExpress';
@@ -30,22 +29,14 @@ import AdminFondos from './pages/AdminFondos';
 
 function App() {
   return (
-    // Reemplazamos <Router> por etiquetas vacías <> (Fragmentos)
     <> 
-      <header className="header">
-        <div className="social">
-            <div className="social-icons">
-                <a href="https://facebook.com/tu-pagina" target="_blank" rel="noopener noreferrer">
-                    <i className="fab fa-facebook"></i>
-                </a>
+      {/* 🌟 1. AQUI VA EL VIGILANTE DEL SCROLL 🌟 */}
+      {/* Es invisible, pero te subirá cada vez que cambies de ruta */}
+      <ScrollToTop />
 
-                <a href="https://www.instagram.com/estudioadiie/" target="_blank" rel="noopener noreferrer">
-                    <i className="fab fa-instagram"></i>
-                </a>
-            </div>
-        </div>
+     
         <Navbar />
-      </header>
+      
 
       <Routes>
         <Route path="/" element={<Inicio />} />
@@ -55,7 +46,6 @@ function App() {
         <Route path="/galeria_proyectos" element={<Galeria_proyectos />} />
         <Route path="/galeria_diseños_personalizados" element={<Galeria_diseños_personalizados />} />
         <Route path="/carrito" element={<Carrito/>} />
-        {/* Tu ruta personalizada exactamente como la querías */}
         <Route path="/pagina_proyecto/:idUrl" element={<PaginaProyecto />} />
         <Route path="/pagina_diseno/:idUrl" element={<PaginaDiseno />} />
         <Route path="/admin_proyecto" element={<AdminProyectos />} />
@@ -67,8 +57,8 @@ function App() {
         <Route path="/pago-pendiente" element={<PagoPendiente />} />
         <Route path="/infoservicioexpress" element={<InfoServicioExpress/>} />
         <Route path="/formularioproyectoexpress" element={<FormularioProyectoExpress/>} />
-        <Route path="*" element={<Not404/>} />
         <Route path="/admin_fondos" element={<AdminFondos />} />
+        <Route path="*" element={<Not404/>} />
       </Routes>
 
       <Footer />

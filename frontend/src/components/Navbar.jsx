@@ -2,14 +2,14 @@ import { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { CarritoContext } from "../context/CarritoContext";
-import '../styles/Navbar.css'; 
+import '../styles/Navbar.css';
 import { AuthContext } from '../context/AuthContext';
 import {
     User,
     Settings,
     ShoppingCart,
     ChevronDown,
-    Menu 
+    Menu
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,10 +19,10 @@ function Navbar() {
     const navigate = useNavigate(); // Herramienta para navegar sin recargar
 
     const { carrito } = useContext(CarritoContext);
-    
+
     // 🌟 2. ELIMINAMOS el localStorage y usamos el Contexto
     // Extraemos la variable reactiva y la función para salir
-    const { estaLogueado, logout } = useContext(AuthContext); 
+    const { estaLogueado, logout } = useContext(AuthContext);
 
     const toggleMenu = () => setMenuAbierto(!menuAbierto);
     const cerrarMenu = () => setMenuAbierto(false);
@@ -44,12 +44,14 @@ function Navbar() {
         return () => document.removeEventListener('mousedown', manejarClickFuera);
     }, [menuAbierto]);
 
+    
+
     return (
         // FONDO ACTUALIZADO: Quitamos bg-white y agregamos el backgroundColor #0B2126
-        <nav className="shadow-sm position-fixed top-0 w-100 d-flex justify-content-between align-items-center z-3" 
-             style={{ backgroundColor: '#0B2126', height: '90px' }} 
-             ref={navRef}>
-             
+        <nav className="shadow-sm position-fixed top-0 w-100 d-flex justify-content-between align-items-center z-3"
+            style={{ backgroundColor: '#0B2126', height: '90px' }}
+            ref={navRef}>
+
             {/* LADO IZQUIERDO: LOGO Y ADMIN */}
             <div className="d-flex align-items-center ms-3 ms-lg-4">
                 <Link to="/">
@@ -80,10 +82,14 @@ function Navbar() {
             {/* LADO DERECHO: LINKS ESCRITORIO Y MENÚ BURBUJA MÓVIL */}
             <div className={`nav-links-container me-lg-5 ${menuAbierto ? 'active' : ''}`}>
                 <ul className="d-flex flex-column flex-lg-row align-items-center list-unstyled m-0 gap-4">
-                    
+
                     <li><Link className="nav-link-custom" to="/" onClick={cerrarMenu}>Inicio</Link></li>
                     <li><Link className="nav-link-custom" to="/portafolio" onClick={cerrarMenu}>Portafolio</Link></li>
-                    <li><HashLink className="nav-link-custom" smooth to="/#Servicios" onClick={cerrarMenu}>Servicios</HashLink></li>
+                    <li className="nav-item">
+                        <HashLink smooth to="/#Servicios" className="nav-link-custom" onClick={cerrarMenu}>
+                            Servicios
+                        </HashLink>
+                    </li>
 
                     {/* MENÚ DESPLEGABLE SERVICIO EXPRESS */}
                     <li className="dropdown-container position-relative">
@@ -101,7 +107,9 @@ function Navbar() {
                     </li>
 
                     <li className="text-nowrap"><Link className="nav-link-custom" to="/en_construccion" onClick={cerrarMenu}>Proyectos en venta</Link></li>
-                    <li><HashLink className="nav-link-custom" smooth to="/#Contacto" onClick={cerrarMenu}>Contacto</HashLink></li>
+                    <li><HashLink smooth to="/#Contacto" className="nav-link-custom" onClick={cerrarMenu}>
+                        Contacto
+                    </HashLink></li>
 
                     {/* CARRITO ESCRITORIO */}
                     <li className="d-none d-lg-block">

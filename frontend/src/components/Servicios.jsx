@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Usamos Link para los enlaces internos
-import '../App.css'; // Solo para el efecto de hover premium
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async'; // 🌟 Importamos Helmet
+import '../App.css';
 
 function Servicios() {
     const listaServicios = [
@@ -11,7 +12,7 @@ function Servicios() {
             descripcion: ["Un servicio para quienes buscan la decoración de su espacio en poco tiempo. Pensado para quienes se animan a implementar el diseño por su cuenta y así lograr un importante ahorro."]
         },
         {
-            enlace: "/galeria-disenos",
+            enlace: null,
             icono: "/img/hogar.png",
             titulo: "Diseño arquitectónico",
             descripcion: [
@@ -57,8 +58,24 @@ function Servicios() {
     ];
 
     return (
-        // BOOTSTRAP: py-5 da espaciado arriba/abajo, style maneja tu color corporativo #0B2126
         <section id="Servicios" className="py-5" style={{ backgroundColor: '#0B2126' }}>
+            
+            {/* 🌟 MAGIA SEO: HELMET CON PALABRAS CLAVE ESTRATÉGICAS 🌟 */}
+            <Helmet>
+                <title>Servicios de Arquitectura y Construcción | EstudioAdiie</title>
+                <meta 
+                    name="description" 
+                    content="Descubre los servicios de EstudioAdiie: Diseño arquitectónico, construcción de obras, diseño de interiores, regularización municipal (Ley del Mono) y nuestro exclusivo Servicio Express." 
+                />
+                <meta 
+                    name="keywords" 
+                    content="arquitectura, construcción, diseño de interiores, remodelaciones, servicio express arquitectura, planos 2D, modelado 3D, visualizaciones realistas, regularización municipal, permisos de edificación, ley del mono, master plan parcela, Estudio Adiie, Chile" 
+                />
+                {/* Etiquetas para compartir bonito en WhatsApp/Facebook */}
+                <meta property="og:title" content="Servicios de Arquitectura y Construcción | EstudioAdiie" />
+                <meta property="og:description" content="Hacemos realidad tus proyectos. Desde diseño express y planos 3D hasta la construcción y regularización legal de tu propiedad." />
+            </Helmet>
+
             <div className="container py-4">
                 
                 {/* TÍTULO DE LA SECCIÓN */}
@@ -66,11 +83,10 @@ function Servicios() {
                     Servicios
                 </h2>
 
-                {/* GRILLA RESPONSIVA: 1 col en celular, 2 en tablets (md), 3 en PC (lg). g-4 maneja la separación */}
+                {/* GRILLA RESPONSIVA */}
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
                     {listaServicios.map((servicio, index) => {
                         
-                        // Contenido interno estructurado con Flexbox de Bootstrap para alinear todo verticalmente
                         const contenidoTarjeta = (
                             <div className="card-body d-flex flex-column align-items-center text-center p-4">
                                 <img 
@@ -92,7 +108,6 @@ function Servicios() {
                             </div>
                         );
 
-                        // Si tiene enlace, envolvemos la tarjeta en un Link de react-router-dom
                         if (servicio.enlace) {
                             return (
                                 <div key={index} className="col d-flex justify-content-center">
@@ -103,7 +118,6 @@ function Servicios() {
                             );
                         }
 
-                        // Si no tiene enlace, es un div estático con aspecto idéntico
                         return (
                             <div key={index} className="col d-flex justify-content-center">
                                 <div className="card card-servicio-custom h-100 border-0 shadow">

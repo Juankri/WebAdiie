@@ -12,6 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <HelmetProvider>
       {/* 2. Primero el motor de navegación */}
       <BrowserRouter>
+        
         {/* 🌟 3. Luego el cerebro de seguridad de la Sesión */}
         <AuthProvider>
           {/* 4. Luego nuestra memoria global del carrito */}
