@@ -7,7 +7,7 @@ from datetime import datetime
 
 pagos_bp = Blueprint('pagos', __name__)
 
-# Configuración de llaves (Idealmente mueve el token de MP a tu .env pronto)
+# Configuración de llaves (Dejamos el token hardcodeado por ahora)
 sdk = mercadopago.SDK("APP_USR-4673614381035123-052217-9598653dccc9cc17eb3e5e69027e16b0-3421390750")
 resend.api_key = os.getenv("RESEND_API_KEY")
 
@@ -32,14 +32,13 @@ def crear_preferencia():
         },
         "external_reference": correo_real,
         "back_urls": {
-            "success": "https://webadiie-1.onrender.com/pago-exitoso",
-            "failure": "https://webadiie-1.onrender.com/pago-fallido",
-            "pending": "https://webadiie-1.onrender.com/pago-pendiente"
+            "success": "https://www.estudioadiie.cl/pago-exitoso", # Actualizado al dominio oficial
+            "failure": "https://www.estudioadiie.cl/pago-fallido",
+            "pending": "https://www.estudioadiie.cl/pago-pendiente"
         },
         "auto_return": "approved",
         
         # 👇 1. LE AVISAMOS A MERCADO PAGO DÓNDE ESTÁ NUESTRO WEBHOOK
-        # IMPORTANTE: Cambia "tu-backend" por el link real de tu backend en Render
         "notification_url": "https://webadiie-backend-gexl.onrender.com/api/webhook-pagos"
     }
 
@@ -60,7 +59,7 @@ def crear_preferencia():
 
 
 # ==========================================
-# 👇 2. NUEVA RUTA: EL RECEPTOR INVISIBLE (WEBHOOK)
+# 👇 2. EL RECEPTOR INVISIBLE (WEBHOOK)
 # ==========================================
 @pagos_bp.route('/api/webhook-pagos', methods=['POST'])
 def webhook_pagos():
@@ -74,21 +73,20 @@ def webhook_pagos():
             payment = payment_info["response"]
             
             if payment.get("status") == "approved":
-                # 🌟 AQUÍ ESTÁ EL TRUCO: Extraemos el correo real que guardamos en la preferencia
+                # Extraemos el correo real que guardamos en la preferencia
                 email_cliente_real = payment.get("external_reference")
-                orden_id = str(payment.get("id")) # Lo pasamos a texto por seguridad
+                orden_id = str(payment.get("id"))
                 
                 # 🛡️ 1. CREAMOS EL COMPROBANTE EN LA BASE DE DATOS
-                # Si la colección "comprobantes" no existe, Mongo la crea en este exacto instante.
                 comprobante = {
                     "orden_id": orden_id,
                     "email_cliente": email_cliente_real,
                     "estado_pago": "aprobado",
-                    "formulario_completado": False, # <--- Este es el candado clave
+                    "formulario_completado": False,
                     "fecha_pago": datetime.now()
                 }
                 
-                # Buscamos si ya existe para no duplicar (Mercado Pago a veces manda avisos dobles)
+                # Buscamos si ya existe para no duplicar
                 existe = db.comprobantes.find_one({"orden_id": orden_id})
                 if not existe:
                     db.comprobantes.insert_one(comprobante)
@@ -108,24 +106,38 @@ def webhook_pagos():
 # 👇 3. FUNCIÓN PARA MANDAR EL CORREO CON RESEND
 # ==========================================
 def enviar_link_formulario(email_cliente, orden_id):
-    # Armamos el link dinámico apuntando a tu frontend
-    link_formulario = f"https://webadiie-1.onrender.com/formularioproyectoexpress?orden={orden_id}"
+    link_formulario = f"https://www.estudioadiie.cl/formularioproyectoexpress?orden={orden_id}"
     
     html_content = f"""
-    <div style="font-family: Arial, sans-serif; color: #0B2126;">
-        <h2 style="color: #D4AF37;">¡Pago Exitoso! Bienvenido al Estudio Adiie</h2>
-        <p>Hemos recibido correctamente tu pago (Orden #{orden_id}).</p>
-        <p>Tu arquitecto está listo para empezar. Por favor, haz clic en el siguiente botón para enviarnos las medidas y fotos de tu espacio:</p>
-        <a href="{link_formulario}" style="display: inline-block; padding: 12px 24px; background-color: #0B2126; color: #D4AF37; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px;">
-            Ir al Formulario del Proyecto
-        </a>
+    <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+        <div style="background-color: #0B2126; padding: 20px; text-align: center;">
+            <h2 style="color: #D4AF37; margin: 0;">¡Pago Exitoso!</h2>
+        </div>
+        <div style="padding: 20px;">
+            <p style="font-size: 16px;">Hola,</p>
+            <p style="font-size: 16px;">Hemos recibido correctamente tu pago <strong>(Orden #{orden_id})</strong>. ¡Bienvenido a Estudio Adiie!</p>
+            <p style="font-size: 16px;">Tu arquitecto está listo para empezar. Por favor, haz clic en el siguiente botón para enviarnos las medidas, fotos y detalles de tu espacio:</p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{link_formulario}" style="display: inline-block; padding: 14px 28px; background-color: #D4AF37; color: #0B2126; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">
+                    Ir al Formulario del Proyecto
+                </a>
+            </div>
+            
+            <p style="font-size: 14px; color: #666;">Si el botón no funciona, copia y pega este enlace en tu navegador:</p>
+            <p style="font-size: 12px; color: #999; word-break: break-all;">{link_formulario}</p>
+        </div>
+        <div style="background-color: #f1f1f1; padding: 15px; text-align: center; font-size: 12px; color: #666;">
+            Estudio Adiie - Arquitectura e Interiorismo
+        </div>
     </div>
     """
 
     params = {
-        "from": "onboarding@resend.dev", 
+        "from": "Estudio Adiie <ventas@estudioadiie.cl>", 
         "to": email_cliente,
-        "subject": f"Siguiente paso: Detalles de tu Diseño Express (Orden #{orden_id})",
+        "reply_to": "adiie.estudio@gmail.com", # Las respuestas del cliente llegan al Gmail del estudio
+        "subject": f"¡Pago exitoso! Siguiente paso para tu Diseño Express (Orden #{orden_id})",
         "html": html_content
     }
 
@@ -140,7 +152,6 @@ def enviar_link_formulario(email_cliente, orden_id):
 @pagos_bp.route('/api/validar-orden/<payment_id>', methods=['GET'])
 def validar_orden(payment_id):
     try:
-        # 1. Buscamos el comprobante en nuestra base de datos
         orden = db.comprobantes.find_one({"orden_id": str(payment_id)})
         
         if not orden:
@@ -149,14 +160,12 @@ def validar_orden(payment_id):
                 "error": "Esta orden no existe en nuestros registros de pago."
             }), 404
             
-        # 2. Revisamos el candado (Si ya se completó el formulario)
         if orden.get("formulario_completado") == True:
             return jsonify({
                 "valido": False, 
                 "error": "Este enlace ya fue utilizado para enviar un proyecto. Si necesitas otro diseño, debes generar una nueva cotización."
             }), 403
             
-        # 3. Si existe y el formulario es 'False', le damos luz verde a React
         return jsonify({
             "valido": True, 
             "mensaje": "Orden válida"

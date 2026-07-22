@@ -11,18 +11,16 @@ correos_bp = Blueprint('correos_bp', __name__)
 
 @correos_bp.route('/api/enviar-formulario-express', methods=['POST'])
 def enviar_formulario_express():  
-
     try:
         # Extraer los textos
         data = request.form
         nombre = data.get('nombre', 'Sin nombre')
-
         orden_id = request.form.get('orden_id', '')
         
-        # Construimos el cuerpo HTML profesional (Resend ama el HTML)
+        # Construimos el cuerpo HTML profesional
         html_content = f"""
         <div style="font-family: Arial, sans-serif; color: #333;">
-            <h2 style="color: #0B2126;">🚀 Nuevo Servicio Express: {nombre}</h2>
+            <h2 style="color: #0B2126;"> Nuevo Servicio Express: {nombre}</h2>
             
             <h3 style="color: #D4AF37; border-bottom: 1px solid #ddd; padding-bottom: 5px;">1. Contacto</h3>
             <ul>
@@ -64,10 +62,10 @@ def enviar_formulario_express():
                         "content": list(file.read()) 
                     })
 
-        # Disparamos el correo
+        # Disparamos el correo a la bandeja corporativa
         params = {
-            "from": "onboarding@resend.dev", # Nota: Resend requiere dominio verificado para usar tu correo real
-            "to": "juancri687@gmail.com",
+            "from": "Sistema Adiie <notificaciones@estudioadiie.cl>", 
+            "to": "adiie.estudio@gmail.com",
             "subject": f"Nuevo Proyecto Express: {nombre}",
             "html": html_content,
             "attachments": attachments
@@ -80,7 +78,7 @@ def enviar_formulario_express():
                 {"orden_id": str(orden_id)},
                 {"$set": {
                     "formulario_completado": True,
-                    "fecha_formulario": datetime.now() # Opcional: guardamos cuándo mandó las fotos
+                    "fecha_formulario": datetime.now()
                 }}
             )
 
@@ -91,18 +89,15 @@ def enviar_formulario_express():
         return jsonify({'error': 'No se pudo enviar el correo'}), 500
 
 
-
-
 @correos_bp.route('/api/contacto', methods=['POST'])
 def enviar_contacto():
     try:
-        # Como en React (Contacto.jsx) enviamos un JSON, extraemos los datos así:
         data = request.get_json()
         nombre = data.get('nombre', 'Sin nombre')
         correo = data.get('correo', 'Sin correo')
         mensaje = data.get('mensaje', 'Sin mensaje')
 
-        # Construimos un HTML muy elegante usando tus colores corporativos
+        # Construimos un HTML muy elegante usando colores corporativos
         html_content = f"""
         <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
             <div style="background-color: #0B2126; padding: 20px; text-align: center;">
@@ -110,8 +105,8 @@ def enviar_contacto():
             </div>
             <div style="padding: 20px;">
                 <p>Tienes un nuevo mensaje desde la sección de contacto de tu sitio web.</p>
-                <p><strong>👤 Cliente:</strong> {nombre}</p>
-                <p><strong>✉️ Correo:</strong> {correo}</p>
+                <p><strong> Cliente:</strong> {nombre}</p>
+                <p><strong> Correo:</strong> {correo}</p>
                 
                 <h3 style="color: #0B2126; border-bottom: 2px solid #D4AF37; padding-bottom: 5px; margin-top: 30px;">Mensaje:</h3>
                 <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; border-left: 4px solid #0B2126;">
@@ -124,18 +119,17 @@ def enviar_contacto():
         </div>
         """
 
-        # Preparamos el envío
+        # Preparamos el envío con el truco del reply_to
         params = {
-            "from": "onboarding@resend.dev", # Nota: Cambiar por tu correo .cl cuando lo verifiques en Resend (ej: "contacto@estudioadiie.cl")
-            "to": "juancri687@gmail.com",
+            "from": "Web Estudio Adiie <contacto@estudioadiie.cl>",
+            "to": "adiie.estudio@gmail.com",
+            "reply_to": correo, # La magia para poder responderle directo al cliente desde Gmail
             "subject": f"Mensaje de {nombre} - Web Estudio Adiie",
             "html": html_content
         }
 
-        # Disparamos el correo
         resend.Emails.send(params)
 
-        # Si todo sale bien, le respondemos "OK" a React
         return jsonify({'mensaje': 'Mensaje de contacto enviado con éxito'}), 200
 
     except Exception as e:
