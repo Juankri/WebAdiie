@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin_dashboard
+Disallow: /admin_proyecto
+Disallow: /admin_disenos
+Disallow: /admin_fondos
+Disallow: /carrito
+Disallow: /pago-exitoso
+Disallow: /formularioproyectoexpress
+
+Sitemap: https://www.estudioadiie.cl/sitemap.xml
