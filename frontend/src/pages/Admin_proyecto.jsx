@@ -39,7 +39,7 @@ const AdminProyectos = () => {
 
     const obtenerProyectos = async () => {
         try {
-            const res = await fetch('https://webadiie-backend.onrender.com/api/proyectos');
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/proyectos`);
             const datos = await res.json();
             setProyectos(datos);
         } catch (error) { console.error("Error:", error); }
@@ -87,7 +87,7 @@ const AdminProyectos = () => {
 
     const enviarProyecto = async (e) => {
         e.preventDefault();
-        const url = editandoId ? `https://webadiie-backend.onrender.com/api/proyectos/${editandoId}` : 'https://webadiie-backend.onrender.com/api/proyectos';
+        const url = editandoId ? `${import.meta.env.VITE_API_URL}/api/proyectos/${editandoId}` : `${import.meta.env.VITE_API_URL}/api/proyectos`;
         const metodo = editandoId ? 'PUT' : 'POST';
 
         try {
@@ -135,7 +135,7 @@ const AdminProyectos = () => {
       });
 
       try {
-        const res = await fetch(`https://webadiie-backend.onrender.com/api/proyectos/${id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/proyectos/${id}`, {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }
         });

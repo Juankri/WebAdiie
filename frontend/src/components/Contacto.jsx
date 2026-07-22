@@ -36,7 +36,7 @@ function Contacto() {
         });
         
         try {
-            const respuesta = await fetch('https://webadiie-backend.onrender.com/api/contacto', {
+            const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/api/contacto`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json' 

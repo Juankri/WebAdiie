@@ -18,7 +18,7 @@ const AdminFondos = () => {
 
     const obtenerFondos = async () => {
         try {
-            const res = await fetch('https://webadiie-backend.onrender.com/api/fondos_hero');
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/fondos_hero`);
             const data = await res.json();
             setFondos(data);
         } catch (error) { 
@@ -45,7 +45,7 @@ const AdminFondos = () => {
 
     const guardarFondoEnBD = async (url) => {
         try {
-            const res = await fetch('https://webadiie-backend.onrender.com/api/fondos_hero', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/fondos_hero`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const AdminFondos = () => {
 
         if (confirmacion.isConfirmed) {
             try {
-                const res = await fetch(`https://webadiie-backend.onrender.com/api/fondos_hero/${id}`, {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/fondos_hero/${id}`, {
                     method: 'DELETE',
                     headers: { 'Authorization': `Bearer ${token}` }
                 });

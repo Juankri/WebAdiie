@@ -13,7 +13,7 @@ function Galeria_diseños_personalizados() {
     useEffect(() => {
         const obtenerDisenos = async () => {
             try {
-                const respuesta = await fetch('https://webadiie-backend.onrender.com/api/disenos');
+                const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/api/disenos`);
                 const datos = await respuesta.json();
                 setDisenos(datos);
                 setCargando(false);

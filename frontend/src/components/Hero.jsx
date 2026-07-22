@@ -13,7 +13,7 @@ function Hero() {
         const cargarFondos = async () => {
             try {
                 // Preparado para conectarse a tu backend (crearemos esta ruta luego)
-                const res = await fetch('https://webadiie-backend.onrender.com/api/fondos_hero');
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/fondos_hero`);
                 if (res.ok) {
                     const data = await res.json();
                     // Si el cliente subió fotos, las usamos. Si no, dejamos la de por defecto.

@@ -46,7 +46,7 @@ function Carrito() {
             console.log("Enviando datos y generando orden de pago...", paqueteDeDatos);
 
             // Disparamos la petición directamente a tu ruta de Mercado Pago en Render
-            const respuesta = await fetch('https://webadiie-backend.onrender.com/api/crear_preferencia', {
+            const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/api/crear_preferencia`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(paqueteDeDatos)

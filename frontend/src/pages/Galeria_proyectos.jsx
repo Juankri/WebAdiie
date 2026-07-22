@@ -11,7 +11,7 @@ function Galeria_proyectos() {
     useEffect(() => {
         const obtenerProyectos = async () => {
             try {
-                const respuesta = await fetch('https://webadiie-backend.onrender.com/api/proyectos');
+                const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/api/proyectos`);
                 const datos = await respuesta.json();
                 
                 setProyectos(datos);

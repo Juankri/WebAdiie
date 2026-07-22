@@ -40,7 +40,7 @@ def crear_preferencia():
         
         # 👇 1. LE AVISAMOS A MERCADO PAGO DÓNDE ESTÁ NUESTRO WEBHOOK
         # IMPORTANTE: Cambia "tu-backend" por el link real de tu backend en Render
-        "notification_url": "https://webadiie-backend.onrender.com/api/webhook-pagos"
+        "notification_url": "https://webadiie-backend-gexl.onrender.com/api/webhook-pagos"
     }
 
     print("====== ENVIANDO DATOS A MP ======")

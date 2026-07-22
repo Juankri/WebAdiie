@@ -10,7 +10,7 @@ function Proyectosdes() {
     useEffect(() => {
         const obtenerProyectosDestacados = async () => {
             try {
-                const respuesta = await fetch('https://webadiie-backend.onrender.com/api/proyectos');
+                const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/api/proyectos`);
                 const data = await respuesta.json();
                 const proyectosDestacados = data.filter(proyecto => proyecto.destacado === true);
 

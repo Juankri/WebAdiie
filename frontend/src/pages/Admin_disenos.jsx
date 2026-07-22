@@ -36,7 +36,7 @@ const AdminDisenos = () => {
 
     const obtenerDisenos = async () => {
         try {
-            const res = await fetch('https://webadiie-backend.onrender.com/api/disenos');
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/disenos`);
             const datos = await res.json();
             setDisenos(datos);
         } catch (error) { console.error("Error:", error); }
@@ -82,8 +82,8 @@ const AdminDisenos = () => {
     const enviarDiseno = async (e) => {
         e.preventDefault();
         const url = editandoId 
-            ? `https://webadiie-backend.onrender.com/api/disenos/${editandoId}` 
-            : 'https://webadiie-backend.onrender.com/api/disenos';
+            ? `${import.meta.env.VITE_API_URL}/api/disenos/${editandoId}` 
+            : `${import.meta.env.VITE_API_URL}/api/disenos`;
         const metodo = editandoId ? 'PUT' : 'POST';
 
         try {
@@ -135,7 +135,7 @@ const AdminDisenos = () => {
       });
 
       try {
-        const res = await fetch(`https://webadiie-backend.onrender.com/api/disenos/${id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/disenos/${id}`, {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }
         });

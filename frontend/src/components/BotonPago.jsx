@@ -18,7 +18,7 @@ const BotonPago = ({ tituloServicio, precioServicio, datosCliente, carrito }) =>
     
     try {
       // 2. PETICIÓN A PRODUCCIÓN: Hacemos la petición a tu backend en Render
-      const response = await fetch('https://webadiie-backend.onrender.com/api/crear_preferencia', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/crear_preferencia`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

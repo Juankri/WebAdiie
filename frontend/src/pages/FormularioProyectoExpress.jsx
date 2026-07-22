@@ -131,7 +131,7 @@ const FormularioProyectoExpress = () => {
     try {
       // 3. ENVIAMOS AL BACKEND EN PYTHON
       // (Cambia el localhost por la URL de tu backend en Render cuando lo subas)
-      const respuesta = await fetch('https://webadiie-backend.onrender.com/api/enviar-formulario-express', {
+      const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/api/enviar-formulario-express`, {
         method: 'POST',
         body: formData, // Mandamos la caja con las fotos y datos
       });
@@ -183,7 +183,7 @@ const FormularioProyectoExpress = () => {
 
       try {
         // Consultamos al backend en Render si la orden es real
-        const respuesta = await fetch(`https://webadiie-backend.onrender.com/api/validar-orden/${ordenId}`);
+        const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/api/validar-orden/${ordenId}`);
         const resultado = await respuesta.json();
 
         if (respuesta.ok && resultado.valido) {

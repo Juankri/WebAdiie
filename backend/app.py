@@ -19,7 +19,15 @@ from routes.fondos import fondos_bp
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app) 
+
+origenes_permitidos = [
+    "https://estudioadiie.cl",
+    "https://www.estudioadiie.cl",
+    "https://estudioadiie-web.vercel.app", # Cambia esto por tu link real de Vercel
+    "http://localhost:5173" # Puerto de Vite para que sigas programando en tu PC
+]
+
+CORS(app, resources={r"/*": {"origins": origenes_permitidos}}) 
 
 # Configuración de Seguridad
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")

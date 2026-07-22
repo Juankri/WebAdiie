@@ -25,7 +25,7 @@ function PaginaDiseno() {
     useEffect(() => {
         const obtenerDetalles = async () => {
             try {
-                const respuesta = await fetch(`https://webadiie-backend.onrender.com/api/disenos/${idUrl}`);
+                const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/api/disenos/${idUrl}`);
                 const datos = await respuesta.json();
                 setProyecto(datos);
                 setCargando(false);
