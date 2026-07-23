@@ -38,7 +38,7 @@ function Footer() {
                     <div className="col-12 col-md-4 d-flex flex-column align-items-center">
                         <a href="/">
                             <img 
-                                src="/img/logo/azzul.png" 
+                                src="/img/logo/azul.png" 
                                 alt="Logo EstudioAdiie" 
                                 className="img-fluid mb-3"
                                 style={{ height: '75px', objectFit: 'contain' }}

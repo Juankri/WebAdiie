@@ -55,7 +55,7 @@ function Navbar() {
             {/* LADO IZQUIERDO: LOGO Y ADMIN */}
             <div className="d-flex align-items-center ms-3 ms-lg-4">
                 <Link to="/">
-                    <img src="/img/logo/azzul.png" alt="Logo ADIIE" style={{ height: '75px', objectFit: 'contain' }} />
+                    <img src="/img/logo/azul.png" alt="Logo ADIIE" style={{ height: '75px', objectFit: 'contain' }} />
                 </Link>
                 <div className="ms-3 ms-lg-4">
                     <Link to={estaLogueado ? "/admin_dashboard" : "/login"} className="icon-admin-custom text-decoration-none">
